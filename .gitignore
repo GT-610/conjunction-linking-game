@@ -1,0 +1,7 @@
+.venv/
+.venv-win/
+__pycache__/
+backend/__pycache__
+frontend/__pycache__
+source.py
+tempCodeRunnerFile.py
