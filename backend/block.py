@@ -86,24 +86,24 @@ def isOneCornerLink(map, p1, p2):
     return None
 
 
-# 两个拐点
-# for循环中的第一个数组是纵向比较(x不变)，第二个是横向比较(y不变)，合在一起可以减少代码量
+# 两个拐点检查
 def isTwoCornerLink(map, p1, p2):
     rows, cols = len(map), len(map[0])
     
     # 遍历所有可能的水平、垂直线
-    for x in range(-1, rows + 1):
-        for y in range(-1, cols + 1):
-            # 构建第一个拐点和第二个拐点
+    for x in range(rows):  # x 遍历所有行，包括边界
+        for y in range(cols):  # y 遍历所有列，包括边界
+            # 构建两个拐点
             pointCorner1 = (p1[0], y)  # 水平拐点
             pointCorner2 = (x, p2[1])  # 垂直拐点
 
-            # 排除p1与p2自身两个点
+            # 排除 p1 与 p2 自身两个点
             if pointCorner1 == p1 or pointCorner2 == p2:
                 continue
 
-            # 边界点处理：检查是否在边界，避免越界
-            if y == -1 or y == rows or x == -1 or x == cols:
+            # 检查路径连通性
+            # 对边界点：无需检查是否为空
+            if (map[p1[0]][y] == -1 or map[x][p2[1]] == -1):
                 if isStraightLink(map, p1, pointCorner1) and isStraightLink(map, pointCorner2, p2):
                     return [pointCorner1, pointCorner2]
 
@@ -116,6 +116,7 @@ def isTwoCornerLink(map, p1, p2):
                 return [pointCorner1, pointCorner2]
 
     return None
+
 
 
 
@@ -151,7 +152,7 @@ def check_and_clear(map, p1, p2):
     
     # 如果连通（返回值为1，2，或3），执行清除操作
     ClearLinkedBlocks(map, p1, p2)
-    return True
+    return link_type
 
 
 # 消除连通的两个块

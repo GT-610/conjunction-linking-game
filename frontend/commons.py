@@ -12,3 +12,4 @@ YELLOW = (255, 255, 0)
 # 字体文件路径
 font_path = "fonts/SourceHanSansCN-Regular.otf"
 
+block_size = 50  # 每个块的尺寸，例如 50x50 像素

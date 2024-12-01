@@ -314,7 +314,6 @@ def game_page():
     # 块
     ## 游戏地图大小 10x10
     map_size = 10
-    block_size = 50  # 每个块的尺寸，例如 50x50 像素
     offset_x = (SCREEN_WIDTH - map_size * block_size) // 2  # 使地图居中
     offset_y = (SCREEN_HEIGHT - map_size * block_size) // 2
 
@@ -352,7 +351,7 @@ def game_page():
                 for row in blocks:
                     for block in row:
                         if block.rect.collidepoint(event.pos):
-                            handle_block_click(block, map)
+                            handle_block_click(block, map, blocks)
                             update_blocks(map, blocks)  # 更新块
 
         # 绘制背景
@@ -390,7 +389,7 @@ def game_page():
 selected_block = None
 
 # 处理块的点击事件
-def handle_block_click(block, map):
+def handle_block_click(block, map, blocks):
     global selected_block
 
     if selected_block is None:
@@ -410,9 +409,10 @@ def handle_block_click(block, map):
 
         print("已选中块", p2)
 
+        link_type = check_and_clear(map, p1, p2)
         # 检查这两个块是否连通
-        if check_and_clear(map, p1, p2):
-            draw_link_line(selected_block, block)  # 绘制连线
+        if link_type:
+            draw_link_line(selected_block, block, link_type, blocks)  # 绘制连线
 
         # 重置选择状态
         selected_block.toggle_selection()
@@ -426,13 +426,37 @@ def update_blocks(map, blocks):
             block.value = map[i][j]
 
 # 绘制路径连线
-def draw_link_line(block1, block2):
+def draw_link_line(block1, block2, link_type, blocks):
     # 计算两个块的中心坐标
     start_pos = block1.outerCenterPoint
     end_pos = block2.outerCenterPoint
 
-    # 绘制一条线连接两个块
-    pygame.draw.line(screen, (255, 255, 0), start_pos, end_pos, 5)
+    if link_type == 1:
+        # 绘制一条线连接两个块
+        pygame.draw.line(screen, YELLOW, start_pos, end_pos, 5)
+        print("绘制直连线")
+
+    elif link_type[0] == 2:
+        blockCorner = blocks[link_type[1][0]][link_type[1][1]].outerCenterPoint
+
+        pygame.draw.line(screen, YELLOW, start_pos, blockCorner, 5)
+        pygame.draw.line(screen, YELLOW, blockCorner, end_pos, 5)
+        print("绘制单拐点线")
+    
+    elif link_type[0] == 3:
+        blockCorner1 = blocks[link_type[1][0][0]][link_type[1][0][1]].outerCenterPoint
+        blockCorner2 = blocks[link_type[1][1][0]][link_type[1][1][1]].outerCenterPoint
+        pygame.draw.line(screen, YELLOW, start_pos, blockCorner1 , 5)
+        pygame.draw.line(screen, YELLOW, blockCorner1, blockCorner2, 5)
+        pygame.draw.line(screen, YELLOW, blockCorner2, end_pos, 5)
+        print("绘制双拐点线")
+
+    # 更新屏幕，确保连线可见
+    pygame.display.update()
+
+    # 延迟清屏
+    pygame.time.delay(250)
+    print("已绘制连线")
 
 
 
