@@ -13,3 +13,8 @@ YELLOW = (255, 255, 0)
 font_path = "fonts/SourceHanSansCN-Regular.otf"
 
 block_size = 50  # 每个块的尺寸，例如 50x50 像素
+
+# 按钮参数
+button_width = 150
+button_height = 50
+vertical_spacing = 80
