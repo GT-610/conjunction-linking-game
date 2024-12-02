@@ -6,8 +6,9 @@ from frontend.commons import *
 from frontend.widgets import Button, button_font
 
 from backend.map import generate_map
-from backend.block import Block, check_and_clear
+from backend.block import Block
 from backend.link import getLinkType
+from backend.game_logic import check_and_clear
 
 # 字体
 font = pygame.font.Font(font_path, 48)  # 标题字体
@@ -74,6 +75,7 @@ def game_page():
         blocks.append(row)
 
     # 剩余时间文本
+    time_start = pygame.time.get_ticks()  # 记录开始时间（毫秒）
     time_text = button_font.render("已用时间: 0", True, WHITE)
     time_rect = time_text.get_rect(topright=(SCREEN_WIDTH - 10, 20))
 
@@ -99,6 +101,11 @@ def game_page():
 
         # 绘制背景
         screen.fill(BLACK)
+
+        # 绘制已用时间
+        elapsed_time = (pygame.time.get_ticks() - time_start) // 1000  # 获取已经过去的秒数
+        time_text = button_font.render(f"已用时间: {elapsed_time}", True, WHITE)
+        screen.blit(time_text, time_rect)
 
         # 绘制顶部区域
         screen.blit(time_text, time_rect)
@@ -200,6 +207,7 @@ def draw_link_line(block1, block2, link_type, blocks):
     # 延迟清屏
     pygame.time.delay(250)
     print("已绘制连线")
+
 
 # 暂停游戏（占位函数）
 def pause_game():
