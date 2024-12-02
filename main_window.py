@@ -267,6 +267,8 @@ def difficulty_selection_page():
         # 更新屏幕
         pygame.display.flip()
 
+
+
 # 主要游戏部分
 # 游戏主界面
 # 游戏主界面
