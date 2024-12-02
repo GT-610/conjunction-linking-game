@@ -1,5 +1,7 @@
-# Conjuctions Linking game (联结词连连看)
+# `rebuild` branch of Conjuctions Linking game (联结词连连看)
 Small conjuction linking game fully written in Python.
+
+This **experimental** branch is to rebuild and deconstruct the main part of this program, into several files.
 
 ## Why this exists?
 This tiny project is a final assignment of my teammate and I for our *Python Data Structure and Algorithm* course. Since the class is over, we decided to open-source the whole project for everyone to learn Python and algorithm.
