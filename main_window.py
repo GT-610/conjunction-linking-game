@@ -3,8 +3,9 @@ import sys
 import time
 
 from frontend.widgets import Button, Slider, TextInputBox
-from frontend.leaderboard import load_leaderboard, save_leaderboard ,get_sorted_leaderboard
 from frontend.commons import *
+# 游戏界面
+from frontend.game import game_page
 
 from backend.map import generate_map
 from backend.block import Block, check_and_clear
@@ -16,11 +17,8 @@ pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("连连看")
 
-
-
 # 字体
 font = pygame.font.Font(font_path, 48)  # 标题字体
-button_font = pygame.font.Font(font_path, 36)  # 按钮字体
 
 # 主菜单
 def main_menu():
