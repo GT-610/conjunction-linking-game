@@ -87,38 +87,34 @@ def isOneCornerLink(map, p1, p2):
 
 
 # 两个拐点
-# for循环中的第一个数组是纵向比较(x不变)，第二个是横向比较(y不变)，合在一起可以减少代码量
 def isTwoCornerLink(map, p1, p2):
     rows, cols = len(map), len(map[0])
     
-    # 遍历所有可能的水平、垂直线
-    for x in range(-1, rows + 1):
-        for y in range(-1, cols + 1):
-            # 构建第一个拐点和第二个拐点
-            pointCorner1 = (p1[0], y)  # 水平拐点
-            pointCorner2 = (x, p2[1])  # 垂直拐点
-
-            # 排除p1与p2自身两个点
-            if pointCorner1 == p1 or pointCorner2 == p2:
-                continue
-
-            # 边界点处理：检查是否在边界，避免越界
-            if y == -1 or y == rows or x == -1 or x == cols:
-                if isStraightLink(map, p1, pointCorner1) and isStraightLink(map, pointCorner2, p2):
-                    return [pointCorner1, pointCorner2]
-
-            # 对普通点：检查路径连通性，且拐点应为空
-            elif (isStraightLink(map, p1, pointCorner1) and
-                  isStraightLink(map, pointCorner1, pointCorner2) and
-                  isStraightLink(map, pointCorner2, p2) and
-                  isEmptyInMap(map, pointCorner1) and
-                  isEmptyInMap(map, pointCorner2)):
-                return [pointCorner1, pointCorner2]
-
+    # 定义四个方向：上、右、下、左
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # 上、下、左、右
+    
+    # 遍历四个方向，寻找空格（-1）
+    for direction in directions:
+        # 计算checkP坐标
+        checkP = (p1[0] + direction[0], p1[1] + direction[1])
+        
+        # 确保checkP在地图范围内
+        if checkP[0] < 0 or checkP[0] >= rows or checkP[1] < 0 or checkP[1] >= cols:
+            continue
+        
+        # 检查checkP是否是空格
+        if map[checkP[0]][checkP[1]] != -1:
+            continue
+        
+        # 检查从p1到checkP，以及从checkP到p2是否能通过单直角连通
+        corner1, corner2 = isOneCornerLink(map, p1, checkP), isOneCornerLink(map, checkP, p2)
+        
+        # 如果找到了有效的拐点，返回
+        if corner1 and corner2:
+            return [corner1, corner2]  # 返回两个拐点坐标
+    
+    # 如果四个方向都没有找到合适的checkP
     return None
-
-
-
 
 
 # 获取两个点连通类型
