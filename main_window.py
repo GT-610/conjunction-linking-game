@@ -8,6 +8,7 @@ from frontend.commons import *
 
 from backend.map import generate_map
 from backend.block import Block, check_and_clear
+from backend.game_logic import update_blocks, handle_block_click, timer
 
 
 # 初始化 pygame
@@ -333,6 +334,7 @@ def game_page():
         blocks.append(row)
 
     # 剩余时间文本
+    time_start = pygame.time.get_ticks()  # 记录开始时间（毫秒）
     time_text = button_font.render("已用时间: 0", True, WHITE)
     time_rect = time_text.get_rect(topright=(SCREEN_WIDTH - 10, 20))
 
@@ -358,6 +360,11 @@ def game_page():
 
         # 绘制背景
         screen.fill(BLACK)
+
+        # 绘制已用时间
+        elapsed_time = (pygame.time.get_ticks() - time_start) // 1000  # 获取已经过去的秒数
+        time_text = button_font.render(f"已用时间: {elapsed_time}", True, WHITE)
+        screen.blit(time_text, time_rect)
 
         # 绘制顶部区域
         screen.blit(time_text, time_rect)
@@ -387,45 +394,6 @@ def game_page():
         # 更新屏幕
         pygame.display.flip()
 
-# 记录已选择的块
-selected_block = None
-
-# 处理块的点击事件
-def handle_block_click(block, map, blocks):
-    global selected_block
-
-    if selected_block is None:
-        # 第一个块被点击
-        selected_block = block
-        block.toggle_selection()  # 选中第一个块
-        print(f"已选中块：({selected_block.innerX}, {selected_block.innerY})")
-    elif selected_block == block:
-        # 再次点击同一个块，取消选中
-        block.toggle_selection()  # 取消选中状态
-        selected_block = None  # 重置选择状态
-    else:
-        # 第二个块被点击
-        block.toggle_selection()  # 选中第二个块
-        p1 = (selected_block.innerX, selected_block.innerY)
-        p2 = (block.innerX, block.innerY)
-
-        print("已选中块", p2)
-
-        link_type = check_and_clear(map, p1, p2)
-        # 检查这两个块是否连通
-        if link_type:
-            draw_link_line(selected_block, block, link_type, blocks)  # 绘制连线
-
-        # 重置选择状态
-        selected_block.toggle_selection()
-        block.toggle_selection()
-        selected_block = None
-
-# 更新块逻辑
-def update_blocks(map, blocks):
-    for i, row in enumerate(blocks):
-        for j, block in enumerate(row):
-            block.value = map[i][j]
 
 # 绘制路径连线
 def draw_link_line(block1, block2, link_type, blocks):
