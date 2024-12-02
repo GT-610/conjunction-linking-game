@@ -2,17 +2,15 @@ import pygame
 pygame.init()
 import sys
 
-from frontend.commons import *
-from frontend.widgets import Button, button_font
+from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font, font_path
+from frontend.commons import Button, button_width, button_height, button_font
+from frontend.commons import WHITE, BLACK, BLUE, GRAY, YELLOW
 
 from backend.map import generate_map
-from backend.block import Block
+
+from backend.block import Block, block_size
 from backend.link import getLinkType
 from backend.game_logic import check_and_clear
-
-# 字体
-font = pygame.font.Font(font_path, 48)  # 标题字体
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # 主要游戏部分
 # 游戏主界面
@@ -141,6 +139,9 @@ selected_block = None
 # 处理块的点击事件
 def handle_block_click(block, map, blocks):
     global selected_block
+
+    if block.value == -1:
+        return
 
     if selected_block is None:
         # 第一个块被点击
