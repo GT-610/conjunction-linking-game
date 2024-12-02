@@ -323,9 +323,9 @@ def game_page():
 
     ## 生成块对象
     blocks = []
-    for i in range(map_size):
+    for i in range(map_size + 2):
         row = []
-        for j in range(map_size):
+        for j in range(map_size + 2):
             block = Block(map, (i, j), block_size, offset_x, offset_y)
             row.append(block)
         blocks.append(row)
