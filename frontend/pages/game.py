@@ -232,4 +232,5 @@ def restart_game():
 # 返回主菜单
 def return_main_menu():
     print("返回主菜单功能待实现")
+    from frontend.pages.difficulty_selection import difficulty_selection_page
     difficulty_selection_page()

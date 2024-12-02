@@ -2,7 +2,8 @@ import pygame
 pygame.init()
 import time
 
-from frontend.commons import screen, font
+from frontend.commons import screen, font, BLACK, WHITE, GRAY, Button
+from backend.leaderboard import load_leaderboard, save_leaderboard, get_sorted_leaderboard
 
 # 排行榜界面
 def leaderboard_page():
@@ -44,6 +45,7 @@ def leaderboard_page():
             y_offset += 50  # 每条记录之间的垂直间距
 
     # 绘制返回按钮
+    from frontend.pages.main_menu import main_menu
     back_button = Button(
         "返回主菜单",
         300,

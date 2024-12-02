@@ -1,7 +1,7 @@
 import pygame
 pygame.init()
 
-from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, Button, font
+from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, Button, font, BLACK, WHITE, GRAY
 
 from frontend.pages.game import game_page
 
@@ -47,9 +47,10 @@ def difficulty_selection_page():
             200, 50,
             callback=choose_hard,
             hover_color=(128, 0, 128)  # 紫色
-            ),
-        Button("返回主菜单", 300, 440, 200, 50, callback=main_menu)  # 默认按钮颜色
-    ]
+            )]
+    
+    from frontend.pages.main_menu import main_menu
+    buttons.append(Button("返回主菜单", 300, 440, 200, 50, callback=main_menu))
 
     while True:
         # 事件处理

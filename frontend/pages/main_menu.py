@@ -1,10 +1,13 @@
 import pygame
 import sys
 
-from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, Button, font
+from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font
+from frontend.commons import Button, button_width, button_height
+from frontend.commons import vertical_spacing
+from frontend.commons import BLACK, GRAY, WHITE
 
 # 导入其他页面
-from frontend.pages.game import game_page
+from frontend.pages.difficulty_selection import difficulty_selection_page
 from frontend.pages.settings import settings_page
 from frontend.pages.leaderboard import leaderboard_page
 
@@ -75,7 +78,3 @@ def main_menu():
 def quit_game():
     pygame.quit()
     sys.exit()
-
-# 启动主菜单
-if __name__ == "__main__":
-    game_page()

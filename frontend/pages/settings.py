@@ -11,6 +11,7 @@ def settings_page():
     name_input = TextInputBox(300, 400, 200, 40, text="玩家")
 
     # 返回按钮
+    from frontend.pages.main_menu import main_menu
     back_button = Button("返回主菜单", 300, 500, 200, 50, callback=main_menu)
 
     while True:
