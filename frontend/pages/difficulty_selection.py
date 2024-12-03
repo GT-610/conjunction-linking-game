@@ -1,9 +1,8 @@
 import pygame
+import sys
 pygame.init()
 
 from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, Button, font, BLACK, WHITE, GRAY
-
-from frontend.pages.game import game_page
 
 # 选择难度界面
 def difficulty_selection_page():
@@ -12,6 +11,7 @@ def difficulty_selection_page():
     button_height = 50
     vertical_spacing = 80
 
+    from frontend.pages.game import game_page
     # 按钮回调函数
     def choose_easy():
         game_page()

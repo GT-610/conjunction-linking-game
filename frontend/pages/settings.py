@@ -1,4 +1,5 @@
 import pygame
+import sys
 pygame.init()
 
 from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font
