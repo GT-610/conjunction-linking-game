@@ -20,7 +20,7 @@ from backend.game_events import update_blocks, handle_block_click, check_and_cle
 def game_page():
 
     # 是否处于暂停状态
-    global is_paused, isGameEnd
+    global is_paused, time_start, isGameEnd
     is_paused = False
 
     # 按钮创建
@@ -101,18 +101,19 @@ def game_page():
                 hint_button.check_click()
                 restart_button.check_click()
                 return_main_menu_button.check_click()
-                # 检测哪个块被点击
-                for row in blocks:
-                    for block in row:
-                        if block.rect.collidepoint(event.pos):
-                            handle_block_click(block, map, blocks, score_manager)
-                            update_blocks(map, blocks)  # 更新块
-
+                # 如果游戏暂停，禁止块交互
+                if not is_paused:
+                    for row in blocks:
+                        for block in row:
+                            if block.rect.collidepoint(event.pos):
+                                handle_block_click(block, map, blocks)
+                                update_blocks(map, blocks)
         # 绘制背景
         screen.fill(BLACK)
 
-        # 绘制已用时间
-        elapsed_time = (pygame.time.get_ticks() - time_start) // 1000  # 获取已经过去的秒数
+        # 绘制已用时间（如果未暂停）
+        if not is_paused:
+            elapsed_time = (pygame.time.get_ticks() - time_start) // 1000
         time_text = button_font.render(f"已用时间: {elapsed_time}", True, WHITE)
         screen.blit(time_text, time_rect)
 
@@ -150,6 +151,13 @@ def game_page():
             from frontend.pages.checkout import checkout_page
             checkout_page(final_score, elapsed_time)
             return
+
+        # 暂停时显示提示
+        if is_paused:
+            paused_text = button_font.render("游戏暂停中", True, WHITE)
+            paused_rect = paused_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+            screen.blit(paused_text, paused_rect)
+            pygame.display.flip()  # 更新屏幕
 
         # 更新屏幕
         pygame.display.flip()
@@ -195,14 +203,23 @@ def end_game():
     global isGameEnd
     isGameEnd = 1  # 设置游戏结束标志
 
-# 暂停游戏（占位函数）
+# 初始化暂停时长
+paused_duration = 0  # 总暂停时长
+
+# 暂停游戏（修改版）
 def pause_game():
-    global is_paused
-    is_paused = not is_paused  # 更改暂停状态
-    if is_paused == True:
-        print("暂停功能待实现")
+    global is_paused, time_start  # 显式声明全局变量
+    paused_duration = 0
+    if is_paused:
+        # 恢复游戏
+        time_start -= paused_duration  # 减去暂停的时长
+        paused_duration = 0  # 重置暂停时长
     else:
-        print("已取消暂停")
+        # 暂停游戏
+        paused_duration = pygame.time.get_ticks() - time_start  # 记录暂停时长
+    is_paused = not is_paused  # 切换暂停状态
+
+
 
 # 提示（占位函数）
 def hint_game():
