@@ -1,4 +1,4 @@
-# Conjuctions Linking game (联结词连连看)
+# `rebuild` branch of Conjuctions Linking game (联结词连连看)
 Small conjuction linking game fully written in Python.
 
 ## Run from code
