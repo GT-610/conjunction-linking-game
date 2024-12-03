@@ -10,7 +10,7 @@ def update_blocks(map, blocks):
 selected_block = None
 
 # 处理块的点击事件
-def handle_block_click(block, map, blocks):
+def handle_block_click(block, map, blocks, score_manager):
     global selected_block
 
     if block.value == -1:
@@ -38,6 +38,8 @@ def handle_block_click(block, map, blocks):
         if link_type:
             from frontend.pages.game import draw_link_line
             draw_link_line(selected_block, block, link_type, blocks)  # 绘制连线
+            # 更新分数
+            score_manager.add_score(100)
 
         # 重置选择状态
         selected_block.toggle_selection()

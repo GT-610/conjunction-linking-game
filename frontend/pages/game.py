@@ -9,6 +9,7 @@ from frontend.commons import WHITE, BLACK, BLUE, GRAY, YELLOW
 from backend.map import generate_map
 
 from backend.block import Block, block_size
+from backend.score import Score
 from backend.link import getLinkType
 from backend.game_events import update_blocks, handle_block_click, check_and_clear
 
@@ -18,7 +19,7 @@ from backend.game_events import update_blocks, handle_block_click, check_and_cle
 def game_page():
 
     # 是否处于暂停状态
-    global is_paused
+    global is_paused, isGameEnd
     is_paused = False
 
     # 按钮创建
@@ -72,10 +73,18 @@ def game_page():
             row.append(block)
         blocks.append(row)
 
+    # 初始化分数对象
+    score_manager = Score()
+    score_font = button_font  # 假设已有的字体资源
+
+    # 分数文本
+    score_text = score_font.render(f"分数: {score_manager.get_score()}", True, WHITE)
+    score_rect = score_text.get_rect(topleft=(30, 60))
+
     # 剩余时间文本
     time_start = pygame.time.get_ticks()  # 记录开始时间（毫秒）
     time_text = button_font.render("已用时间: 0", True, WHITE)
-    time_rect = time_text.get_rect(topright=(SCREEN_WIDTH - 30, 20))
+    time_rect = time_text.get_rect(topleft=(30, 20))
 
     # 绘制游戏界面
     while True:
@@ -94,7 +103,7 @@ def game_page():
                 for row in blocks:
                     for block in row:
                         if block.rect.collidepoint(event.pos):
-                            handle_block_click(block, map, blocks)
+                            handle_block_click(block, map, blocks, score_manager)
                             update_blocks(map, blocks)  # 更新块
 
         # 绘制背景
@@ -104,6 +113,10 @@ def game_page():
         elapsed_time = (pygame.time.get_ticks() - time_start) // 1000  # 获取已经过去的秒数
         time_text = button_font.render(f"已用时间: {elapsed_time}", True, WHITE)
         screen.blit(time_text, time_rect)
+
+        # 绘制分数显示
+        score_text = score_font.render(f"分数: {score_manager.get_score()}", True, WHITE)
+        screen.blit(score_text, score_rect)
 
         # 绘制顶部区域
         screen.blit(time_text, time_rect)
@@ -117,9 +130,8 @@ def game_page():
         # 绘制返回主菜单按钮
         return_main_menu_button.draw(screen)
 
-        # 画中央区域的地图框架（留空）
-        # 居中绘制
-        map_width, map_height = 750, 750
+        # 画中央区域的地图框架
+        map_width, map_height = 650, 650
         map_x = (SCREEN_WIDTH - map_width) // 2
         map_y = (SCREEN_HEIGHT - map_height) // 2 + 20
         pygame.draw.rect(screen, WHITE, (map_x, map_y, map_width, map_height), 2)  # 绘制地图框架
@@ -129,6 +141,13 @@ def game_page():
             for block in row:
                 if block.value != -1:
                     block.draw(screen)
+
+        # 如果游戏结束，显示结束时间
+        if isGameEnd == 1:
+            end_time = (pygame.time.get_ticks() - time_start) // 1000  # 游戏结束时的时间
+            end_time_text = button_font.render(f"游戏结束！总时间: {end_time}秒", True, WHITE)
+            screen.blit(end_time_text, (SCREEN_WIDTH // 2 - end_time_text.get_width() // 2, SCREEN_HEIGHT // 2))
+            pygame.time.delay(2000)
 
         # 更新屏幕
         pygame.display.flip()
@@ -166,6 +185,13 @@ def draw_link_line(block1, block2, link_type, blocks):
     pygame.time.delay(250)
     print("已绘制连线")
 
+# 假设 isGameEnd 被其他地方设置为 1 来表示游戏结束
+isGameEnd = 0  # 游戏未结束
+
+# 游戏结束时调用的函数
+def end_game():
+    global isGameEnd
+    isGameEnd = 1  # 设置游戏结束标志
 
 # 暂停游戏（占位函数）
 def pause_game():
@@ -188,6 +214,6 @@ def restart_game():
 
 # 返回主菜单
 def return_main_menu():
+    global isGameEnd
+    isGameEnd = 1
     print("返回主菜单功能待实现")
-    from frontend.pages.difficulty_selection import difficulty_selection_page
-    difficulty_selection_page()
