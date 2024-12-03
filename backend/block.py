@@ -49,8 +49,4 @@ class Block:
     # 切换选中状态
     def toggle_selection(self):
         self.selected = not self.selected
-
-# 游戏结束
-def isGameEnd(map):
-    return np.all(map == -1)
  
