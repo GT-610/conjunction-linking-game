@@ -1,6 +1,7 @@
 import pygame
-pygame.init()
 import sys
+import numpy as np
+pygame.init()
 
 from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font, font_path
 from frontend.commons import Button, button_width, button_height, button_font
@@ -65,13 +66,14 @@ def game_page():
     map = generate_map(map_size)  # 生成10x10的地图
 
     ## 生成块对象
-    blocks = []
-    for i in range(map_size + 2):
-        row = []
-        for j in range(map_size + 2):
-            block = Block(map, (i, j), block_size, offset_x, offset_y)
-            row.append(block)
-        blocks.append(row)
+    blocks = np.empty((map_size + 2, map_size + 2), dtype=object)  # 创建一个空的二维数组用于存储 Block 对象
+
+    # 生成一维 blocks 数组并 reshape
+    blocks = np.empty((map_size + 2) * (map_size + 2), dtype=object)
+    for index in range((map_size + 2) * (map_size + 2)):
+        i, j = divmod(index, map_size + 2)
+        blocks[index] = Block(map, (i, j), block_size, offset_x, offset_y)
+    blocks = blocks.reshape((map_size + 2, map_size + 2))
 
     # 初始化分数对象
     score_manager = Score()
@@ -130,20 +132,16 @@ def game_page():
         # 绘制返回主菜单按钮
         return_main_menu_button.draw(screen)
 
-        # 画中央区域的地图框架
-        map_width, map_height = 650, 650
-        map_x = (SCREEN_WIDTH - map_width) // 2
-        map_y = (SCREEN_HEIGHT - map_height) // 2 + 20
-        pygame.draw.rect(screen, WHITE, (map_x, map_y, map_width, map_height), 2)  # 绘制地图框架
 
         # 绘制每个块
-        for row in blocks:
-            for block in row:
-                if block.value != -1:
-                    block.draw(screen)
+        for block in np.nditer(blocks, flags=['refs_ok']):
+            block = block.item()  # 取出 Block 对象
+            if block.value != -1:
+                block.draw(screen)
+
 
         # 游戏结束
-        if isGameEnd == 1:
+        if np.all(map == -1) or isGameEnd == 1:
             # 计算最终分数和用时
             final_score = score_manager.get_score()
             elapsed_time = (pygame.time.get_ticks() - time_start) // 1000
