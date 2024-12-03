@@ -142,12 +142,16 @@ def game_page():
                 if block.value != -1:
                     block.draw(screen)
 
-        # 如果游戏结束，显示结束时间
+        # 游戏结束
         if isGameEnd == 1:
-            end_time = (pygame.time.get_ticks() - time_start) // 1000  # 游戏结束时的时间
-            end_time_text = button_font.render(f"游戏结束！总时间: {end_time}秒", True, WHITE)
-            screen.blit(end_time_text, (SCREEN_WIDTH // 2 - end_time_text.get_width() // 2, SCREEN_HEIGHT // 2))
-            pygame.time.delay(2000)
+            # 计算最终分数和用时
+            final_score = score_manager.get_score()
+            elapsed_time = (pygame.time.get_ticks() - time_start) // 1000
+
+            # 调用结算页面
+            from frontend.pages.checkout import checkout_page
+            checkout_page(final_score, elapsed_time)
+            return
 
         # 更新屏幕
         pygame.display.flip()
@@ -216,4 +220,3 @@ def restart_game():
 def return_main_menu():
     global isGameEnd
     isGameEnd = 1
-    print("返回主菜单功能待实现")
