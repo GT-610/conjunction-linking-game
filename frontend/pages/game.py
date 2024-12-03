@@ -8,11 +8,14 @@ from frontend.commons import Button, button_width, button_height, button_font
 from frontend.commons import WHITE, BLACK, BLUE, GRAY, YELLOW
 
 from backend.map import generate_map
-
 from backend.block import Block, block_size
+from backend.timer import Timer
 from backend.score import Score
 from backend.link import getLinkType
 from backend.game_events import update_blocks, handle_block_click, check_and_clear
+
+# 初始化计时器
+timer = Timer()
 
 # 主要游戏部分
 # 游戏主界面
@@ -20,7 +23,7 @@ from backend.game_events import update_blocks, handle_block_click, check_and_cle
 def game_page():
 
     # 是否处于暂停状态
-    global is_paused, time_start, isGameEnd
+    global is_paused, timer, isGameEnd
     is_paused = False
 
     # 按钮创建
@@ -84,7 +87,8 @@ def game_page():
     score_rect = score_text.get_rect(topleft=(30, 60))
 
     # 剩余时间文本
-    time_start = pygame.time.get_ticks()  # 记录开始时间（毫秒）
+    # 游戏开始时启动计时
+    timer.start()
     time_text = button_font.render("已用时间: 0", True, WHITE)
     time_rect = time_text.get_rect(topleft=(30, 20))
 
@@ -106,14 +110,14 @@ def game_page():
                     for row in blocks:
                         for block in row:
                             if block.rect.collidepoint(event.pos):
-                                handle_block_click(block, map, blocks)
+                                handle_block_click(block, map, blocks, score_manager)
                                 update_blocks(map, blocks)
         # 绘制背景
         screen.fill(BLACK)
 
         # 绘制已用时间（如果未暂停）
         if not is_paused:
-            elapsed_time = (pygame.time.get_ticks() - time_start) // 1000
+            elapsed_time = timer.get_elapsed_time()
         time_text = button_font.render(f"已用时间: {elapsed_time}", True, WHITE)
         screen.blit(time_text, time_rect)
 
@@ -145,7 +149,7 @@ def game_page():
         if np.all(map == -1) or isGameEnd == 1:
             # 计算最终分数和用时
             final_score = score_manager.get_score()
-            elapsed_time = (pygame.time.get_ticks() - time_start) // 1000
+            elapsed_time = timer.get_elapsed_time()
 
             # 调用结算页面
             from frontend.pages.checkout import checkout_page
@@ -155,7 +159,7 @@ def game_page():
         # 暂停时显示提示
         if is_paused:
             paused_text = button_font.render("游戏暂停中", True, WHITE)
-            paused_rect = paused_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+            paused_rect = paused_text.get_rect(topleft=(30, 100))
             screen.blit(paused_text, paused_rect)
             pygame.display.flip()  # 更新屏幕
 
@@ -195,6 +199,16 @@ def draw_link_line(block1, block2, link_type, blocks):
     pygame.time.delay(250)
     print("已绘制连线")
 
+# 暂停操作
+def pause_game():
+    global is_paused
+    if is_paused:
+        timer.resume()  # 恢复计时
+    else:
+        timer.pause()  # 暂停计时
+    is_paused = not is_paused
+
+
 # 假设 isGameEnd 被其他地方设置为 1 来表示游戏结束
 isGameEnd = 0  # 游戏未结束
 
@@ -202,23 +216,6 @@ isGameEnd = 0  # 游戏未结束
 def end_game():
     global isGameEnd
     isGameEnd = 1  # 设置游戏结束标志
-
-# 初始化暂停时长
-paused_duration = 0  # 总暂停时长
-
-# 暂停游戏（修改版）
-def pause_game():
-    global is_paused, time_start  # 显式声明全局变量
-    paused_duration = 0
-    if is_paused:
-        # 恢复游戏
-        time_start -= paused_duration  # 减去暂停的时长
-        paused_duration = 0  # 重置暂停时长
-    else:
-        # 暂停游戏
-        paused_duration = pygame.time.get_ticks() - time_start  # 记录暂停时长
-    is_paused = not is_paused  # 切换暂停状态
-
 
 
 # 提示（占位函数）
