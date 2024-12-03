@@ -1,9 +1,6 @@
 # `rebuild` branch of Conjuctions Linking game (联结词连连看)
 Small conjuction linking game fully written in Python.
 
-This **experimental** branch is to rebuild and deconstruct the main part of this program, into several files.
-
-
 ## Run from code
 The game is developed in Python 3.12. Make sure you have at least Python 3.10 or above.
 
