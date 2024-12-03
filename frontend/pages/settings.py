@@ -1,7 +1,9 @@
 import pygame
 pygame.init()
 
-from frontend.commons import screen, Button, Slider, TextInputBox
+from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font
+from frontend.commons import Button, button_font, Slider, TextInputBox
+from frontend.commons import WHITE, BLACK
 
 # 设置界面
 def settings_page():

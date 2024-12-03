@@ -75,7 +75,7 @@ def game_page():
     # 剩余时间文本
     time_start = pygame.time.get_ticks()  # 记录开始时间（毫秒）
     time_text = button_font.render("已用时间: 0", True, WHITE)
-    time_rect = time_text.get_rect(topright=(SCREEN_WIDTH - 10, 20))
+    time_rect = time_text.get_rect(topright=(SCREEN_WIDTH - 30, 20))
 
     # 绘制游戏界面
     while True:
