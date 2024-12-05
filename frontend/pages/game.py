@@ -128,15 +128,9 @@ def game_page(difficulty):
                 restart_button.check_click()
                 return_main_menu_button.check_click()
 
+                # 检查联结词块交互
                 for block in conj_blocks:
-                    if block.rect.collidepoint(event.pos):  # 检测是否点击了联结词块
-                        cur_conj = block.conj_name  # 更新为被点击的联结词
-                        print(f"选择了联结词: {cur_conj}")  # 调试信息
-
-                        # 更新块的选中状态
-                        for b in conj_blocks:
-                            b.is_selected = False  # 取消其他块的选中状态
-                        block.is_selected = True  # 设置当前块为选中
+                    block.handle_click(event.pos)
                 
                 # 游戏未在暂停的时候，检查地图块交互
                 if not is_paused:
