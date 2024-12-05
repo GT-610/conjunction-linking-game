@@ -4,8 +4,6 @@ pygame.init()
 from frontend.commons import *
 from backend.link import getLinkType
 
-block_size = 50  # 每个块的尺寸，例如 50x50 像素
-
 class Block:
     def __init__(self, map, point, block_size, offset_x, offset_y):
         self.innerX, self.innerY = point  # 块的位置 (map的坐标)

@@ -6,7 +6,6 @@ def isEmptyInMap(map, point):
     # 检查是否在边界内，且是否为空
     return 0 <= x < len(map) and 0 <= y < len(map[0]) and map[x][y] == -1
 
-
 # 直连
 def isStraightLink(map, p1, p2):
     if p1[1] == p2[1]:
@@ -71,7 +70,7 @@ def isTwoCornerLink(map, p1, p2):
 
 # 获取两个点连通类型
 from backend.conjunctions import CONJUNCTIONS
-cur_conj = "异或"  # 默认选择的联结词为“与”
+cur_conj = "异或"
 def getLinkType(map, p1, p2):
     # 获取当前选定的联结词的运算函数
     conj_func = CONJUNCTIONS.get(cur_conj)

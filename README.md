@@ -10,10 +10,10 @@ The game is developed in Python 3.12. Make sure you have at least Python 3.10 or
     pip install -r requirements.txt
     ```
 
-2. Run `main_window.py`:
+2. Run `main.py`:
 
     ```bash
-    python main_window.py
+    python main.py
     ```
 
 ## License
