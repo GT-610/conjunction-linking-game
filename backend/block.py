@@ -2,7 +2,6 @@ import pygame
 pygame.init()
 
 from frontend.commons import *
-from backend.link import getLinkType
 
 class Block:
     def __init__(self, map, point, block_size, offset_x, offset_y):

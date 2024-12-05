@@ -3,18 +3,17 @@ import sys
 import numpy as np
 pygame.init()
 
-from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font, font_path
+from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font_path
 from frontend.commons import Button, button_width, button_height, button_font
 from frontend.commons import WHITE, BLACK, BLUE, GRAY, YELLOW
 
 from backend.map import generate_map
 from backend.block import Block
 from backend.conj_block import ConjunctionBlock
-from backend.conjunctions import CONJUNCTIONS, DIFFICULTY_CONJUNCTIONS
+from backend.conjunctions import DIFFICULTY_CONJUNCTIONS
 from backend.timer import Timer
 from backend.score import Score
-from backend.link import getLinkType
-from backend.game_events import update_blocks, handle_block_click, check_and_clear
+from backend.game_events import update_blocks, handle_block_click
 
 # 初始化计时器
 timer = Timer()
@@ -83,7 +82,7 @@ def game_page(difficulty):
     blocks = blocks.reshape((map_size + 2, map_size + 2))
 
     # 创建联结词块
-    conjunction_blocks = []
+    conj_blocks = []
     block_size = 100  # 联结词块大小
     start_x, start_y = 50, 150  # 起始位置
     spacing = 20  # 块之间的间隔
@@ -92,14 +91,14 @@ def game_page(difficulty):
         """联结词块被选中后的回调"""
         global cur_conj
         cur_conj = selected_block.conj_name  # 更新当前联结词
-        for block in conjunction_blocks:
+        for block in conj_blocks:
             block.set_selected(block == selected_block)  # 更新其他块状态
 
     # 初始化联结词块
     for i, conj_name in enumerate(conjunctions):
         pos = (start_x, start_y + i * (block_size + spacing))
         conj_block = ConjunctionBlock(conj_name, pos, block_size, select_conjunction_block)
-        conjunction_blocks.append(conj_block)
+        conj_blocks.append(conj_block)
 
     # 初始化分数对象
     score_manager = Score()
@@ -129,16 +128,22 @@ def game_page(difficulty):
                 restart_button.check_click()
                 return_main_menu_button.check_click()
 
-                # 检查联结词块交互
-                for block in conjunction_blocks:
-                    block.handle_click(event.pos)
+                for block in conj_blocks:
+                    if block.rect.collidepoint(event.pos):  # 检测是否点击了联结词块
+                        cur_conj = block.conj_name  # 更新为被点击的联结词
+                        print(f"选择了联结词: {cur_conj}")  # 调试信息
+
+                        # 更新块的选中状态
+                        for b in conj_blocks:
+                            b.is_selected = False  # 取消其他块的选中状态
+                        block.is_selected = True  # 设置当前块为选中
                 
                 # 游戏未在暂停的时候，检查地图块交互
                 if not is_paused:
                     for row in blocks:
                         for block in row:
                             if block.rect.collidepoint(event.pos):
-                                handle_block_click(block, map, blocks, score_manager)
+                                handle_block_click(block, map, blocks, score_manager, cur_conj)
                                 update_blocks(map, blocks)
         # 绘制背景
         screen.fill(BLACK)
@@ -172,7 +177,7 @@ def game_page(difficulty):
                 block.draw(screen)
 
         # 绘制联结词块
-        for conj_block in conjunction_blocks:
+        for conj_block in conj_blocks:
             conj_block.draw(screen)
 
         # 游戏结束

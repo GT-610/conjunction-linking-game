@@ -3,7 +3,6 @@ import sys
 pygame.init()
 
 from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, Button, font, BLACK, WHITE, GRAY
-from backend.conjunctions import DIFFICULTY_CONJUNCTIONS
 
 # 选择难度界面
 def difficulty_selection_page():

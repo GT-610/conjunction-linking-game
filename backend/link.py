@@ -70,8 +70,7 @@ def isTwoCornerLink(map, p1, p2):
 
 # 获取两个点连通类型
 from backend.conjunctions import CONJUNCTIONS
-cur_conj = "异或"
-def getLinkType(map, p1, p2):
+def getLinkType(map, p1, p2, cur_conj):
     # 获取当前选定的联结词的运算函数
     conj_func = CONJUNCTIONS.get(cur_conj)
 

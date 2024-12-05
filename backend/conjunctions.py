@@ -14,9 +14,13 @@ def OR(a, b):
 def XOR(a, b):
     return a ^ b  # 按位异或
 
+def XNOR(a, b):
+    return a == b
+
 # 映射联结词到函数
 CONJUNCTIONS = {
     "与": AND,
     "或": OR,
-    "异或": XOR
+    "异或": XOR,
+    "同或": XNOR
 }
