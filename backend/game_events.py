@@ -9,6 +9,7 @@ def update_blocks(map, blocks):
 # 记录已选择的块
 selected_block = None
 
+
 # 处理块的点击事件
 def handle_block_click(block, map, blocks, score_manager):
     global selected_block
@@ -33,7 +34,11 @@ def handle_block_click(block, map, blocks, score_manager):
 
         print("已选中块", p2)
 
+
+
+        # 判断连通性和联结词条件
         link_type = check_and_clear(map, p1, p2)
+
         # 检查这两个块是否连通
         if link_type:
             from frontend.pages.game import draw_link_line
@@ -47,8 +52,9 @@ def handle_block_click(block, map, blocks, score_manager):
         selected_block = None
 
 
-# 判断两个块是否连通并清除
+# 检查两个块是否可以消除
 def check_and_clear(map, p1, p2):
+    # 获取两个块是否连通
     link_type = getLinkType(map, p1, p2)
     
     print(f"连通类型：{link_type}")
@@ -56,10 +62,15 @@ def check_and_clear(map, p1, p2):
     # 如果返回值是 0，说明不连通，直接返回
     if link_type == 0:
         return False
-    
-    # 如果连通（返回值为1，2，或3），执行清除操作
+
+    # 联结词运算的判断
+    block1_value = map[p1[0]][p1[1]]
+    block2_value = map[p2[0]][p2[1]]
+
+    # 如果连通并且满足运算条件，执行清除操作
     ClearLinkedBlocks(map, p1, p2)
     return link_type
+
 
 
 # 消除连通的两个块
