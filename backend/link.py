@@ -6,7 +6,6 @@ def isEmptyInMap(map, point):
     # 检查是否在边界内，且是否为空
     return 0 <= x < len(map) and 0 <= y < len(map[0]) and map[x][y] == -1
 
-
 # 直连
 def isStraightLink(map, p1, p2):
     if p1[1] == p2[1]:
@@ -22,7 +21,8 @@ def isStraightLink(map, p1, p2):
     else:
         return False
     return True
- 
+
+# 一个拐点
 def isOneCornerLink(map, p1, p2):
     pointCorner = (p1[0], p2[1])  # 假设为水平-垂直拐点
     if (isStraightLink(map, p1, pointCorner) and 
@@ -37,7 +37,6 @@ def isOneCornerLink(map, p1, p2):
         return pointCorner
 
     return None
-
 
 # 两个拐点
 def isTwoCornerLink(map, p1, p2):
@@ -69,11 +68,15 @@ def isTwoCornerLink(map, p1, p2):
     # 如果四个方向都没有找到合适的checkP
     return None
 
-
 # 获取两个点连通类型
-def getLinkType(map, p1, p2):
-    if map[p1[0]][p1[1]] != map[p2[0]][p2[1]]:
-        return 0 # 相同块无法连通
+from backend.conjunctions import CONJUNCTIONS
+def getLinkType(map, p1, p2, cur_conj):
+    # 获取当前选定的联结词的运算函数
+    conj_func = CONJUNCTIONS.get(cur_conj)
+
+    if conj_func(map[p1[0]][p1[1]], map[p2[0]][p2[1]]) != 1:
+        print(f"{p1} 和 {p2} 不符合{cur_conj}要求")
+        return 0 # 联结词不满足肯定为不连通
 
     if isStraightLink(map, p1, p2):
         return 1 # 直连

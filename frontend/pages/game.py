@@ -3,16 +3,17 @@ import sys
 import numpy as np
 pygame.init()
 
-from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font, font_path
+from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font_path
 from frontend.commons import Button, button_width, button_height, button_font
 from frontend.commons import WHITE, BLACK, BLUE, GRAY, YELLOW
 
 from backend.map import generate_map
-from backend.block import Block, block_size
+from backend.block import Block
+from backend.conj_block import ConjunctionBlock
+from backend.conjunctions import DIFFICULTY_CONJUNCTIONS
 from backend.timer import Timer
 from backend.score import Score
-from backend.link import getLinkType
-from backend.game_events import update_blocks, handle_block_click, check_and_clear
+from backend.game_events import update_blocks, handle_block_click
 
 # 初始化计时器
 timer = Timer()
@@ -20,11 +21,13 @@ timer = Timer()
 # 主要游戏部分
 # 游戏主界面
 # 游戏主界面
-def game_page():
+def game_page(difficulty):
 
     # 是否处于暂停状态
     global is_paused, timer, isGameEnd
     is_paused = False
+    conjunctions = DIFFICULTY_CONJUNCTIONS[difficulty]
+    cur_conj = conjunctions[0]
 
     # 按钮创建
     pause_button = Button(
@@ -61,8 +64,8 @@ def game_page():
     # 块
     ## 游戏地图大小 10x10
     map_size = 10
-    offset_x = (SCREEN_WIDTH - map_size * block_size) // 2  # 使地图居中
-    offset_y = (SCREEN_HEIGHT - map_size * block_size) // 2
+    offset_x = (SCREEN_WIDTH - map_size * 50) // 2  # 使地图居中
+    offset_y = (SCREEN_HEIGHT - map_size * 50) // 2
 
     # 在游戏开始时生成地图
     map_size = 10
@@ -75,8 +78,27 @@ def game_page():
     blocks = np.empty((map_size + 2) * (map_size + 2), dtype=object)
     for index in range((map_size + 2) * (map_size + 2)):
         i, j = divmod(index, map_size + 2)
-        blocks[index] = Block(map, (i, j), block_size, offset_x, offset_y)
+        blocks[index] = Block(map, (i, j), 50, offset_x, offset_y)
     blocks = blocks.reshape((map_size + 2, map_size + 2))
+
+    # 创建联结词块
+    conj_blocks = []
+    block_size = 100  # 联结词块大小
+    start_x, start_y = 50, 150  # 起始位置
+    spacing = 20  # 块之间的间隔
+
+    def select_conjunction_block(selected_block):
+        """联结词块被选中后的回调"""
+        global cur_conj
+        cur_conj = selected_block.conj_name  # 更新当前联结词
+        for block in conj_blocks:
+            block.set_selected(block == selected_block)  # 更新其他块状态
+
+    # 初始化联结词块
+    for i, conj_name in enumerate(conjunctions):
+        pos = (start_x, start_y + i * (block_size + spacing))
+        conj_block = ConjunctionBlock(conj_name, pos, block_size, select_conjunction_block)
+        conj_blocks.append(conj_block)
 
     # 初始化分数对象
     score_manager = Score()
@@ -105,12 +127,17 @@ def game_page():
                 hint_button.check_click()
                 restart_button.check_click()
                 return_main_menu_button.check_click()
-                # 如果游戏暂停，禁止块交互
+
+                # 检查联结词块交互
+                for block in conj_blocks:
+                    block.handle_click(event.pos)
+                
+                # 游戏未在暂停的时候，检查地图块交互
                 if not is_paused:
                     for row in blocks:
                         for block in row:
                             if block.rect.collidepoint(event.pos):
-                                handle_block_click(block, map, blocks, score_manager)
+                                handle_block_click(block, map, blocks, score_manager, cur_conj)
                                 update_blocks(map, blocks)
         # 绘制背景
         screen.fill(BLACK)
@@ -137,13 +164,15 @@ def game_page():
         # 绘制返回主菜单按钮
         return_main_menu_button.draw(screen)
 
-
         # 绘制每个块
         for block in np.nditer(blocks, flags=['refs_ok']):
             block = block.item()  # 取出 Block 对象
             if block.value != -1:
                 block.draw(screen)
 
+        # 绘制联结词块
+        for conj_block in conj_blocks:
+            conj_block.draw(screen)
 
         # 游戏结束
         if np.all(map == -1) or isGameEnd == 1:
@@ -216,7 +245,6 @@ isGameEnd = 0  # 游戏未结束
 def end_game():
     global isGameEnd
     isGameEnd = 1  # 设置游戏结束标志
-
 
 # 提示（占位函数）
 def hint_game():
