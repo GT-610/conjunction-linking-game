@@ -1,3 +1,10 @@
+# 难度联结词表
+DIFFICULTY_CONJUNCTIONS = {
+    "easy": ["同或"],
+    "advanced": ["异或", "与", "或"],
+    "master": ["异或", "与", "或", "与非", "或非"]
+}
+
 def AND(a, b):
     return a & b  # 按位与
 

@@ -10,7 +10,7 @@ from frontend.commons import WHITE, BLACK, BLUE, GRAY, YELLOW
 from backend.map import generate_map
 from backend.block import Block
 from backend.conj_block import ConjunctionBlock
-from backend.conjunctions import CONJUNCTIONS
+from backend.conjunctions import CONJUNCTIONS, DIFFICULTY_CONJUNCTIONS
 from backend.timer import Timer
 from backend.score import Score
 from backend.link import getLinkType
@@ -22,11 +22,13 @@ timer = Timer()
 # 主要游戏部分
 # 游戏主界面
 # 游戏主界面
-def game_page():
+def game_page(difficulty):
 
     # 是否处于暂停状态
     global is_paused, timer, isGameEnd
     is_paused = False
+    conjunctions = DIFFICULTY_CONJUNCTIONS[difficulty]
+    cur_conj = conjunctions[0]
 
     # 按钮创建
     pause_button = Button(
@@ -93,10 +95,8 @@ def game_page():
         for block in conjunction_blocks:
             block.set_selected(block == selected_block)  # 更新其他块状态
 
-    # 当前选中的联结词（全局变量）
-    cur_conj = "与"  # 默认值
     # 初始化联结词块
-    for i, conj_name in enumerate(CONJUNCTIONS.keys()):
+    for i, conj_name in enumerate(conjunctions):
         pos = (start_x, start_y + i * (block_size + spacing))
         conj_block = ConjunctionBlock(conj_name, pos, block_size, select_conjunction_block)
         conjunction_blocks.append(conj_block)
