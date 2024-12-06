@@ -4,7 +4,7 @@ import time
 pygame.init()
 
 from frontend.commons import screen, font, BLACK, WHITE, GRAY, Button
-from backend.leaderboard import load_leaderboard, save_leaderboard, get_sorted_leaderboard
+from backend.leaderboard import load_leaderboard, save_to_leaderboard, get_sorted_leaderboard
 
 # 排行榜界面
 def leaderboard_page():

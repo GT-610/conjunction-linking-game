@@ -11,7 +11,7 @@ def settings_page():
     # 滑块实例
     bgm_slider = Slider(300, 200, 200, initial_value=50)
     sfx_slider = Slider(300, 300, 200, initial_value=50)
-    name_input = TextInputBox(300, 400, 200, 40, text="玩家")
+    name_input = TextInputBox(300, 400, 200, 40, text="PLAYER")
 
     # 返回按钮
     from frontend.pages.main_menu import main_menu

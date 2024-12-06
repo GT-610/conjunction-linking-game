@@ -1,13 +1,16 @@
 import pygame
 import sys
 from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font, button_font, Button, WHITE, BLACK
-from backend.leaderboard import save_leaderboard
+from backend.leaderboard import save_to_leaderboard
 
 def checkout_page(final_score, elapsed_time):
     pygame.init()
 
+    username = "PLAYER" # 预留，后期再做
+
     # 标题字体
     title_font = pygame.font.Font(None, 64)
+    
 
     # 按钮：返回主菜单
     return_main_menu_button = Button(
@@ -18,8 +21,9 @@ def checkout_page(final_score, elapsed_time):
         return_to_main_menu
     )
 
-    # # 调用排行榜存储函数（目前留空）
-    # save_to_leaderboard(final_score, elapsed_time)
+    from frontend.pages.difficulty_selection import difficulty
+    # 保存排行榜数据
+    save_to_leaderboard(username, difficulty, elapsed_time, final_score)
 
     # 绘制界面
     while True:

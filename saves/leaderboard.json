@@ -1,11 +1,19 @@
 {
-    "last_updated": 1732948551,
+    "last_updated": 1733475710,
     "records": [
         {
             "username": "test",
             "difficulty": 0,
             "time": 500,
-            "date": 1
+            "score": 10000,
+            "date": 114514
+        },
+        {
+            "username": "PLAYER",
+            "difficulty": null,
+            "time": 1,
+            "date": "2024-12-06T09:01:50.632711+00:00",
+            "score": 0
         }
     ]
 }
