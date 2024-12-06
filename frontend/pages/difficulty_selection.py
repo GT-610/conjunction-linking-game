@@ -3,6 +3,7 @@ import sys
 pygame.init()
 
 from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, Button, font, BLACK, WHITE, GRAY
+from backend.config import config
 
 # 选择难度界面
 def difficulty_selection_page():
@@ -14,15 +15,18 @@ def difficulty_selection_page():
     from frontend.pages.game import game_page
     # 按钮回调函数
     def choose_easy():
-        game_page("easy")
+        config.difficulty = "easy"
+        game_page()
         print("已选择简单难度")
 
     def choose_advanced():
-        game_page("advanced")
+        config.difficulty = "advanced"
+        game_page()
         print("已选择高级难度")
 
     def choose_master():
-        game_page("master")
+        config.difficulty = "master"
+        game_page()
         print("已选择大师难度")
 
     # 创建按钮

@@ -9,6 +9,7 @@ from frontend.commons import WHITE, BLACK, BLUE, GRAY, YELLOW
 
 from backend.map import generate_map
 from backend.block import Block
+from backend.config import config
 from backend.conj_block import ConjunctionBlock
 from backend.conjunctions import DIFFICULTY_CONJUNCTIONS
 from backend.timer import Timer
@@ -21,13 +22,12 @@ timer = Timer()
 # 主要游戏部分
 # 游戏主界面
 # 游戏主界面
-def game_page(difficulty):
+def game_page():
 
     # 是否处于暂停状态
-    global is_paused, timer, isGameEnd
-    is_paused = False
-    conjunctions = DIFFICULTY_CONJUNCTIONS[difficulty]
-    cur_conj = conjunctions[0]
+    global timer, isGameEnd
+    conjunctions = DIFFICULTY_CONJUNCTIONS[config.difficulty]
+    config.conjunction = conjunctions[0]
 
     # 按钮创建
     pause_button = Button(
@@ -89,8 +89,7 @@ def game_page(difficulty):
 
     def select_conjunction_block(selected_block):
         """联结词块被选中后的回调"""
-        global cur_conj
-        cur_conj = selected_block.conj_name  # 更新当前联结词
+        config.conjunction = selected_block.conj_name  # 更新当前联结词
         for block in conj_blocks:
             block.set_selected(block == selected_block)  # 更新其他块状态
 
@@ -133,7 +132,7 @@ def game_page(difficulty):
                     block.handle_click(event.pos)
                 
                 # 游戏未在暂停的时候，检查地图块交互
-                if not is_paused:
+                if not config.is_paused:
                     for row in blocks:
                         for block in row:
                             if block.rect.collidepoint(event.pos):
@@ -143,7 +142,7 @@ def game_page(difficulty):
         screen.fill(BLACK)
 
         # 绘制已用时间（如果未暂停）
-        if not is_paused:
+        if not config.is_paused:
             elapsed_time = timer.get_elapsed_time()
         time_text = button_font.render(f"已用时间: {elapsed_time}", True, WHITE)
         screen.blit(time_text, time_rect)
@@ -159,7 +158,7 @@ def game_page(difficulty):
         pause_button.draw(screen)
         hint_button.draw(screen)
         ## 如果暂停，则显示“重新开始”按钮
-        if is_paused:
+        if config.is_paused:
             restart_button.draw(screen)
         # 绘制返回主菜单按钮
         return_main_menu_button.draw(screen)
@@ -186,7 +185,7 @@ def game_page(difficulty):
             return
 
         # 暂停时显示提示
-        if is_paused:
+        if config.is_paused:
             paused_text = button_font.render("游戏暂停中", True, WHITE)
             paused_rect = paused_text.get_rect(topleft=(30, 100))
             screen.blit(paused_text, paused_rect)
@@ -230,12 +229,11 @@ def draw_link_line(block1, block2, link_type, blocks):
 
 # 暂停操作
 def pause_game():
-    global is_paused
-    if is_paused:
+    if config.is_paused:
         timer.resume()  # 恢复计时
     else:
         timer.pause()  # 暂停计时
-    is_paused = not is_paused
+    config.is_paused = not config.is_paused
 
 
 # 假设 isGameEnd 被其他地方设置为 1 来表示游戏结束
@@ -252,9 +250,7 @@ def hint_game():
 
 # 重新开始
 def restart_game():
-    print("重新开始游戏功能待实现")
-    global is_paused
-    is_paused = False  # 重新开始游戏，恢复游戏状态
+    config.reset()
 
 # 返回主菜单
 def return_main_menu():
