@@ -1,23 +1,17 @@
 import json
 import os
-import time
+from time import time
 
 # 文件路径
 LEADERBOARD_FILE = f"saves/leaderboard.json"
 
 # 默认的排行榜结构
 DEFAULT_LEADERBOARD = {
-    "last_updated": int(time.time()),  # 最后更新时间
+    "last_updated": int(time()),  # 最后更新时间
     "records": []                # 记录
 }
 
-import json
-import os
-import time
 from datetime import datetime, timezone
-
-LEADERBOARD_FILE = "saves/leaderboard.json"
-DEFAULT_LEADERBOARD = {"records": [], "last_updated": 0}
 
 # 加载排行榜
 def load_leaderboard():
@@ -42,13 +36,13 @@ def save_to_leaderboard(username, difficulty, play_time, score):
         "username": username,
         "difficulty": difficulty,
         "time": play_time,
-        "date": datetime.now(timezone.utc).isoformat(),  # 使用 ISO 格式保存时间
+        "date": int(time()),  # 使用 ISO 格式保存时间
         "score": score
     }
 
     # 添加新记录
     leaderboard["records"].append(new_record)
-    leaderboard["last_updated"] = int(time.time())
+    leaderboard["last_updated"] = int(time())
 
     # 写入文件
     with open(LEADERBOARD_FILE, "w") as file:
