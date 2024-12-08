@@ -37,7 +37,7 @@ def handle_block_click(block, map, blocks, score_manager, cur_conj):
 
 
         # 判断连通性和联结词条件
-        link_type = check_and_clear(map, p1, p2, cur_conj)
+        link_type = check_and_clear(map, p1, p2)
 
         # 检查这两个块是否连通
         if link_type:
@@ -53,9 +53,9 @@ def handle_block_click(block, map, blocks, score_manager, cur_conj):
 
 
 # 检查两个块是否可以消除
-def check_and_clear(map, p1, p2, cur_conj):
+def check_and_clear(map, p1, p2):
     # 获取两个块是否连通
-    link_type = getLinkType(map, p1, p2, cur_conj)
+    link_type = getLinkType(map, p1, p2)
     
     print(f"连通类型：{link_type}")
 

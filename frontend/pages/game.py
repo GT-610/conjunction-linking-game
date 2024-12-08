@@ -24,10 +24,13 @@ timer = Timer()
 # 游戏主界面
 def game_page():
 
-    # 是否处于暂停状态
-    global timer, isGameEnd
+    # 初始化并全部重置
+    global timer
+    timer.reset()
+    config.reset()
+
     conjunctions = DIFFICULTY_CONJUNCTIONS[config.difficulty]
-    config.conjunction = conjunctions[0]
+    config.cur_conj = conjunctions[0]
 
     # 按钮创建
     pause_button = Button(
@@ -89,7 +92,7 @@ def game_page():
 
     def select_conjunction_block(selected_block):
         """联结词块被选中后的回调"""
-        config.conjunction = selected_block.conj_name  # 更新当前联结词
+        config.cur_conj = selected_block.conj_name  # 更新当前联结词
         for block in conj_blocks:
             block.set_selected(block == selected_block)  # 更新其他块状态
 
@@ -136,7 +139,7 @@ def game_page():
                     for row in blocks:
                         for block in row:
                             if block.rect.collidepoint(event.pos):
-                                handle_block_click(block, map, blocks, score_manager, cur_conj)
+                                handle_block_click(block, map, blocks, score_manager, config.cur_conj)
                                 update_blocks(map, blocks)
         # 绘制背景
         screen.fill(BLACK)
@@ -174,7 +177,7 @@ def game_page():
             conj_block.draw(screen)
 
         # 游戏结束
-        if np.all(map == -1) or isGameEnd == 1:
+        if np.all(map == -1) or config.is_game_end == 1:
             # 计算最终分数和用时
             final_score = score_manager.get_score()
             elapsed_time = timer.get_elapsed_time()
@@ -236,13 +239,9 @@ def pause_game():
     config.is_paused = not config.is_paused
 
 
-# 假设 isGameEnd 被其他地方设置为 1 来表示游戏结束
-isGameEnd = 0  # 游戏未结束
-
 # 游戏结束时调用的函数
 def end_game():
-    global isGameEnd
-    isGameEnd = 1  # 设置游戏结束标志
+    config.is_game_end = True  # 设置游戏结束标志
 
 # 提示（占位函数）
 def hint_game():
@@ -250,9 +249,10 @@ def hint_game():
 
 # 重新开始
 def restart_game():
-    config.reset()
+    game_page()
+    
+    
 
 # 返回主菜单
 def return_main_menu():
-    global isGameEnd
-    isGameEnd = 1
+    config.is_game_end = True
