@@ -1,5 +1,5 @@
 {
-    "last_updated": 1733475710,
+    "last_updated": 1733649029,
     "records": [
         {
             "username": "test",
@@ -13,6 +13,13 @@
             "difficulty": null,
             "time": 1,
             "date": "2024-12-06T09:01:50.632711+00:00",
+            "score": 0
+        },
+        {
+            "username": "PLAYER",
+            "difficulty": "easy",
+            "time": 0,
+            "date": "2024-12-08T09:10:29.986032+00:00",
             "score": 0
         }
     ]

@@ -22,9 +22,8 @@ def checkout_page(final_score, elapsed_time):
         return_to_main_menu
     )
 
-    from frontend.pages.difficulty_selection import difficulty
     # 保存排行榜数据
-    save_to_leaderboard(username, difficulty, elapsed_time, final_score)
+    save_to_leaderboard(config.username, config.difficulty, config.elapsed_time, config.final_score)
 
     # 绘制界面
     while True:

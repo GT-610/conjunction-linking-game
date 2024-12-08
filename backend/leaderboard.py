@@ -22,7 +22,7 @@ DEFAULT_LEADERBOARD = {"records": [], "last_updated": 0}
 # 加载排行榜
 def load_leaderboard():
     if not os.path.exists(LEADERBOARD_FILE):
-        save_leaderboard(DEFAULT_LEADERBOARD)
+        save_to_leaderboard(DEFAULT_LEADERBOARD)
     with open(LEADERBOARD_FILE, "r") as file:
         return json.load(file)
 
