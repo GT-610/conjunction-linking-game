@@ -70,13 +70,14 @@ def isTwoCornerLink(map, p1, p2):
     return None
 
 # 获取两个点连通类型
+from backend.config import config
 from backend.conjunctions import CONJUNCTIONS
-def getLinkType(map, p1, p2, cur_conj):
+def getLinkType(map, p1, p2):
     # 获取当前选定的联结词的运算函数
-    conj_func = CONJUNCTIONS.get(cur_conj)
+    conj_func = CONJUNCTIONS.get(config.cur_conj)
 
     if conj_func(map[p1[0]][p1[1]], map[p2[0]][p2[1]]) != 1:
-        print(f"{p1} 和 {p2} 不符合{cur_conj}要求")
+        print(f"{p1} 和 {p2} 不符合{config.cur_conj}要求")
         return 0 # 联结词不满足肯定为不连通
 
     if isStraightLink(map, p1, p2):
