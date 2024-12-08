@@ -19,12 +19,10 @@ from backend.game_events import update_blocks, handle_block_click
 # 初始化计时器
 timer = Timer()
 
-# 主要游戏部分
-# 游戏主界面
 # 游戏主界面
 def game_page():
 
-    # 初始化并全部重置
+    # 初始化计时器并重置计时器和基本参数
     global timer
     timer.reset()
     config.reset()
@@ -40,6 +38,7 @@ def game_page():
         button_width, button_height,
         pause_game
     )
+
     hint_button = Button(
         "提示",
         (SCREEN_WIDTH - button_width) // 2,
@@ -47,6 +46,7 @@ def game_page():
         button_width, button_height,
         hint_game
     )
+
     # 重新开始按钮（仅在暂停时显示）
     restart_button = Button(
         "重新开始",
@@ -55,7 +55,7 @@ def game_page():
         button_width,button_height,
         restart_game
     )
-    # 返回主菜单按钮
+
     return_main_menu_button = Button(
         "返回主菜单",
         SCREEN_WIDTH - button_width - 10,
@@ -63,26 +63,24 @@ def game_page():
         button_width, button_height,
         return_main_menu
     )
+    print("已绘制按钮")
 
-    # 块
-    ## 游戏地图大小 10x10
+    # 生成地图
     map_size = 10
-    offset_x = (SCREEN_WIDTH - map_size * 50) // 2  # 使地图居中
+    map = generate_map(map_size)
+    print(f"已生成大小为 {map_size} * {map_size} 的地图")
+
+    # 生成一维 blocks 数组并 reshape 为二维
+    ## 块的偏移坐标
+    offset_x = (SCREEN_WIDTH - map_size * 50) // 2
     offset_y = (SCREEN_HEIGHT - map_size * 50) // 2
 
-    # 在游戏开始时生成地图
-    map_size = 10
-    map = generate_map(map_size)  # 生成10x10的地图
-
-    ## 生成块对象
-    blocks = np.empty((map_size + 2, map_size + 2), dtype=object)  # 创建一个空的二维数组用于存储 Block 对象
-
-    # 生成一维 blocks 数组并 reshape
     blocks = np.empty((map_size + 2) * (map_size + 2), dtype=object)
     for index in range((map_size + 2) * (map_size + 2)):
         i, j = divmod(index, map_size + 2)
         blocks[index] = Block(map, (i, j), 50, offset_x, offset_y)
     blocks = blocks.reshape((map_size + 2, map_size + 2))
+    print("已生成地图块")
 
     # 创建联结词块
     conj_blocks = []
@@ -90,31 +88,31 @@ def game_page():
     start_x, start_y = 50, 150  # 起始位置
     spacing = 20  # 块之间的间隔
 
-    def select_conjunction_block(selected_block):
-        """联结词块被选中后的回调"""
-        config.cur_conj = selected_block.conj_name  # 更新当前联结词
-        for block in conj_blocks:
-            block.set_selected(block == selected_block)  # 更新其他块状态
-
     # 初始化联结词块
+    ## 联结词块被选中后的回调
+    def select_conjunction_block(selected_block):
+        config.cur_conj = selected_block.conj_name  # 更新当前联结词
+
     for i, conj_name in enumerate(conjunctions):
         pos = (start_x, start_y + i * (block_size + spacing))
         conj_block = ConjunctionBlock(conj_name, pos, block_size, select_conjunction_block)
         conj_blocks.append(conj_block)
+    print("已生成联结词块")
 
-    # 初始化分数对象
+    # 分数
     score_manager = Score()
-    score_font = button_font  # 假设已有的字体资源
-
-    # 分数文本
+    score_font = button_font
     score_text = score_font.render(f"分数: {score_manager.get_score()}", True, WHITE)
     score_rect = score_text.get_rect(topleft=(30, 60))
+    print("初始化分数完成")
 
-    # 剩余时间文本
-    # 游戏开始时启动计时
-    timer.start()
+    # 剩余时间
     time_text = button_font.render("已用时间: 0", True, WHITE)
     time_rect = time_text.get_rect(topleft=(30, 20))
+
+    # 游戏开始时启动计时
+    timer.start()
+    print("初始化计时器完成")
 
     # 绘制游戏界面
     while True:

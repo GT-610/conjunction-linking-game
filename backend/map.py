@@ -1,4 +1,5 @@
 import numpy as np
+
 # 生成地图
 def generate_map(mapSize):
     # 块类型只有0和1，所以只需要生成2种块
