@@ -1,22 +1,22 @@
 # 难度联结词表
 DIFFICULTY_CONJUNCTIONS = {
-    "easy": ["同或"],
-    "advanced": ["异或", "与"],
-    "master": ["与"]
+    "easy": ["或非", "与", "蕴含"],
+    "advanced": ["与", "或非"],
+    "master": ["蕴含"]
 }
 
 def AND(a, b):
-    return a & b  # 按位与
+    return a and b  # 与
 
-def XOR(a, b):
-    return a ^ b  # 按位异或
+def NOR(a, b):
+    return not (a or b)  # 或非
 
-def XNOR(a, b): # 同或
-    return a == b
+def IMP(a, b):
+    return not a or b  # 蕴含
 
 # 映射联结词到函数
 CONJUNCTIONS = {
     "与": AND,
-    "异或": XOR,
-    "同或": XNOR
+    "或非": NOR,
+    "蕴含": IMP
 }

@@ -1,5 +1,7 @@
 import pygame
 from frontend.commons import *
+from backend.config import config
+
 class ConjunctionBlock:
     def __init__(self, conj_name, position, size, callback):
         """
@@ -24,7 +26,7 @@ class ConjunctionBlock:
         pygame.draw.rect(screen, GRAY, self.rect)
 
         # 边框颜色：选中时为黄色，否则为白色
-        border_color = RED if self.selected else WHITE
+        border_color = RED if config.cur_conj == self.conj_name else WHITE
         pygame.draw.rect(screen, border_color, self.rect, 3)
 
         # 显示联结词文字
@@ -39,7 +41,3 @@ class ConjunctionBlock:
             self.callback(self)
             return True
         return False
-
-    def set_selected(self, selected):
-        """设置选中状态"""
-        self.selected = selected

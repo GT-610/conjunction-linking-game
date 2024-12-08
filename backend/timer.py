@@ -21,7 +21,6 @@ class Timer:
 
     # 恢复计时
     def resume(self):
-        
         if self.is_paused:
             paused_time = pygame.time.get_ticks() - self.pause_start_time  # 计算暂停时长
             self.paused_duration += paused_time  # 更新总暂停时长
@@ -29,10 +28,16 @@ class Timer:
 
     # 获取已经过去的时间（秒）
     def get_elapsed_time(self):
-        
         if self.is_paused:
             # 在暂停时，时间不再增加，返回暂停期间的时间
             return (self.pause_start_time - self.time_start - self.paused_duration) // 1000
         else:
             # 在正常计时情况下，返回实际已用时间
             return (pygame.time.get_ticks() - self.time_start - self.paused_duration) // 1000
+
+    # 重置计时器
+    def reset(self):
+        self.time_start = 0
+        self.paused_duration = 0
+        self.pause_start_time = 0
+        self.is_paused = False

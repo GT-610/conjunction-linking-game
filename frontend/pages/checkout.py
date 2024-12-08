@@ -2,6 +2,7 @@ import pygame
 import sys
 from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font, button_font, Button, WHITE, BLACK
 from backend.leaderboard import save_to_leaderboard
+from backend.config import config
 
 def checkout_page(final_score, elapsed_time):
     pygame.init()
