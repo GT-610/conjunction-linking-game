@@ -175,7 +175,9 @@ def game_page():
             conj_block.draw(screen)
 
         # 游戏结束
-        if np.all(map == -1) or config.is_game_end == 1:
+        if config.is_game_end == True:
+            if np.all(map == -1):
+                config.is_cleared = True
             # 计算最终分数和用时
             final_score = score_manager.get_score()
             elapsed_time = timer.get_elapsed_time()
@@ -236,11 +238,6 @@ def pause_game():
         timer.pause()  # 暂停计时
     config.is_paused = not config.is_paused
 
-
-# 游戏结束时调用的函数
-def end_game():
-    config.is_game_end = True  # 设置游戏结束标志
-
 # 提示（占位函数）
 def hint_game():
     print("提示功能待实现")
@@ -248,8 +245,6 @@ def hint_game():
 # 重新开始
 def restart_game():
     game_page()
-    
-    
 
 # 返回主菜单
 def return_main_menu():

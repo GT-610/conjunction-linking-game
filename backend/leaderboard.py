@@ -21,12 +21,13 @@ def load_leaderboard():
         return json.load(file)
 
 # 保存新记录到排行榜
-def save_to_leaderboard(username, difficulty, play_time, score):
+def save_to_leaderboard(username, difficulty, play_time, score, is_cleared):
     """
     username: 用户名 (str)
     difficulty: 难度 (0-2)
     play_time: 通关时间 (秒)
     score: 游戏得分 (int)
+    is_cleared: 是否通关 (bool)
     """
 
     leaderboard = load_leaderboard()
@@ -36,7 +37,8 @@ def save_to_leaderboard(username, difficulty, play_time, score):
         "username": username,
         "difficulty": difficulty,
         "time": play_time,
-        "date": int(time()),  # 使用 ISO 格式保存时间
+        "date": int(time()),  # 使用 UNIX 时间戳保存时间
+        "is_cleared": is_cleared,
         "score": score
     }
 
@@ -58,9 +60,12 @@ def get_sorted_leaderboard(sort_key="time", difficulty=None):
     """
     leaderboard = load_leaderboard()
     records = leaderboard["records"]
-    if difficulty is not None:
-        records = [r for r in records if r["difficulty"] == difficulty]
-    return sorted(records, key=lambda r: r[sort_key])
+    # 按通关优先、分数降序排序
+    sorted_records = sorted(
+        records,
+        key=lambda x: (not x["is_cleared"], -x["score"])  # 未通关排后，分数降序
+    )
+    return sorted_records
 
 def clear_leaderboard():
     # 清空排行榜数据

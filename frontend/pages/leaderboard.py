@@ -38,8 +38,10 @@ def leaderboard_page():
         sorted_records = get_sorted_leaderboard()
         y_offset = 100  # 起始y位置
         for record in sorted_records:
+            local_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(record['date']))
+            cleared_text = "通关" if record["is_cleared"] else "未通关"
             record_text = font.render(
-                f"{record['username']} - 难度: {record['difficulty']} - 时间: {record['time']}秒 - 日期: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(record['date']))}",
+                f"{record['username']} - {cleared_text} - 难度: {record['difficulty']} - 时间: {record['time']}秒 - 日期: {local_time} - 分数: {record['score']}",
                 True, WHITE
             )
             screen.blit(record_text, (20, y_offset))
