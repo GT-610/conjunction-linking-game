@@ -12,6 +12,7 @@ from backend.block import Block
 from backend.config import config
 from backend.conj_block import ConjunctionBlock
 from backend.conjunctions import DIFFICULTY_CONJUNCTIONS
+from backend.link import getLinkType
 from backend.timer import Timer
 from backend.score import Score
 from backend.game_events import update_blocks, handle_block_click
@@ -37,14 +38,6 @@ def game_page():
         20,
         button_width, button_height,
         pause_game
-    )
-
-    hint_button = Button(
-        "提示",
-        (SCREEN_WIDTH - button_width) // 2,
-        20,
-        button_width, button_height,
-        hint_game
     )
 
     # 重新开始按钮（仅在暂停时显示）
@@ -81,6 +74,17 @@ def game_page():
         blocks[index] = Block(map, (i, j), 50, offset_x, offset_y)
     blocks = blocks.reshape((map_size + 2, map_size + 2))
     print("已生成地图块")
+
+    def hint():
+        hint_game(map, blocks)
+
+    hint_button = Button(
+        "提示",
+        (SCREEN_WIDTH - button_width) // 2,
+        20,
+        button_width, button_height,
+        hint
+    )
 
     # 创建联结词块
     conj_blocks = []
@@ -239,10 +243,9 @@ def pause_game():
     config.is_paused = not config.is_paused
 
 # 提示（占位函数）
-def hint_game():
-    """提供提示，找到任意一对可连通的块并显示连线"""
+def hint_game(map, blocks):
+    print("激活提示")
     from frontend.commons import GREEN, screen
-
     # 遍历地图寻找可以连通的一对块
     for x1 in range(10):
         for y1 in range(10):
@@ -259,22 +262,14 @@ def hint_game():
                         block1 = blocks[x1][y1]
                         block2 = blocks[x2][y2]
 
-                        draw_link_line(block1, block2, link_type, config.blocks)
+                        draw_link_line(block1, block2, link_type, blocks)
                         pygame.display.update()
 
                         # 延迟一段时间后清除提示
                         pygame.time.delay(1000)  # 提示线显示 1 秒
-                        redraw_game_screen()  # 重绘游戏界面，清除提示线
                         return
 
     print("没有可提示的连通块")
-
-def redraw_game_screen():
-    """重绘整个游戏界面，清除提示线"""
-    from frontend.pages.game_page import draw_game_map  # 假设游戏地图绘制函数是这样
-    screen.fill(BLACK)
-    draw_game_map()
-    pygame.display.update()
 
 # 重新开始
 def restart_game():
