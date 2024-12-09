@@ -11,36 +11,45 @@ DEFAULT_LEADERBOARD = {
     "records": []                # 记录
 }
 
-# 加载
+from datetime import datetime, timezone
+
+# 加载排行榜
 def load_leaderboard():
     if not os.path.exists(LEADERBOARD_FILE):
-        save_leaderboard(DEFAULT_LEADERBOARD)
+        save_to_leaderboard(DEFAULT_LEADERBOARD)
     with open(LEADERBOARD_FILE, "r") as file:
         return json.load(file)
 
-# 保存
-def save_leaderboard(data):
-    with open(LEADERBOARD_FILE, "w") as file:
-        json.dump(data, file, indent=4)
+# 保存新记录到排行榜
+def save_to_leaderboard(username, difficulty, play_time, score, is_cleared):
+    """
+    username: 用户名 (str)
+    difficulty: 难度 (0-2)
+    play_time: 通关时间 (秒)
+    score: 游戏得分 (int)
+    is_cleared: 是否通关 (bool)
+    """
 
-def add_record(username, difficulty, play_time, play_date):
-    """
-    添加新记录到排行榜。
-    :param username: 用户名 (str)
-    :param difficulty: 难度 (0-2)
-    :param play_time: 通关时间 (秒)
-    :param play_date: 游玩日期 (UNIX 时间戳)
-    """
     leaderboard = load_leaderboard()
+
+    # 构造新记录
     new_record = {
         "username": username,
         "difficulty": difficulty,
         "time": play_time,
-        "date": play_date
+        "date": int(time()),  # 使用 UNIX 时间戳保存时间
+        "is_cleared": is_cleared,
+        "score": score
     }
+
+    # 添加新记录
     leaderboard["records"].append(new_record)
-    leaderboard["last_updated"] = int(time())  # 更新最后修改时间
-    save_leaderboard(leaderboard)
+    leaderboard["last_updated"] = int(time())
+
+    # 写入文件
+    with open(LEADERBOARD_FILE, "w") as file:
+        json.dump(leaderboard, file, indent=4)
+
 
 def get_sorted_leaderboard(sort_key="time", difficulty=None):
     """
@@ -51,10 +60,13 @@ def get_sorted_leaderboard(sort_key="time", difficulty=None):
     """
     leaderboard = load_leaderboard()
     records = leaderboard["records"]
-    if difficulty is not None:
-        records = [r for r in records if r["difficulty"] == difficulty]
-    return sorted(records, key=lambda r: r[sort_key])
+    # 按通关优先、分数降序排序
+    sorted_records = sorted(
+        records,
+        key=lambda x: (not x["is_cleared"], -x["score"])  # 未通关排后，分数降序
+    )
+    return sorted_records
 
 def clear_leaderboard():
     # 清空排行榜数据
-    save_leaderboard(DEFAULT_LEADERBOARD)
+    save_to_leaderboard(DEFAULT_LEADERBOARD)

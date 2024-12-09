@@ -1,7 +1,7 @@
 import pygame
 import sys
 from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font, button_font, Button, WHITE, BLACK
-from backend.leaderboard import save_leaderboard
+from backend.leaderboard import save_to_leaderboard
 from backend.config import config
 
 def checkout_page(final_score, elapsed_time):
@@ -9,7 +9,7 @@ def checkout_page(final_score, elapsed_time):
 
     # 标题字体
     title_font = pygame.font.Font(None, 64)
-
+    
     # 按钮：返回主菜单
     return_main_menu_button = Button(
         "返回主菜单",
@@ -19,8 +19,8 @@ def checkout_page(final_score, elapsed_time):
         return_to_main_menu
     )
 
-    # # 调用排行榜存储函数（目前留空）
-    # save_to_leaderboard(final_score, elapsed_time)
+    # 保存排行榜数据
+    save_to_leaderboard(config.username, config.difficulty, config.elapsed_time, config.final_score, config.is_cleared)
 
     # 绘制界面
     while True:
@@ -34,10 +34,12 @@ def checkout_page(final_score, elapsed_time):
         # 背景颜色
         screen.fill(BLACK)
 
-        # 标题
-        title_text = font.render("游戏结束", True, WHITE)
-        title_rect = title_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 4))
-        screen.blit(title_text, title_rect)
+        # 通关状态
+        cleared_text = "通关" if config.is_cleared else "未通关"
+        cleared_color = (0, 255, 0) if config.is_cleared else (255, 0, 0)  # 成功为绿色，失败为红色
+        cleared_text_rendered = font.render(cleared_text, True, cleared_color)
+        cleared_rect = cleared_text_rendered.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 4))
+        screen.blit(cleared_text_rendered, cleared_rect)
 
         # 分数
         score_text = button_font.render(f"分数: {final_score}", True, WHITE)

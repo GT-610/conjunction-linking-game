@@ -13,6 +13,7 @@ def difficulty_selection_page():
     vertical_spacing = 80
 
     from frontend.pages.game import game_page
+    global difficulty
     # 按钮回调函数
     def choose_easy():
         config.difficulty = "easy"

@@ -1,11 +1,45 @@
 {
-    "last_updated": 1732948551,
+    "last_updated": 1733706081,
     "records": [
         {
             "username": "test",
-            "difficulty": 0,
+            "difficulty": "easy",
             "time": 500,
-            "date": 1
+            "date": 114514,
+            "is_cleared": true,
+            "score": 10000
+        },
+        {
+            "username": "PLAYER",
+            "difficulty": "easy",
+            "time": 0,
+            "date": 1733649795,
+            "is_cleared": false,
+            "score": 0
+        },
+        {
+            "username": "PLAYER",
+            "difficulty": "easy",
+            "time": 0,
+            "date": 1733704299,
+            "is_cleared": false,
+            "score": 0
+        },
+        {
+            "username": "PLAYER",
+            "difficulty": "easy",
+            "time": 0,
+            "date": 1733705989,
+            "is_cleared": false,
+            "score": 0
+        },
+        {
+            "username": "PLAYER",
+            "difficulty": "easy",
+            "time": 0,
+            "date": 1733706081,
+            "is_cleared": false,
+            "score": 0
         }
     ]
 }

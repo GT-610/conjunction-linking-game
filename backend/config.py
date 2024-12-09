@@ -8,6 +8,7 @@ class GameConfig:
         self.final_score = 0              # 最终得分
         self.elapsed_time = 0             # 总用时
         self.is_game_end = False # 游戏是否结束
+        self.is_cleared = False # 是否通关
 
     # 重置游戏状态
     def reset(self):
@@ -16,6 +17,7 @@ class GameConfig:
         self.final_score = 0
         self.elapsed_time = 0
         self.is_game_end = False
+        self.is_cleared = False
 
 # 全局配置实例
 config = GameConfig()

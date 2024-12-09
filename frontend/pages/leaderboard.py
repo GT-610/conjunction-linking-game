@@ -3,8 +3,8 @@ import sys
 import time
 pygame.init()
 
-from frontend.commons import screen, font, BLACK, WHITE, GRAY, Button
-from backend.leaderboard import load_leaderboard, save_leaderboard, get_sorted_leaderboard
+from frontend.commons import screen, font, button_font, BLACK, WHITE, GRAY, Button
+from backend.leaderboard import load_leaderboard, save_to_leaderboard, get_sorted_leaderboard
 
 # 排行榜界面
 def leaderboard_page():
@@ -25,8 +25,11 @@ def leaderboard_page():
 
     # 显示更新时间
     last_updated_time = leaderboard_data.get("last_updated", 0)
-    last_updated_text = font.render(f"更新时间: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(last_updated_time))}", True, WHITE)
-    screen.blit(last_updated_text, (20, 20))
+    last_updated_text = button_font.render(
+        f"更新时间: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(last_updated_time))}",
+        True, WHITE
+    )
+    screen.blit(last_updated_text, (screen.get_width() - last_updated_text.get_width() - 20, 10))
 
     # 获取排行榜记录
     records = leaderboard_data.get("records", [])
@@ -35,15 +38,36 @@ def leaderboard_page():
         no_records_rect = no_records_text.get_rect(center=(screen.get_width() // 2, screen.get_height() // 2 + 50))
         screen.blit(no_records_text, no_records_rect)
     else:
+        # 优化2: 排行榜数据表格化，调整字号和对齐方式
         sorted_records = get_sorted_leaderboard()
-        y_offset = 100  # 起始y位置
-        for record in sorted_records:
-            record_text = font.render(
-                f"{record['username']} - 难度: {record['difficulty']} - 时间: {record['time']}秒 - 日期: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(record['date']))}",
-                True, WHITE
-            )
-            screen.blit(record_text, (20, y_offset))
-            y_offset += 50  # 每条记录之间的垂直间距
+        y_offset = 80  # 起始 y 位置
+        header_font = pygame.font.Font("fonts/SourceHanSansCN-Regular.otf", 36)
+        table_font = pygame.font.Font("fonts/SourceHanSansCN-Regular.otf", 28)
+        
+        # 绘制表头
+        headers = ["用户名", "通关", "难度", "时间(秒)", "日期", "分数"]
+        header_x_positions = [50, 250, 450, 600, 800, 1100]  # 每列起始 x 坐标
+        for i, header in enumerate(headers):
+            header_text = header_font.render(header, True, GRAY)
+            screen.blit(header_text, (header_x_positions[i], y_offset))
+        y_offset += 40  # 表头与内容的间距
+
+        # 绘制记录
+        for record in sorted_records[:11]:
+            local_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(record['date']))
+            cleared_text = "通关" if record["is_cleared"] else "未通关"
+            row_data = [
+                record['username'],
+                cleared_text,
+                record['difficulty'],
+                str(record['time']),
+                local_time,
+                str(record['score'])
+            ]
+            for i, data in enumerate(row_data):
+                record_text = table_font.render(data, True, WHITE)
+                screen.blit(record_text, (header_x_positions[i], y_offset))
+            y_offset += 35  # 每条记录之间的垂直间距
 
     # 绘制返回按钮
     from frontend.pages.main_menu import main_menu
