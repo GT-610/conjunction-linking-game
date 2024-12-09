@@ -3,7 +3,7 @@ import sys
 import numpy as np
 pygame.init()
 
-from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font_path
+from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT
 from frontend.commons import Button, button_width, button_height, button_font
 from frontend.commons import WHITE, BLACK, BLUE, GRAY, YELLOW
 
@@ -12,6 +12,7 @@ from backend.block import Block
 from backend.config import config
 from backend.conj_block import ConjunctionBlock
 from backend.conjunctions import DIFFICULTY_CONJUNCTIONS
+from backend.link import getLinkType
 from backend.timer import Timer
 from backend.score import Score
 from backend.game_events import update_blocks, handle_block_click
@@ -39,14 +40,6 @@ def game_page():
         pause_game
     )
 
-    hint_button = Button(
-        "提示",
-        (SCREEN_WIDTH - button_width) // 2,
-        20,
-        button_width, button_height,
-        hint_game
-    )
-
     # 重新开始按钮（仅在暂停时显示）
     restart_button = Button(
         "重新开始",
@@ -58,9 +51,9 @@ def game_page():
 
     return_main_menu_button = Button(
         "返回主菜单",
-        SCREEN_WIDTH - button_width - 10,
+        SCREEN_WIDTH - 200 - 10,
         SCREEN_HEIGHT - button_height - 10,
-        button_width, button_height,
+        200, button_height,
         return_main_menu
     )
     print("已绘制按钮")
@@ -81,6 +74,18 @@ def game_page():
         blocks[index] = Block(map, (i, j), 50, offset_x, offset_y)
     blocks = blocks.reshape((map_size + 2, map_size + 2))
     print("已生成地图块")
+
+    from backend.hint import hint_game
+    def hint():
+        hint_game(map, blocks)
+
+    hint_button = Button(
+        "提示",
+        (SCREEN_WIDTH - button_width) // 2,
+        20,
+        button_width, button_height,
+        hint
+    )
 
     # 创建联结词块
     conj_blocks = []
@@ -198,29 +203,29 @@ def game_page():
         pygame.display.flip()
 
 # 绘制路径连线
-def draw_link_line(block1, block2, link_type, blocks):
+def draw_link_line(block1, block2, link_type, blocks, color=YELLOW):
     # 计算两个块的中心坐标
     start_pos = block1.outerCenterPoint
     end_pos = block2.outerCenterPoint
 
     if link_type == 1:
         # 绘制一条线连接两个块
-        pygame.draw.line(screen, YELLOW, start_pos, end_pos, 5)
+        pygame.draw.line(screen, color, start_pos, end_pos, 5)
         print("绘制直连线")
 
     elif link_type[0] == 2:
         blockCorner = blocks[link_type[1][0]][link_type[1][1]].outerCenterPoint
 
-        pygame.draw.line(screen, YELLOW, start_pos, blockCorner, 5)
-        pygame.draw.line(screen, YELLOW, blockCorner, end_pos, 5)
+        pygame.draw.line(screen, color, start_pos, blockCorner, 5)
+        pygame.draw.line(screen, color, blockCorner, end_pos, 5)
         print("绘制单拐点线")
     
     elif link_type[0] == 3:
         blockCorner1 = blocks[link_type[1][0][0]][link_type[1][0][1]].outerCenterPoint
         blockCorner2 = blocks[link_type[1][1][0]][link_type[1][1][1]].outerCenterPoint
-        pygame.draw.line(screen, YELLOW, start_pos, blockCorner1 , 5)
-        pygame.draw.line(screen, YELLOW, blockCorner1, blockCorner2, 5)
-        pygame.draw.line(screen, YELLOW, blockCorner2, end_pos, 5)
+        pygame.draw.line(screen, color, start_pos, blockCorner1 , 5)
+        pygame.draw.line(screen, color, blockCorner1, blockCorner2, 5)
+        pygame.draw.line(screen, color, blockCorner2, end_pos, 5)
         print("绘制双拐点线")
 
     # 更新屏幕，确保连线可见
@@ -238,9 +243,6 @@ def pause_game():
         timer.pause()  # 暂停计时
     config.is_paused = not config.is_paused
 
-# 提示（占位函数）
-def hint_game():
-    print("提示功能待实现")
 
 # 重新开始
 def restart_game():
