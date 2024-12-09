@@ -53,7 +53,7 @@ def leaderboard_page():
         y_offset += 40  # 表头与内容的间距
 
         # 绘制记录
-        for record in sorted_records:
+        for record in sorted_records[:11]:
             local_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(record['date']))
             cleared_text = "通关" if record["is_cleared"] else "未通关"
             row_data = [
