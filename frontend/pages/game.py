@@ -75,6 +75,7 @@ def game_page():
     blocks = blocks.reshape((map_size + 2, map_size + 2))
     print("已生成地图块")
 
+    from backend.hint import hint_game
     def hint():
         hint_game(map, blocks)
 
@@ -202,29 +203,29 @@ def game_page():
         pygame.display.flip()
 
 # 绘制路径连线
-def draw_link_line(block1, block2, link_type, blocks):
+def draw_link_line(block1, block2, link_type, blocks, color=YELLOW):
     # 计算两个块的中心坐标
     start_pos = block1.outerCenterPoint
     end_pos = block2.outerCenterPoint
 
     if link_type == 1:
         # 绘制一条线连接两个块
-        pygame.draw.line(screen, YELLOW, start_pos, end_pos, 5)
+        pygame.draw.line(screen, color, start_pos, end_pos, 5)
         print("绘制直连线")
 
     elif link_type[0] == 2:
         blockCorner = blocks[link_type[1][0]][link_type[1][1]].outerCenterPoint
 
-        pygame.draw.line(screen, YELLOW, start_pos, blockCorner, 5)
-        pygame.draw.line(screen, YELLOW, blockCorner, end_pos, 5)
+        pygame.draw.line(screen, color, start_pos, blockCorner, 5)
+        pygame.draw.line(screen, color, blockCorner, end_pos, 5)
         print("绘制单拐点线")
     
     elif link_type[0] == 3:
         blockCorner1 = blocks[link_type[1][0][0]][link_type[1][0][1]].outerCenterPoint
         blockCorner2 = blocks[link_type[1][1][0]][link_type[1][1][1]].outerCenterPoint
-        pygame.draw.line(screen, YELLOW, start_pos, blockCorner1 , 5)
-        pygame.draw.line(screen, YELLOW, blockCorner1, blockCorner2, 5)
-        pygame.draw.line(screen, YELLOW, blockCorner2, end_pos, 5)
+        pygame.draw.line(screen, color, start_pos, blockCorner1 , 5)
+        pygame.draw.line(screen, color, blockCorner1, blockCorner2, 5)
+        pygame.draw.line(screen, color, blockCorner2, end_pos, 5)
         print("绘制双拐点线")
 
     # 更新屏幕，确保连线可见
@@ -242,34 +243,6 @@ def pause_game():
         timer.pause()  # 暂停计时
     config.is_paused = not config.is_paused
 
-# 提示（占位函数）
-def hint_game(map, blocks):
-    print("激活提示")
-    from frontend.commons import GREEN, screen
-    # 遍历地图寻找可以连通的一对块
-    for x1 in range(10):
-        for y1 in range(10):
-            for x2 in range(10):
-                for y2 in range(10):
-                    # 跳过空块或相同位置
-                    if (x1, y1) == (x2, y2) or map[x1][y1] == -1 or map[x2][y2] == -1:
-                        continue
-                    
-                    # 检查连通性
-                    link_type = getLinkType(map, (x1, y1), (x2, y2))
-                    if link_type:
-                        # 找到连通块，绘制提示线
-                        block1 = blocks[x1][y1]
-                        block2 = blocks[x2][y2]
-
-                        draw_link_line(block1, block2, link_type, blocks)
-                        pygame.display.update()
-
-                        # 延迟一段时间后清除提示
-                        pygame.time.delay(1000)  # 提示线显示 1 秒
-                        return
-
-    print("没有可提示的连通块")
 
 # 重新开始
 def restart_game():
