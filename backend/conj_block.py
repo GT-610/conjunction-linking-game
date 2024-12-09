@@ -1,5 +1,5 @@
 import pygame
-from frontend.commons import *
+from frontend.commons import font_path, RED, BLACK, GRAY, WHITE
 from backend.config import config
 
 class ConjunctionBlock:
@@ -20,8 +20,9 @@ class ConjunctionBlock:
         # 字体初始化
         self.font = pygame.font.Font(font_path, 36)
 
+    # 绘制联结词块
     def draw(self, screen):
-        """绘制联结词块"""
+        
         # 背景颜色
         pygame.draw.rect(screen, GRAY, self.rect)
 
@@ -34,8 +35,8 @@ class ConjunctionBlock:
         text_rect = text.get_rect(center=self.rect.center)
         screen.blit(text, text_rect)
 
+    # 处理点击事件
     def handle_click(self, pos):
-        """处理点击事件"""
         if self.rect.collidepoint(pos):
             # 调用回调函数切换选中状态
             self.callback(self)

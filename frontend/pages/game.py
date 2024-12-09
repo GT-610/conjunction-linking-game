@@ -3,7 +3,7 @@ import sys
 import numpy as np
 pygame.init()
 
-from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font_path
+from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT
 from frontend.commons import Button, button_width, button_height, button_font
 from frontend.commons import WHITE, BLACK, BLUE, GRAY, YELLOW
 
@@ -58,9 +58,9 @@ def game_page():
 
     return_main_menu_button = Button(
         "返回主菜单",
-        SCREEN_WIDTH - button_width - 10,
+        SCREEN_WIDTH - 200 - 10,
         SCREEN_HEIGHT - button_height - 10,
-        button_width, button_height,
+        200, button_height,
         return_main_menu
     )
     print("已绘制按钮")

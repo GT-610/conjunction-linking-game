@@ -1,5 +1,3 @@
-from frontend.commons import *
-
 # 是否存在障碍物
 def isEmptyInMap(map, point):
     x, y = point

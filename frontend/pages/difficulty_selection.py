@@ -2,16 +2,13 @@ import pygame
 import sys
 pygame.init()
 
-from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, Button, font, BLACK, WHITE, GRAY
+from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT
+from frontend.commons import Button, button_width, button_height, vertical_spacing
+from frontend.commons import font, BLACK, WHITE, GRAY
 from backend.config import config
 
 # 选择难度界面
 def difficulty_selection_page():
-    # 按钮参数
-    button_width = 200
-    button_height = 50
-    vertical_spacing = 80
-
     from frontend.pages.game import game_page
     global difficulty
     # 按钮回调函数
@@ -44,7 +41,7 @@ def difficulty_selection_page():
             "高级",
             (SCREEN_WIDTH - button_width) // 2,
             SCREEN_HEIGHT // 2,
-            200, 50,
+            button_width, button_height,
             callback=choose_advanced,
             hover_color=(255, 0, 0)  # 红色
             ),
@@ -52,7 +49,7 @@ def difficulty_selection_page():
             "大师",
             (SCREEN_WIDTH - button_width) // 2,
             SCREEN_HEIGHT // 2 + vertical_spacing,
-            200, 50,
+            button_width, button_height,
             callback=choose_master,
             hover_color=(128, 0, 128)  # 紫色
             )]
