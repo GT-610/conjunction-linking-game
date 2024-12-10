@@ -1,6 +1,6 @@
 import pygame
 import sys
-from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font, button_font, Button, WHITE, BLACK
+from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font, small_font, Button, WHITE, BLACK
 from backend.leaderboard import save_to_leaderboard
 from backend.config import config
 
@@ -42,12 +42,12 @@ def checkout_page(final_score, elapsed_time):
         screen.blit(cleared_text_rendered, cleared_rect)
 
         # 分数
-        score_text = button_font.render(f"分数: {final_score}", True, WHITE)
+        score_text = small_font.render(f"分数: {final_score}", True, WHITE)
         score_rect = score_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 30))
         screen.blit(score_text, score_rect)
 
         # 时间
-        time_text = button_font.render(f"用时: {elapsed_time}秒", True, WHITE)
+        time_text = small_font.render(f"用时: {elapsed_time}秒", True, WHITE)
         time_rect = time_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 30))
         screen.blit(time_text, time_rect)
 

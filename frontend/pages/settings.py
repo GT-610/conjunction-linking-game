@@ -3,7 +3,7 @@ import sys
 pygame.init()
 
 from frontend.commons import screen, SCREEN_WIDTH, font
-from frontend.commons import Button, button_font, Slider, TextInputBox
+from frontend.commons import Button, small_font, Slider, TextInputBox
 from frontend.commons import WHITE, BLACK
 
 # 设置界面
@@ -46,12 +46,12 @@ def settings_page():
         name_input.draw(screen)
 
         # 显示音量和玩家名称
-        bgm_text = button_font.render(f"背景音乐音量: {int(bgm_slider.value)}", True, WHITE)
+        bgm_text = small_font.render(f"背景音乐音量: {int(bgm_slider.value)}", True, WHITE)
         screen.blit(bgm_text, (300, 140))
-        sfx_text = button_font.render(f"音效音量: {int(sfx_slider.value)}", True, WHITE)
+        sfx_text = small_font.render(f"音效音量: {int(sfx_slider.value)}", True, WHITE)
         screen.blit(sfx_text, (300, 240))
 
-        name_text = button_font.render("玩家名称:", True, WHITE)
+        name_text = small_font.render("玩家名称:", True, WHITE)
         screen.blit(name_text, (300, 340))
 
         # 绘制返回按钮
