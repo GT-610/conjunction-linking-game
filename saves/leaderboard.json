@@ -3,11 +3,11 @@
     "records": [
         {
             "username": "test",
-            "difficulty": "简单",
+            "difficulty": "easy",
             "time": 500,
             "date": 114514,
             "is_cleared": true,
-            "score": 10000
+            "score": 4900
         }
     ]
 }

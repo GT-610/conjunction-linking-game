@@ -13,17 +13,17 @@ def difficulty_selection_page():
     global difficulty
     # 按钮回调函数
     def choose_easy():
-        config.difficulty = "初级"
+        config.difficulty = "easy"
         game_page()
         print("已选择简单难度")
 
     def choose_advanced():
-        config.difficulty = "高级"
+        config.difficulty = "advanced"
         game_page()
         print("已选择高级难度")
 
     def choose_master():
-        config.difficulty = "大师"
+        config.difficulty = "master"
         game_page()
         print("已选择大师难度")
 
