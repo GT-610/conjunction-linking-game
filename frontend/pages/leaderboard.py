@@ -38,7 +38,7 @@ def leaderboard_page():
         no_records_rect = no_records_text.get_rect(center=(screen.get_width() // 2, screen.get_height() // 2 + 50))
         screen.blit(no_records_text, no_records_rect)
     else:
-        # 优化2: 排行榜数据表格化，调整字号和对齐方式
+        # 表格化数据
         sorted_records = get_sorted_leaderboard()
         y_offset = 80  # 起始 y 位置
         header_font = pygame.font.Font("fonts/SourceHanSansCN-Regular.otf", 36)
@@ -60,9 +60,8 @@ def leaderboard_page():
                 record['username'],
                 cleared_text,
                 record['difficulty'],
-                str(record['time']),
                 local_time,
-                str(record['score'])
+                str(record['oscore'])
             ]
             for i, data in enumerate(row_data):
                 record_text = table_font.render(data, True, WHITE)

@@ -1,21 +1,26 @@
 {
-    "last_updated": 1733813597,
+    "last_updated": 1733822620,
     "records": [
         {
             "username": "test",
-            "difficulty": "easy",
-            "time": 500,
+            "difficulty": 0,
             "date": 114514,
             "is_cleared": true,
-            "score": 4900
+            "oscore": 97
         },
         {
             "username": "PLAYER",
-            "difficulty": "master",
-            "time": 8,
+            "difficulty": 2,
             "date": 1733813597,
             "is_cleared": false,
-            "score": 100
+            "oscore": 100
+        },
+        {
+            "username": "PLAYER",
+            "difficulty": "easy",
+            "date": 1733822620,
+            "is_cleared": false,
+            "oscore": 9
         }
     ]
 }

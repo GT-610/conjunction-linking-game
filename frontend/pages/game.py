@@ -14,7 +14,6 @@ from backend.conj_block import ConjunctionBlock
 from backend.conjunctions import DIFFICULTY_CONJUNCTIONS
 from backend.link import getLinkType
 from backend.timer import Timer
-from backend.score import Score
 from backend.game_events import update_blocks, handle_block_click
 
 # 初始化计时器
@@ -104,12 +103,10 @@ def game_page():
         conj_blocks.append(conj_block)
     print("已生成联结词块")
 
-    # 分数
-    score_manager = Score()
-    score_font = small_font
-    score_text = score_font.render(f"分数: {score_manager.get_score()}", True, WHITE)
-    score_rect = score_text.get_rect(topleft=(30, 60))
-    print("初始化分数完成")
+    # 完成度
+    cr_text = small_font.render(f"完成度: 0%", True, WHITE)
+    cr_rect = cr_text.get_rect(topleft=(30, 60))
+    print("初始化完成度完成")
 
     # 剩余时间
     time_text = small_font.render("已用时间: 0", True, WHITE)
@@ -142,7 +139,7 @@ def game_page():
                     for row in blocks:
                         for block in row:
                             if block.rect.collidepoint(event.pos):
-                                handle_block_click(block, map, blocks, score_manager, config.cur_conj)
+                                handle_block_click(block, map, blocks, config.cur_conj)
                                 update_blocks(map, blocks)
         # 绘制背景
         screen.fill(BLACK)
@@ -154,8 +151,8 @@ def game_page():
         screen.blit(time_text, time_rect)
 
         # 绘制分数显示
-        score_text = score_font.render(f"分数: {score_manager.get_score()}", True, WHITE)
-        screen.blit(score_text, score_rect)
+        cr_text = small_font.render(f"完成度: {int(config.clear_rate * 100)}%", True, WHITE)
+        screen.blit(cr_text, cr_rect)
 
         # 绘制顶部区域
         screen.blit(time_text, time_rect)
@@ -183,13 +180,11 @@ def game_page():
         if config.is_game_end == True:
             if np.all(map == -1):
                 config.is_cleared = True
-            # 计算最终分数和用时
-            final_score = score_manager.get_score()
             elapsed_time = timer.get_elapsed_time()
 
             # 调用结算页面
             from frontend.pages.checkout import checkout_page
-            checkout_page(final_score, elapsed_time)
+            checkout_page(elapsed_time)
             return
 
         # 暂停时显示提示
