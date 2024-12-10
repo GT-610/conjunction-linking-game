@@ -3,7 +3,7 @@ import sys
 import time
 pygame.init()
 
-from frontend.commons import screen, font, button_font, BLACK, WHITE, GRAY, Button
+from frontend.commons import screen, font, small_font, BLACK, WHITE, GRAY, Button
 from backend.leaderboard import load_leaderboard, save_to_leaderboard, get_sorted_leaderboard
 
 # 排行榜界面
@@ -25,7 +25,7 @@ def leaderboard_page():
 
     # 显示更新时间
     last_updated_time = leaderboard_data.get("last_updated", 0)
-    last_updated_text = button_font.render(
+    last_updated_text = small_font.render(
         f"更新时间: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(last_updated_time))}",
         True, WHITE
     )

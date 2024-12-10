@@ -4,7 +4,7 @@ import numpy as np
 pygame.init()
 
 from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT
-from frontend.commons import Button, button_width, button_height, button_font
+from frontend.commons import Button, button_width, button_height, small_font
 from frontend.commons import WHITE, BLACK, BLUE, GRAY, YELLOW
 
 from backend.map import generate_map
@@ -106,13 +106,13 @@ def game_page():
 
     # 分数
     score_manager = Score()
-    score_font = button_font
+    score_font = small_font
     score_text = score_font.render(f"分数: {score_manager.get_score()}", True, WHITE)
     score_rect = score_text.get_rect(topleft=(30, 60))
     print("初始化分数完成")
 
     # 剩余时间
-    time_text = button_font.render("已用时间: 0", True, WHITE)
+    time_text = small_font.render("已用时间: 0", True, WHITE)
     time_rect = time_text.get_rect(topleft=(30, 20))
 
     # 游戏开始时启动计时
@@ -150,7 +150,7 @@ def game_page():
         # 绘制已用时间（如果未暂停）
         if not config.is_paused:
             elapsed_time = timer.get_elapsed_time()
-        time_text = button_font.render(f"已用时间: {elapsed_time}", True, WHITE)
+        time_text = small_font.render(f"已用时间: {elapsed_time}", True, WHITE)
         screen.blit(time_text, time_rect)
 
         # 绘制分数显示
@@ -194,7 +194,7 @@ def game_page():
 
         # 暂停时显示提示
         if config.is_paused:
-            paused_text = button_font.render("游戏暂停中", True, WHITE)
+            paused_text = small_font.render("游戏暂停中", True, WHITE)
             paused_rect = paused_text.get_rect(topleft=(30, 100))
             screen.blit(paused_text, paused_rect)
             pygame.display.flip()  # 更新屏幕

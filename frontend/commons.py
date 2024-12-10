@@ -18,7 +18,7 @@ RED = (255, 0, 0)
 # 字体
 font_path = "fonts/SourceHanSansCN-Regular.otf"
 font = pygame.font.Font(font_path, 48)  # 标题字体
-button_font = pygame.font.Font(font_path, 36)  # 按钮字体
+small_font = pygame.font.Font(font_path, 36)  # 按钮字体
 
 # 按钮参数
 button_width = 150
@@ -42,7 +42,7 @@ class Button:
         else:
             pygame.draw.rect(surface, self.color, self.rect)
         # 绘制按钮文本
-        text_surface = button_font.render(self.text, True, WHITE)
+        text_surface = small_font.render(self.text, True, WHITE)
         text_rect = text_surface.get_rect(center=self.rect.center)
         surface.blit(text_surface, text_rect)
 
@@ -86,7 +86,7 @@ class TextInputBox:
         self.text = text
         self.active = False
         self.color = GRAY
-        self.font = button_font
+        self.font = small_font
 
     def draw(self, surface):
         pygame.draw.rect(surface, self.color, self.rect, 2)

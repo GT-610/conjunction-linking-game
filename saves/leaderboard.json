@@ -1,5 +1,5 @@
 {
-    "last_updated": 1733740944,
+    "last_updated": 1733813597,
     "records": [
         {
             "username": "test",
@@ -11,51 +11,11 @@
         },
         {
             "username": "PLAYER",
-            "difficulty": "easy",
-            "time": 0,
-            "date": 1733649795,
+            "difficulty": "master",
+            "time": 8,
+            "date": 1733813597,
             "is_cleared": false,
-            "score": 0
-        },
-        {
-            "username": "PLAYER",
-            "difficulty": "easy",
-            "time": 0,
-            "date": 1733704299,
-            "is_cleared": false,
-            "score": 0
-        },
-        {
-            "username": "PLAYER",
-            "difficulty": "easy",
-            "time": 0,
-            "date": 1733705989,
-            "is_cleared": false,
-            "score": 0
-        },
-        {
-            "username": "PLAYER",
-            "difficulty": "easy",
-            "time": 0,
-            "date": 1733706081,
-            "is_cleared": false,
-            "score": 0
-        },
-        {
-            "username": "PLAYER",
-            "difficulty": "easy",
-            "time": 0,
-            "date": 1733728090,
-            "is_cleared": false,
-            "score": 0
-        },
-        {
-            "username": "PLAYER",
-            "difficulty": "advanced",
-            "time": 0,
-            "date": 1733740944,
-            "is_cleared": false,
-            "score": 0
+            "score": 100
         }
     ]
 }
