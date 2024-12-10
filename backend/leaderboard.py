@@ -63,7 +63,7 @@ def get_sorted_leaderboard(sort_key="time", difficulty=None):
     # 按通关优先、分数降序排序
     sorted_records = sorted(
         records,
-        key=lambda x: (not x["is_cleared"], -x["score"])  # 未通关排后，分数降序
+        key=lambda x: (not x["is_cleared"], -x["score"], x["time"])  # 未通关排后，分数降序
     )
     return sorted_records
 
