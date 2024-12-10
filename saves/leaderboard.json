@@ -3,59 +3,11 @@
     "records": [
         {
             "username": "test",
-            "difficulty": "easy",
+            "difficulty": "简单",
             "time": 500,
             "date": 114514,
             "is_cleared": true,
             "score": 10000
-        },
-        {
-            "username": "PLAYER",
-            "difficulty": "easy",
-            "time": 0,
-            "date": 1733649795,
-            "is_cleared": false,
-            "score": 0
-        },
-        {
-            "username": "PLAYER",
-            "difficulty": "easy",
-            "time": 0,
-            "date": 1733704299,
-            "is_cleared": false,
-            "score": 0
-        },
-        {
-            "username": "PLAYER",
-            "difficulty": "easy",
-            "time": 0,
-            "date": 1733705989,
-            "is_cleared": false,
-            "score": 0
-        },
-        {
-            "username": "PLAYER",
-            "difficulty": "easy",
-            "time": 0,
-            "date": 1733706081,
-            "is_cleared": false,
-            "score": 0
-        },
-        {
-            "username": "PLAYER",
-            "difficulty": "easy",
-            "time": 0,
-            "date": 1733728090,
-            "is_cleared": false,
-            "score": 0
-        },
-        {
-            "username": "PLAYER",
-            "difficulty": "advanced",
-            "time": 0,
-            "date": 1733740944,
-            "is_cleared": false,
-            "score": 0
         }
     ]
 }
