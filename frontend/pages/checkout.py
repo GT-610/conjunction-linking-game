@@ -20,7 +20,7 @@ def checkout_page(final_score, elapsed_time):
     )
 
     # 保存排行榜数据
-    save_to_leaderboard(config.username, config.difficulty, config.elapsed_time, config.final_score, config.is_cleared)
+    save_to_leaderboard(config.username, config.difficulty, elapsed_time, final_score, config.is_cleared)
 
     # 绘制界面
     while True:

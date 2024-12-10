@@ -5,8 +5,6 @@ class GameConfig:
         self.difficulty = None            # 游戏难度
         self.is_paused = False            # 是否暂停
         self.cur_conj = None         # 当前选择的联结词
-        self.final_score = 0              # 最终得分
-        self.elapsed_time = 0             # 总用时
         self.is_game_end = False # 游戏是否结束
         self.is_cleared = False # 是否通关
 
@@ -14,8 +12,6 @@ class GameConfig:
     def reset(self):
         self.is_paused = False
         self.cur_conj = None
-        self.final_score = 0
-        self.elapsed_time = 0
         self.is_game_end = False
         self.is_cleared = False
 
