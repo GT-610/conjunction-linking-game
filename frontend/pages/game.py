@@ -30,7 +30,7 @@ def game_page():
 
     # 显示加载提示
     from frontend.pages.loading import display_loading_message
-    display_loading_message(screen, "基本框架...", small_font)
+    display_loading_message(screen, "加载基本框架...", small_font)
 
     conjunctions = DIFFICULTY_CONJUNCTIONS[config.difficulty]
     config.cur_conj = conjunctions[0]
@@ -62,7 +62,7 @@ def game_page():
     )
     print("已绘制按钮")
 
-    display_loading_message(screen, "地图块...", small_font)
+    display_loading_message(screen, "初始化地图...", small_font)
 
     # 生成地图
     map_size = 10
@@ -74,10 +74,17 @@ def game_page():
     offset_x = (SCREEN_WIDTH - map_size * 50) // 2
     offset_y = (SCREEN_HEIGHT - map_size * 50) // 2
 
-    blocks = np.empty((map_size + 2) * (map_size + 2), dtype=object)
-    for index in range((map_size + 2) * (map_size + 2)):
+    blocks_count = (map_size + 2) * (map_size + 2)
+
+    blocks = np.empty(blocks_count, dtype=object)
+    for index in range(blocks_count):
         i, j = divmod(index, map_size + 2)
         blocks[index] = Block(map, (i, j), 50, offset_x, offset_y)
+                # 每完成一部分，更新加载界面
+        message = f"加载地图块: {index}/{blocks_count}"
+        display_loading_message(screen, message, small_font)
+        pygame.display.update()
+    
     blocks = blocks.reshape((map_size + 2, map_size + 2))
     print("已生成地图块")
     del offset_x, offset_y, map_size
@@ -94,7 +101,7 @@ def game_page():
         hint
     )
 
-    display_loading_message(screen, "联结词块...", small_font)
+    display_loading_message(screen, "初始化联结词块...", small_font)
 
     # 创建联结词块
     conj_blocks = []
@@ -113,7 +120,7 @@ def game_page():
         conj_blocks.append(conj_block)
     print("已生成联结词块")
 
-    display_loading_message(screen, "其他组件...", small_font)
+    display_loading_message(screen, "加载其他组件...", small_font)
 
     # 分数
     score_manager = Score()
