@@ -76,12 +76,14 @@ def game_page():
 
     blocks_count = (map_size + 2) * (map_size + 2)
 
-    blocks = np.empty(blocks_count, dtype=object)
-    for index in range(blocks_count):
-        i, j = divmod(index, map_size + 2)
+    # 生成所有块的索引 (i, j) 的坐标
+    indices = np.array(np.meshgrid(range(map_size + 2), range(map_size + 2))).T.reshape(-1, 2)
+
+    blocks = np.empty(len(indices), dtype=object)
+    # 使用显式循环创建块对象
+    for index, (i, j) in enumerate(indices):
         blocks[index] = Block(map, (i, j), 50, offset_x, offset_y)
-                # 每完成一部分，更新加载界面
-        message = f"加载地图块: {index}/{blocks_count}"
+        message = f"加载地图块: {index + 1}/{len(indices)}"
         display_loading_message(screen, message, small_font)
         pygame.display.update()
     
