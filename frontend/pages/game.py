@@ -27,6 +27,10 @@ def game_page():
     timer.reset()
     config.reset()
 
+    # 显示加载提示
+    from frontend.pages.loading import display_loading_message
+    display_loading_message(screen, "加载基本框架...", small_font)
+
     conjunctions = DIFFICULTY_CONJUNCTIONS[config.difficulty]
     config.cur_conj = conjunctions[0]
 
@@ -58,21 +62,29 @@ def game_page():
     print("已绘制按钮")
 
     # 生成地图
+    display_loading_message(screen, "初始化地图...", small_font)
     map_size = 10
     map = generate_map(map_size)
     print(f"已生成大小为 {map_size} * {map_size} 的地图")
 
     # 生成一维 blocks 数组并 reshape 为二维
+    display_loading_message(screen, "初始化地图块...", small_font)
     ## 块的偏移坐标
     offset_x = (SCREEN_WIDTH - map_size * 50) // 2
     offset_y = (SCREEN_HEIGHT - map_size * 50) // 2
 
-    blocks = np.empty((map_size + 2) * (map_size + 2), dtype=object)
-    for index in range((map_size + 2) * (map_size + 2)):
-        i, j = divmod(index, map_size + 2)
-        blocks[index] = Block(map, (i, j), 50, offset_x, offset_y)
+    blocks_count = (map_size + 2) * (map_size + 2)
+    # 生成所有块的索引 (i, j) 的坐标
+    indices = np.array(np.meshgrid(range(map_size + 2), range(map_size + 2))).T.reshape(-1, 2)
+
+    # 使用列表推导创建 Block 对象，减少显式的两层循环
+    blocks = np.array([
+        Block(map, (i, j), 50, offset_x, offset_y)
+        for i, j in indices
+    ], dtype=object)
+    
     blocks = blocks.reshape((map_size + 2, map_size + 2))
-    print("已生成地图块")
+    del offset_x, offset_y, map_size, blocks_count
 
     from backend.hint import hint_game
     def hint():
@@ -87,6 +99,7 @@ def game_page():
     )
 
     # 创建联结词块
+    display_loading_message(screen, "初始化联结词块...", small_font)
     conj_blocks = []
     block_size = 100  # 联结词块大小
     start_x, start_y = 50, 150  # 起始位置
@@ -101,7 +114,8 @@ def game_page():
         pos = (start_x, start_y + i * (block_size + spacing))
         conj_block = ConjunctionBlock(conj_name, pos, block_size, select_conjunction_block)
         conj_blocks.append(conj_block)
-    print("已生成联结词块")
+
+    display_loading_message(screen, "加载其他组件...", small_font)
 
     # 完成度
     cr_text = small_font.render(f"完成度: 0%", True, WHITE)
@@ -115,6 +129,8 @@ def game_page():
     # 游戏开始时启动计时
     timer.start()
     print("初始化计时器完成")
+
+    del display_loading_message
 
     # 绘制游戏界面
     while True:
