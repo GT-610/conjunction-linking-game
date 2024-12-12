@@ -50,6 +50,7 @@ def main_menu():
         )
     ]
     
+    
     while True:
         # 事件处理
         for event in pygame.event.get():
