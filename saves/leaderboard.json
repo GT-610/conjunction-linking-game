@@ -1,33 +1,26 @@
 {
-    "last_updated": 1733962409,
+    "last_updated": 1733963783,
     "records": [
         {
             "username": "test",
             "difficulty": 0,
             "date": 114514,
             "is_cleared": true,
-            "oscore": 97
+            "oscore": 204.74
         },
         {
             "username": "PLAYER",
-            "difficulty": 2,
-            "date": 1733813597,
+            "difficulty": 1,
+            "date": 1733963759,
             "is_cleared": false,
-            "oscore": 100
+            "oscore": 2996.0
         },
         {
             "username": "PLAYER",
-            "difficulty": 0,
-            "date": 1733822620,
+            "difficulty": 1,
+            "date": 1733963783,
             "is_cleared": false,
-            "oscore": 9
-        },
-        {
-            "username": "PLAYER",
-            "difficulty": 0,
-            "date": 1733962409,
-            "is_cleared": false,
-            "oscore": 0.02
+            "oscore": 3594.0
         }
     ]
 }

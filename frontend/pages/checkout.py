@@ -19,8 +19,10 @@ def checkout_page(elapsed_time):
         return_to_main_menu
     )
 
+    # 综合得分 (EXPERIMENTAL)
+    overall_score = 5000 * config.clear_rate + 500 * (config.difficulty + 1) + 1800 - elapsed_time
     # 保存排行榜数据
-    save_to_leaderboard(config.username, config.difficulty, elapsed_time, config.clear_rate, config.is_cleared)
+    save_to_leaderboard(config.username, config.difficulty, elapsed_time, overall_score, config.is_cleared)
 
     # 绘制界面
     while True:
@@ -43,16 +45,18 @@ def checkout_page(elapsed_time):
 
         # 完成度
         cr_text = small_font.render(f"完成度: {int(config.clear_rate * 100)}%", True, WHITE)
-        cr_rect = cr_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 30))
+        cr_rect = cr_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 60))
         screen.blit(cr_text, cr_rect)
 
         # 时间
         time_text = small_font.render(f"用时: {elapsed_time}秒", True, WHITE)
-        time_rect = time_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 30))
+        time_rect = time_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
         screen.blit(time_text, time_rect)
 
-        # 综合得分 (DEBUG)
-        overall_score = config.clear_rate
+        # 综合得分
+        oscore_text = small_font.render(f"综合得分: {overall_score}", True, WHITE)
+        oscore_rect = oscore_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 60))
+        screen.blit(oscore_text, oscore_rect)
 
         # 按钮
         return_main_menu_button.draw(screen)
