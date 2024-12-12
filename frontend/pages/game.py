@@ -28,6 +28,10 @@ def game_page():
     timer.reset()
     config.reset()
 
+    # 显示加载提示
+    from frontend.pages.loading import display_loading_message
+    display_loading_message(screen, "基本框架...", small_font)
+
     conjunctions = DIFFICULTY_CONJUNCTIONS[config.difficulty]
     config.cur_conj = conjunctions[0]
 
@@ -58,6 +62,8 @@ def game_page():
     )
     print("已绘制按钮")
 
+    display_loading_message(screen, "地图块...", small_font)
+
     # 生成地图
     map_size = 10
     map = generate_map(map_size)
@@ -74,6 +80,7 @@ def game_page():
         blocks[index] = Block(map, (i, j), 50, offset_x, offset_y)
     blocks = blocks.reshape((map_size + 2, map_size + 2))
     print("已生成地图块")
+    del offset_x, offset_y, map_size
 
     from backend.hint import hint_game
     def hint():
@@ -86,6 +93,8 @@ def game_page():
         button_width, button_height,
         hint
     )
+
+    display_loading_message(screen, "联结词块...", small_font)
 
     # 创建联结词块
     conj_blocks = []
@@ -104,6 +113,8 @@ def game_page():
         conj_blocks.append(conj_block)
     print("已生成联结词块")
 
+    display_loading_message(screen, "其他组件...", small_font)
+
     # 分数
     score_manager = Score()
     score_font = small_font
@@ -118,6 +129,8 @@ def game_page():
     # 游戏开始时启动计时
     timer.start()
     print("初始化计时器完成")
+
+    del display_loading_message
 
     # 绘制游戏界面
     while True:
