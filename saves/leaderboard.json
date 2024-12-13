@@ -8,22 +8,6 @@
             "date": 114514,
             "is_cleared": true,
             "score": 4900
-        },
-        {
-            "username": "PLAYER",
-            "difficulty": "master",
-            "time": 8,
-            "date": 1733813597,
-            "is_cleared": false,
-            "score": 100
-        },
-        {
-            "username": "PLAYER",
-            "difficulty": "easy",
-            "time": 20,
-            "date": 1733973170,
-            "is_cleared": false,
-            "score": 600
         }
     ]
 }

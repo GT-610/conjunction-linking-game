@@ -195,6 +195,9 @@ def game_page():
         for conj_block in conj_blocks:
             conj_block.draw(screen)
 
+        if np.all(map == -1):
+            config.is_game_end = True
+
         # 游戏结束
         if config.is_game_end == True:
             if np.all(map == -1):
