@@ -47,7 +47,7 @@ def isTwoCornerLink(map, p1, p2):
         # 遍历四个方向，寻找空格（-1）
         for direction in directions:
             # 计算checkP坐标
-            checkP = (p1[0] + direction[0], p1[1] + direction[1])
+            checkP = (p1[0] + direction[0] * step, p1[1] + direction[1] * step)
             
             # 确保checkP在地图范围内
             if checkP[0] < 0 or checkP[0] >= rows or checkP[1] < 0 or checkP[1] >= cols:
