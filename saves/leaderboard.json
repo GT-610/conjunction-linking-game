@@ -3,11 +3,24 @@
     "records": [
         {
             "username": "test",
-            "difficulty": "easy",
-            "time": 500,
+            "difficulty": 0,
             "date": 114514,
             "is_cleared": true,
-            "score": 4900
+            "oscore": 204.74
+        },
+        {
+            "username": "PLAYER",
+            "difficulty": 1,
+            "date": 1733963759,
+            "is_cleared": false,
+            "oscore": 2996.0
+        },
+        {
+            "username": "PLAYER",
+            "difficulty": 1,
+            "date": 1733963783,
+            "is_cleared": false,
+            "oscore": 3594.0
         }
     ]
 }
