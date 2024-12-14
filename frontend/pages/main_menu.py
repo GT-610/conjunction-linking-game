@@ -11,6 +11,7 @@ from frontend.pages.difficulty_selection import difficulty_selection_page
 from frontend.pages.settings import settings_page
 from frontend.pages.leaderboard import leaderboard_page
 
+from backend.config import config, load_settings
 
 # 初始化 pygame
 pygame.init()
@@ -18,6 +19,11 @@ pygame.display.set_caption("连连看")
 
 # 主菜单
 def main_menu():
+
+    settings = load_settings()
+    if "username" in settings:
+        config.username = settings["username"]  # 如果配置文件中有用户名，加载它
+    del settings
 
     # 创建按钮
     buttons = [

@@ -6,7 +6,7 @@ from frontend.commons import screen, SCREEN_WIDTH, font
 from frontend.commons import Button, small_font, Slider, TextInputBox
 from frontend.commons import WHITE, BLACK
 
-from backend.config import config
+from backend.config import config, save_settings
 
 # 设置界面
 def settings_page():
@@ -17,14 +17,16 @@ def settings_page():
 
     # 返回按钮
     from frontend.pages.main_menu import main_menu
-    back_button = Button("返回主菜单", SCREEN_WIDTH // 2 - 100, 500, 200, 50, callback=main_menu)
+    def back_button_callback():
+        save_settings(config)
+        main_menu()
+    back_button = Button("返回主菜单", SCREEN_WIDTH // 2 - 100, 500, 200, 50, callback=back_button_callback)
 
     # 确认按钮
-    def confirm_button_action():
-        # 在点击确认按钮时，将输入框的文本赋值给 config.username
-        config.username = name_input.text
+    def confirm_button_callback():
+        config.username = name_input.text # 传递修改内容给配置实例
         print(f"用户名已更改为：{config.username}")
-    confirm_button = Button("确认", 750, 395, 100, 50, callback=confirm_button_action)
+    confirm_button = Button("确认", 750, 395, 100, 50, callback=confirm_button_callback)
 
     while True:
         for event in pygame.event.get():
