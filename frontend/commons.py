@@ -91,12 +91,13 @@ class TextInputBox:
     def draw(self, surface):
         pygame.draw.rect(surface, self.color, self.rect, 2)
         text_surface = self.font.render(self.text, True, WHITE)
-        surface.blit(text_surface, (self.rect.x + 5, self.rect.y + 5))
+        surface.blit(text_surface, (self.rect.x + 5, self.rect.y - 8))
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.active = self.rect.collidepoint(event.pos)
             self.color = BLUE if self.active else GRAY
+
         elif event.type == pygame.KEYDOWN and self.active:
             if event.key == pygame.K_BACKSPACE:
                 self.text = self.text[:-1]
