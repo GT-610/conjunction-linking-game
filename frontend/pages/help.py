@@ -1,7 +1,7 @@
 import pygame
 from frontend.commons import screen, BLACK, WHITE, YELLOW, font, small_font, SCREEN_WIDTH, SCREEN_HEIGHT, Button
 
-from backend.config import config
+from backend.config import config, DIFFICULTY_MAPPING
 from backend.conjunctions import DIFFICULTY_CONJUNCTIONS, calculate_truth_table
 
 def help_page():
@@ -34,7 +34,7 @@ def help_page():
         screen.fill((0, 0, 0))  # 清屏为黑色背景
 
         # 绘制标题
-        title = font.render("帮助", True, WHITE)
+        title = font.render(f"{DIFFICULTY_MAPPING[config.difficulty]}难度游玩说明", True, WHITE)
         screen.blit(title, (SCREEN_WIDTH // 2 - title.get_width() // 2, 50))
 
         # 绘制真值表
@@ -70,8 +70,8 @@ def help_page():
         pygame.display.flip()
 
 def first_enter_game():
-    config.first_play = False
-    print("首次游玩设定已改为：", config.first_play)
+    config.first_play[config.difficulty] = False
+    print("首次游玩设定已改为：", config.first_play[config.difficulty])
 
     from backend.config import save_settings
     save_settings(config)

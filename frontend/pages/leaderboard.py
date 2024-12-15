@@ -5,6 +5,7 @@ pygame.init()
 
 from frontend.commons import screen, font, small_font, BLACK, WHITE, GRAY, Button
 from backend.leaderboard import load_leaderboard, save_to_leaderboard, get_sorted_leaderboard
+from backend.config import DIFFICULTY_MAPPING
 
 # 排行榜界面
 def leaderboard_page():
@@ -51,13 +52,6 @@ def leaderboard_page():
             header_text = header_font.render(header, True, GRAY)
             screen.blit(header_text, (header_x_positions[i], y_offset))
         y_offset += 40  # 表头与内容的间距
-
-        # 定义难度映射字典
-        DIFFICULTY_MAPPING = {
-            0: "简单",
-            1: "中等",
-            2: "大师"
-        }
 
         # 绘制记录
         for record in sorted_records[:11]:

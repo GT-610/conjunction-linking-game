@@ -5,7 +5,7 @@ pygame.init()
 from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT
 from frontend.commons import Button, button_width, button_height, vertical_spacing
 from frontend.commons import font, BLACK, WHITE, GRAY
-from backend.config import config
+from backend.config import config, DIFFICULTY_MAPPING
 
 # 选择难度界面
 def difficulty_selection_page():
@@ -28,7 +28,7 @@ def difficulty_selection_page():
     # 创建按钮
     buttons = [
         Button(
-            "初级",
+            DIFFICULTY_MAPPING[0],
             (SCREEN_WIDTH - button_width) // 2,
             SCREEN_HEIGHT // 2 - vertical_spacing,
             button_width, button_height,
@@ -36,7 +36,7 @@ def difficulty_selection_page():
             hover_color=(0, 255, 0)  # 绿色
         ),  
         Button(
-            "高级",
+            DIFFICULTY_MAPPING[1],
             (SCREEN_WIDTH - button_width) // 2,
             SCREEN_HEIGHT // 2,
             button_width, button_height,
@@ -44,7 +44,7 @@ def difficulty_selection_page():
             hover_color=(255, 0, 0)  # 红色
             ),
         Button(
-            "大师",
+            DIFFICULTY_MAPPING[2],
             (SCREEN_WIDTH - button_width) // 2,
             SCREEN_HEIGHT // 2 + vertical_spacing,
             button_width, button_height,
@@ -81,8 +81,8 @@ def difficulty_selection_page():
         pygame.display.flip()
 
 def enter_game():
-    print("是否首次游玩：", config.first_play)
-    if config.first_play:
+    print("是否首次游玩：", config.first_play[config.difficulty])
+    if config.first_play[config.difficulty]:
         # 显示帮助页面
         from frontend.pages.help import help_page
         help_page()
