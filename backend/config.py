@@ -19,25 +19,6 @@ class GameConfig:
 # 全局配置实例
 config = GameConfig()
 
-import json
-import os
-
-# 确保文件路径存在
-settings_path = "saves/settings.json"
-
-# 加载设置
-def load_settings():
-    if os.path.exists(settings_path):  # 如果文件存在
-        with open(settings_path, 'r', encoding='utf-8') as file:
-            try:
-                data = json.load(file)  # 读取并解析 JSON 文件
-                return data
-            except json.JSONDecodeError:
-                print("设置文件损坏，使用默认设置。")
-                return {}
-    else:
-        return {}  # 文件不存在时返回空字典
-
 # 保存配置到本地
 import json
 import os
@@ -78,6 +59,7 @@ def save_settings(config):
     # 创建保存数据的字典
     settings_data = {
         "username": config.username,
+        "first_play": config.first_play
     }
 
     # 确保保存目录存在

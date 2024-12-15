@@ -81,6 +81,7 @@ def difficulty_selection_page():
         pygame.display.flip()
 
 def enter_game():
+    print("是否首次游玩：", config.first_play)
     if config.first_play:
         # 显示帮助页面
         from frontend.pages.help import help_page
