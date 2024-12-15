@@ -9,22 +9,20 @@ from backend.config import config
 
 # 选择难度界面
 def difficulty_selection_page():
-    from frontend.pages.game import game_page
-    global difficulty
     # 按钮回调函数
     def choose_easy():
         config.difficulty = "easy"
-        game_page()
+        enter_game()
         print("已选择简单难度")
 
     def choose_advanced():
         config.difficulty = "advanced"
-        game_page()
+        enter_game()
         print("已选择高级难度")
 
     def choose_master():
         config.difficulty = "master"
-        game_page()
+        enter_game()
         print("已选择大师难度")
 
     # 创建按钮
@@ -81,3 +79,14 @@ def difficulty_selection_page():
 
         # 更新屏幕
         pygame.display.flip()
+
+def enter_game():
+    print("是否首次游玩：", config.first_play)
+    if config.first_play:
+        # 显示帮助页面
+        from frontend.pages.help import help_page
+        help_page()
+    else:
+        # 直接进入游戏
+        from frontend.pages.game import game_page
+        game_page()
