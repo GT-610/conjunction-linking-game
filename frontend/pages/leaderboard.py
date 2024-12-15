@@ -52,14 +52,22 @@ def leaderboard_page():
             screen.blit(header_text, (header_x_positions[i], y_offset))
         y_offset += 40  # 表头与内容的间距
 
+        # 定义难度映射字典
+        DIFFICULTY_MAPPING = {
+            0: "简单",
+            1: "中等",
+            2: "大师"
+        }
+
         # 绘制记录
         for record in sorted_records[:11]:
             local_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(record['date']))
             cleared_text = "通关" if record["is_cleared"] else "未通关"
+            difficulty_text = DIFFICULTY_MAPPING.get(record["difficulty"], "未知难度")  # 根据整数获取难度文字
             row_data = [
                 record['username'],
                 cleared_text,
-                str(record['difficulty']),
+                difficulty_text,  # 替换为对应的难度文字
                 local_time,
                 str(record['oscore'])
             ]
