@@ -1,5 +1,5 @@
 {
-    "last_updated": 1734249710,
+    "last_updated": 1734258742,
     "records": [
         {
             "username": "test",
@@ -7,6 +7,13 @@
             "date": 114514,
             "is_cleared": true,
             "oscore": 204
+        },
+        {
+            "username": "PLAYER",
+            "difficulty": 0,
+            "date": 1734258742,
+            "is_cleared": false,
+            "oscore": 0
         }
     ]
 }

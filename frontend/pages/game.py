@@ -59,6 +59,16 @@ def game_page():
         200, button_height,
         return_main_menu
     )
+
+    help_button = Button(
+        text="帮助",
+        x=SCREEN_WIDTH - 100,  # 地图右侧
+        y=150,                 # y 坐标
+        width=80,
+        height=40,
+        callback=show_help_page
+    )
+
     print("已绘制按钮")
 
     # 生成地图
@@ -143,6 +153,7 @@ def game_page():
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # 左键点击
                 pause_button.check_click()
                 hint_button.check_click()
+                help_button.check_click()
                 restart_button.check_click()
                 return_main_menu_button.check_click()
 
@@ -176,6 +187,7 @@ def game_page():
         # 绘制按钮
         pause_button.draw(screen)
         hint_button.draw(screen)
+        help_button.draw(screen)
         ## 如果暂停，则显示“重新开始”按钮
         if config.is_paused:
             restart_button.draw(screen)
@@ -257,10 +269,14 @@ def pause_game():
         timer.pause()  # 暂停计时
     config.is_paused = not config.is_paused
 
-
 # 重新开始
 def restart_game():
     game_page()
+
+def show_help_page():
+    # 调用帮助页面，传递参数表明是通过游戏内触发
+    from frontend.pages.help import help_page
+    help_page(in_game=True)
 
 # 返回主菜单
 def return_main_menu():

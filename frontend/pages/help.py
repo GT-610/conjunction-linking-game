@@ -4,22 +4,33 @@ from frontend.commons import screen, BLACK, WHITE, YELLOW, font, small_font, SCR
 from backend.config import config, DIFFICULTY_MAPPING
 from backend.conjunctions import DIFFICULTY_CONJUNCTIONS, calculate_truth_table
 
-def help_page():
+def help_page(in_game=False):
     # 获取当前难度的联结词
     conjunctions = DIFFICULTY_CONJUNCTIONS[config.difficulty]
     # 根据当前难度计算真值表
     truth_table = calculate_truth_table(conjunctions)
     del conjunctions
 
-    # 创建按钮实例
-    start_game_button = Button(
-        text="开始游戏",
-        x=SCREEN_WIDTH // 2 - 100,
-        y=SCREEN_HEIGHT - 100,
-        width=200,
-        height=50,
-        callback=first_enter_game
-    )
+    # 如果是通过游戏内进入，显示“返回”按钮
+    if in_game:
+        return_button = Button(
+            text="返回",
+            x=SCREEN_WIDTH // 2 - 100,
+            y=SCREEN_HEIGHT - 100,
+            width=200,
+            height=50,
+            callback=exit_help_page
+        )
+    # 如果是首次进入，显示“开始游戏”按钮
+    else:
+        start_game_button = Button(
+            text="开始游戏",
+            x=SCREEN_WIDTH // 2 - 100,
+            y=SCREEN_HEIGHT - 100,
+            width=200,
+            height=50,
+            callback=first_enter_game
+        )
 
     while True:
         # 处理事件
@@ -28,7 +39,10 @@ def help_page():
                 pygame.quit()
                 exit()
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # 检测鼠标点击
-                start_game_button.check_click()
+                if in_game:
+                    return_button.check_click()
+                else:
+                    start_game_button.check_click()
 
         # 绘制帮助页面内容
         screen.fill((0, 0, 0))  # 清屏为黑色背景
@@ -64,10 +78,17 @@ def help_page():
 
 
         # 绘制按钮
-        start_game_button.draw(screen)
+        if in_game:
+            return_button.draw(screen)
+        else:
+            start_game_button.draw(screen)
 
         # 更新屏幕
         pygame.display.flip()
+
+# 退出帮助页面的回调函数
+def exit_help_page():
+    print("退出帮助待实现")
 
 def first_enter_game():
     config.first_play[config.difficulty] = False
