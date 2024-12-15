@@ -7,13 +7,6 @@
             "date": 114514,
             "is_cleared": true,
             "oscore": 204
-        },
-        {
-            "username": "AAABBCC",
-            "difficulty": 0,
-            "date": 1734249710,
-            "is_cleared": false,
-            "oscore": 182
         }
     ]
 }

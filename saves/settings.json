@@ -1,4 +1,4 @@
 {
-    "username": "AAABBCC",
-    "first_play": false
+    "username": "PLAYER",
+    "first_play": [true, true, true]
 }
