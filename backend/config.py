@@ -1,16 +1,18 @@
 class GameConfig:
     def __init__(self):
         # 游戏主要状态
-        self.username = "PLAYER"          # 默认用户名
-        self.difficulty = None            # 游戏难度
-        self.is_paused = False            # 是否暂停
-        self.cur_conj = None         # 当前选择的联结词
+        self.username = "PLAYER" # 默认用户名
+        self.difficulty = None # 游戏难度
+        self.clear_rate = 0.0 # 完成度
+        self.is_paused = False # 是否暂停
+        self.cur_conj = None # 当前选择的联结词
         self.is_game_end = False # 游戏是否结束
         self.is_cleared = False # 是否通关
-        self.first_play = True          # 是否第一次游玩，默认为True
+        self.first_play = first_play = [True, True, True]          # 是否第一次游玩，默认为True
 
     # 重置游戏状态
     def reset(self):
+        self.clear_rate = 0.0
         self.is_paused = False
         self.cur_conj = None
         self.is_game_end = False
@@ -18,6 +20,9 @@ class GameConfig:
 
 # 全局配置实例
 config = GameConfig()
+
+# 难度映射
+DIFFICULTY_MAPPING = ["简单", "高级", "大师"]
 
 # 保存配置到本地
 import json
@@ -32,7 +37,7 @@ def load_settings():
             with open(settings_path, 'r', encoding='utf-8') as file:
                 data = json.load(file)  # 读取并解析 JSON 文件
                 if 'first_play' not in data:  # 如果没有此字段，添加默认值
-                    data['first_play'] = True
+                    data['first_play'] = [True, True, True]
                 return data
         except json.JSONDecodeError:
             print("配置文件损坏，已覆盖默认配置。")

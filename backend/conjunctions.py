@@ -1,9 +1,9 @@
 # 难度联结词表
-DIFFICULTY_CONJUNCTIONS = {
-    "easy": ["或非", "与", "蕴含"],
-    "advanced": ["与", "或非"],
-    "master": ["蕴含"]
-}
+DIFFICULTY_CONJUNCTIONS = [
+    ["或非", "与", "蕴含"],
+    ["与", "或非"],
+    ["蕴含"]
+]
 
 def AND(a, b):
     return a and b  # 与

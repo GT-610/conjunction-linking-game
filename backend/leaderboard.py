@@ -21,12 +21,12 @@ def load_leaderboard():
         return json.load(file)
 
 # 保存新记录到排行榜
-def save_to_leaderboard(username, difficulty, play_time, score, is_cleared):
+def save_to_leaderboard(username, difficulty, play_time, overall_score, is_cleared):
     """
     username: 用户名 (str)
     difficulty: 难度 (0-2)
     play_time: 通关时间 (秒)
-    score: 游戏得分 (int)
+    oscore: 综合得分
     is_cleared: 是否通关 (bool)
     """
 
@@ -36,10 +36,9 @@ def save_to_leaderboard(username, difficulty, play_time, score, is_cleared):
     new_record = {
         "username": username,
         "difficulty": difficulty,
-        "time": play_time,
         "date": int(time()),  # 使用 UNIX 时间戳保存时间
         "is_cleared": is_cleared,
-        "score": score
+        "oscore": overall_score
     }
 
     # 添加新记录
@@ -50,20 +49,14 @@ def save_to_leaderboard(username, difficulty, play_time, score, is_cleared):
     with open(LEADERBOARD_FILE, "w") as file:
         json.dump(leaderboard, file, indent=4)
 
-
-def get_sorted_leaderboard(sort_key="time", difficulty=None):
-    """
-    获取排行榜，按指定键排序。
-    :param sort_key: 排序字段 (默认按通关时间)
-    :param difficulty: 如果指定，则仅返回该难度的记录
-    :return: 排序后的记录列表
-    """
+# 获取排行榜
+def get_sorted_leaderboard():
     leaderboard = load_leaderboard()
     records = leaderboard["records"]
-    # 按通关优先、分数降序排序
+    # 按通关优先、综合得分降序、游玩时间降序排序
     sorted_records = sorted(
         records,
-        key=lambda x: (not x["is_cleared"], -x["score"], x["time"])  # 未通关排后，分数降序
+        key=lambda x: (not x["is_cleared"], -x["oscore"], -x["date"])  # 未通关排后，分数降序
     )
     return sorted_records
 

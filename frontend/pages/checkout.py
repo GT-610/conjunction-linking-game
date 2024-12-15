@@ -4,7 +4,7 @@ from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font, small_fo
 from backend.leaderboard import save_to_leaderboard
 from backend.config import config
 
-def checkout_page(final_score, elapsed_time):
+def checkout_page(elapsed_time):
     pygame.init()
 
     # 标题字体
@@ -19,8 +19,10 @@ def checkout_page(final_score, elapsed_time):
         return_to_main_menu
     )
 
+    overall_score = calc_overall_score(config.clear_rate, config.difficulty, elapsed_time)
+
     # 保存排行榜数据
-    save_to_leaderboard(config.username, config.difficulty, elapsed_time, final_score, config.is_cleared)
+    save_to_leaderboard(config.username, config.difficulty, elapsed_time, overall_score, config.is_cleared)
 
     # 绘制界面
     while True:
@@ -41,21 +43,47 @@ def checkout_page(final_score, elapsed_time):
         cleared_rect = cleared_text_rendered.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 4))
         screen.blit(cleared_text_rendered, cleared_rect)
 
-        # 分数
-        score_text = small_font.render(f"分数: {final_score}", True, WHITE)
-        score_rect = score_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 30))
-        screen.blit(score_text, score_rect)
+        # 完成度
+        cr_text = small_font.render(f"完成度: {int(config.clear_rate * 100)}%", True, WHITE)
+        cr_rect = cr_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 60))
+        screen.blit(cr_text, cr_rect)
 
         # 时间
         time_text = small_font.render(f"用时: {elapsed_time}秒", True, WHITE)
-        time_rect = time_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 30))
+        time_rect = time_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
         screen.blit(time_text, time_rect)
+
+        # 综合得分
+        oscore_text = small_font.render(f"综合得分: {overall_score}", True, WHITE)
+        oscore_rect = oscore_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 60))
+        screen.blit(oscore_text, oscore_rect)
 
         # 按钮
         return_main_menu_button.draw(screen)
 
         # 更新屏幕
         pygame.display.flip()
+
+
+def calc_overall_score(clear_rate, difficulty, elapsed_time):
+    import math
+    # 难度影响参数调整
+    x0 = 200 + 100 * difficulty  # 时间中点，难度越高衰减越慢
+    k = 0.01 / (difficulty + 1)  # Sigmoid 曲线陡峭度，难度越高越平缓
+
+    # 计算时间权重
+    sigmoid = 1 / (1 + math.exp(-k * (elapsed_time - x0)))
+    time_weight = 1 - sigmoid  # 反向处理，时间越大，权重越小
+
+    # 清除率权重，平方放大高达成率
+    clear_weight = clear_rate ** 2
+
+    # 综合得分公式
+    overall_score = (difficulty + 1) * clear_weight * time_weight * 1000
+
+    # 保证最低得分为0
+    return max(0, int(overall_score))
+
 
 def return_to_main_menu():
     from frontend.pages.main_menu import main_menu
