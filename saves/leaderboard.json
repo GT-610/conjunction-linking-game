@@ -1,26 +1,19 @@
 {
-    "last_updated": 1733973170,
+    "last_updated": 1734249710,
     "records": [
         {
             "username": "test",
             "difficulty": 0,
             "date": 114514,
             "is_cleared": true,
-            "oscore": 204.74
+            "oscore": 204
         },
         {
-            "username": "PLAYER",
-            "difficulty": 1,
-            "date": 1733963759,
+            "username": "AAABBCC",
+            "difficulty": 0,
+            "date": 1734249710,
             "is_cleared": false,
-            "oscore": 2996.0
-        },
-        {
-            "username": "PLAYER",
-            "difficulty": 1,
-            "date": 1733963783,
-            "is_cleared": false,
-            "oscore": 3594.0
+            "oscore": 182
         }
     ]
 }

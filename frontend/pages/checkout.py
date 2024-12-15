@@ -19,8 +19,8 @@ def checkout_page(elapsed_time):
         return_to_main_menu
     )
 
-    # 综合得分 (EXPERIMENTAL)
-    overall_score = 5000 * config.clear_rate + 500 * (config.difficulty + 1) + 1800 - elapsed_time
+    overall_score = calc_overall_score(config.clear_rate, config.difficulty, elapsed_time)
+
     # 保存排行榜数据
     save_to_leaderboard(config.username, config.difficulty, elapsed_time, overall_score, config.is_cleared)
 
@@ -64,8 +64,26 @@ def checkout_page(elapsed_time):
         # 更新屏幕
         pygame.display.flip()
 
+
 def calc_overall_score(clear_rate, difficulty, elapsed_time):
-    pass
+    import math
+    # 难度影响参数调整
+    x0 = 200 + 100 * difficulty  # 时间中点，难度越高衰减越慢
+    k = 0.01 / (difficulty + 1)  # Sigmoid 曲线陡峭度，难度越高越平缓
+
+    # 计算时间权重
+    sigmoid = 1 / (1 + math.exp(-k * (elapsed_time - x0)))
+    time_weight = 1 - sigmoid  # 反向处理，时间越大，权重越小
+
+    # 清除率权重，平方放大高达成率
+    clear_weight = clear_rate ** 2
+
+    # 综合得分公式
+    overall_score = (difficulty + 1) * clear_weight * time_weight * 1000
+
+    # 保证最低得分为0
+    return max(0, int(overall_score))
+
 
 def return_to_main_menu():
     from frontend.pages.main_menu import main_menu

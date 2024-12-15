@@ -11,17 +11,17 @@ from backend.config import config
 def difficulty_selection_page():
     # 按钮回调函数
     def choose_easy():
-        config.difficulty = "easy"
+        config.difficulty = 0
         enter_game()
         print("已选择简单难度")
 
     def choose_advanced():
-        config.difficulty = "advanced"
+        config.difficulty = 1
         enter_game()
         print("已选择高级难度")
 
     def choose_master():
-        config.difficulty = "master"
+        config.difficulty = 2
         enter_game()
         print("已选择大师难度")
 
