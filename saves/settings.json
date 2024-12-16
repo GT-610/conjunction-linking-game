@@ -1,4 +1,8 @@
 {
     "username": "PLAYER",
-    "first_play": [true, true, true]
+    "first_play": [
+        true,
+        true,
+        true
+    ]
 }
