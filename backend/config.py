@@ -3,6 +3,7 @@ class GameConfig:
         # 游戏主要状态
         self.username = "PLAYER" # 默认用户名
         self.position = "main_menu"
+        self.params = {}
         self.difficulty = None # 游戏难度
         self.clear_rate = 0.0 # 完成度
         self.is_paused = False # 是否暂停
@@ -21,9 +22,15 @@ class GameConfig:
 
 # 全局配置实例
 config = GameConfig()
-
 # 难度映射
 DIFFICULTY_MAPPING = ["简单", "高级", "大师"]
+
+# 传参
+def navigate_with_params(position, **kwargs):
+    config.position = position
+    config.params = kwargs  # 直接用 kwargs 动态存储传递的参数
+    if kwargs:
+        print(f"切换到页面 {position}，传递参数：{kwargs}")
 
 # 保存配置到本地
 import json

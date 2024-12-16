@@ -33,7 +33,15 @@ if __name__ == "__main__":
         # 根据当前状态调用相应页面
         current_page = config.position
         if current_page in PAGE_MAPPING:
-            PAGE_MAPPING[current_page]()
+            page_function = PAGE_MAPPING[current_page]
+
+            # 尝试调用页面函数，传递参数（如果有）
+            if config.params:
+                page_function(**config.params)
+                config.params.clear()  # 调用后清理参数
+            else:
+                page_function()
+
         else:
             print(f"未知页面：{current_page}")
             break

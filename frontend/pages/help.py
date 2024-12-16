@@ -1,7 +1,7 @@
 import pygame
 from frontend.commons import screen, WHITE, YELLOW, font, small_font, bg0, SCREEN_WIDTH, SCREEN_HEIGHT, Button
 
-from backend.config import config, DIFFICULTY_MAPPING
+from backend.config import config, navigate_with_params, DIFFICULTY_MAPPING
 from backend.conjunctions import DIFFICULTY_CONJUNCTIONS, calculate_truth_table
 
 def help_page(in_game=False, game_state=None):
@@ -15,8 +15,7 @@ def help_page(in_game=False, game_state=None):
     if in_game:
         # 退出帮助页面的回调函数
         def exit_help_page():
-            from frontend.pages.game import game_page
-            game_page(game_state)
+            navigate_with_params("game", game_state=game_state)
             
         return_button = Button(
             text="返回",

@@ -9,7 +9,7 @@ from frontend.commons import WHITE, BLUE, YELLOW
 
 from backend.map import generate_map
 from backend.block import Block
-from backend.config import config
+from backend.config import config, navigate_with_params
 from backend.conj_block import ConjunctionBlock
 from backend.conjunctions import DIFFICULTY_CONJUNCTIONS
 from backend.link import getLinkType
@@ -131,8 +131,7 @@ def game_page(game_state=None):
     def show_help_page():
         game_state = save_game_state(map, blocks, conj_blocks)
         pause_game()
-        from frontend.pages.help import help_page
-        help_page(True, game_state)
+        navigate_with_params("help", in_game=True, game_state=game_state)
 
     help_button = Button(
         text="帮助",
@@ -232,8 +231,7 @@ def game_page(game_state=None):
             elapsed_time = timer.get_elapsed_time()
 
             # 调用结算页面
-            from frontend.pages.checkout import checkout_page
-            checkout_page(elapsed_time)
+            navigate_with_params("checkout", elapsed_time=elapsed_time)
             return
 
         # 暂停时显示提示
