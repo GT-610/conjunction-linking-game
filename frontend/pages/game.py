@@ -4,8 +4,8 @@ import numpy as np
 pygame.init()
 
 from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT
-from frontend.commons import Button, button_width, button_height, small_font
-from frontend.commons import WHITE, BLACK, BLUE, GRAY, YELLOW
+from frontend.commons import Button, button_width, button_height, small_font, bg
+from frontend.commons import WHITE, BLUE, GRAY, YELLOW
 
 from backend.map import generate_map
 from backend.block import Block
@@ -184,7 +184,7 @@ def game_page(game_state=None):
                                 handle_block_click(block, map, blocks, config.cur_conj)
                                 update_blocks(map, blocks)
         # 绘制背景
-        screen.fill(BLACK)
+        bg.draw(screen)
 
         # 绘制已用时间（如果未暂停）
         if not config.is_paused:

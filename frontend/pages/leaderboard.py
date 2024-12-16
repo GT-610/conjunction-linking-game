@@ -3,7 +3,7 @@ import sys
 import time
 pygame.init()
 
-from frontend.commons import screen, SCREEN_WIDTH, font, small_font, BLACK, WHITE, GRAY, Button
+from frontend.commons import screen, SCREEN_WIDTH, font, small_font, bg, WHITE, GRAY, Button
 from backend.leaderboard import load_leaderboard, save_to_leaderboard, get_sorted_leaderboard
 from backend.config import DIFFICULTY_MAPPING
 
@@ -20,9 +20,8 @@ def leaderboard_page():
     # 加载排行榜数据
     leaderboard_data = load_leaderboard()
 
-    # 清空加载中的文字
-    screen.fill(BLACK)
-    pygame.display.update()
+    # 背景
+    bg.draw(screen)
 
     # 显示更新时间
     last_updated_time = leaderboard_data.get("last_updated", 0)
@@ -42,8 +41,8 @@ def leaderboard_page():
         # 表格化数据
         sorted_records = get_sorted_leaderboard()
         y_offset = 80  # 起始 y 位置
-        header_font = pygame.font.Font("fonts/SourceHanSansCN-Regular.otf", 36)
-        table_font = pygame.font.Font("fonts/SourceHanSansCN-Regular.otf", 28)
+        header_font = pygame.font.Font("assets/SourceHanSansCN-Regular.otf", 36)
+        table_font = pygame.font.Font("assets/SourceHanSansCN-Regular.otf", 28)
         
         # 绘制表头
         headers = ["用户名", "通关", "难度", "日期", "分数"]

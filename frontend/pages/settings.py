@@ -4,7 +4,7 @@ pygame.init()
 
 from frontend.commons import screen, SCREEN_WIDTH, font
 from frontend.commons import Button, small_font, Slider, TextInputBox
-from frontend.commons import WHITE, BLACK
+from frontend.commons import WHITE, bg
 
 from backend.config import config, save_settings
 
@@ -44,8 +44,8 @@ def settings_page():
                 back_button.check_click()
                 confirm_button.check_click()
 
-        # 绘制设置界面
-        screen.fill(BLACK)
+        # 背景
+        bg.draw(screen)
 
         # 绘制标题
         title_surface = font.render("设置", True, WHITE)

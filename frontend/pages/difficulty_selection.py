@@ -4,7 +4,7 @@ pygame.init()
 
 from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT
 from frontend.commons import Button, button_width, button_height, vertical_spacing
-from frontend.commons import font, BLACK, WHITE, GRAY
+from frontend.commons import font, bg, WHITE, GRAY
 from backend.config import config, DIFFICULTY_MAPPING
 
 # 选择难度界面
@@ -53,7 +53,15 @@ def difficulty_selection_page():
             )]
     
     from frontend.pages.main_menu import main_menu
-    buttons.append(Button("返回主菜单", 300, 440, 200, 50, callback=main_menu))
+    buttons.append(
+        Button(
+            "返回主菜单",
+            (SCREEN_WIDTH - button_width) // 2 - 25,
+            540, 200,
+            button_height,
+            callback=main_menu
+        )
+    )
 
     while True:
         # 事件处理
@@ -65,8 +73,7 @@ def difficulty_selection_page():
                 for button in buttons:
                     button.check_click()
 
-        # 绘制界面
-        screen.fill(BLACK)
+        bg.draw(screen)
 
         # 绘制标题
         title_surface = font.render("选择难度", True, WHITE)

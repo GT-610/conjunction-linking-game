@@ -1,10 +1,10 @@
 import pygame
 import sys
 
-from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font, small_font
+from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font, bg, small_font
 from frontend.commons import Button, button_width, button_height
 from frontend.commons import vertical_spacing
-from frontend.commons import BLACK, GRAY, WHITE
+from frontend.commons import GRAY, WHITE
 
 from frontend.pages.difficulty_selection import difficulty_selection_page
 from frontend.pages.settings import settings_page
@@ -66,7 +66,7 @@ def main_menu():
                     button.check_click()
 
         # 绘制界面
-        screen.fill(BLACK)
+        bg.draw(screen)
         title_surface = font.render("游戏主菜单", True, WHITE)
         title_rect = title_surface.get_rect(center=(SCREEN_WIDTH // 2, 100))
         screen.blit(title_surface, title_rect)

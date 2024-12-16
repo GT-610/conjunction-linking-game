@@ -1,5 +1,5 @@
 import pygame
-from frontend.commons import screen, BLACK, WHITE, YELLOW, font, small_font, SCREEN_WIDTH, SCREEN_HEIGHT, Button
+from frontend.commons import screen, WHITE, YELLOW, font, small_font, bg, SCREEN_WIDTH, SCREEN_HEIGHT, Button
 
 from backend.config import config, DIFFICULTY_MAPPING
 from backend.conjunctions import DIFFICULTY_CONJUNCTIONS, calculate_truth_table
@@ -53,8 +53,8 @@ def help_page(in_game=False, game_state=None):
                 else:
                     start_game_button.check_click()
 
-        # 绘制帮助页面内容
-        screen.fill((0, 0, 0))  # 清屏为黑色背景
+        # 背景
+        bg.draw(screen)
 
         # 绘制标题
         title = font.render(f"{DIFFICULTY_MAPPING[config.difficulty]}难度游玩说明", True, WHITE)
@@ -85,12 +85,10 @@ def help_page(in_game=False, game_state=None):
                 cell_y = 150 + i * 40  # 每行固定高度
                 screen.blit(cell_text, (cell_x, cell_y))
 
-
         # 绘制按钮
         if in_game:
             return_button.draw(screen)
             screen.blit(paused_text, paused_rect)
-    
         else:
             start_game_button.draw(screen)
 
