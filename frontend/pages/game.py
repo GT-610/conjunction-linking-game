@@ -243,7 +243,6 @@ def game_page(game_state=None):
             paused_text = small_font.render("游戏暂停中", True, WHITE)
             paused_rect = paused_text.get_rect(topleft=(30, 100))
             screen.blit(paused_text, paused_rect)
-            pygame.display.flip()  # 更新屏幕
 
         # 更新屏幕
         pygame.display.flip()
@@ -293,21 +292,16 @@ def pause_game():
 def restart_game():
     game_page()
 
-
+# 保存当前游戏状态
 def save_game_state(map, blocks, conj_blocks):
-    """
-    保存当前游戏状态
-    """
     return {
         "map": map,
         "blocks": blocks,
         "conj_blocks": conj_blocks
     }
 
+# 恢复游戏状态
 def load_game_state(game_state):
-    """
-    根据游戏状态字典恢复游戏
-    """
     map = game_state["map"]
     blocks = game_state["blocks"]
     conj_blocks = game_state["conj_blocks"]

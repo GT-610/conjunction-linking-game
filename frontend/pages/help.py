@@ -26,6 +26,10 @@ def help_page(in_game=False, game_state=None):
             height=50,
             callback=exit_help_page
         )
+
+        paused_text = small_font.render("游戏暂停中", True, WHITE)
+        paused_rect = paused_text.get_rect(topleft=(30, 100))
+
     # 如果是首次进入，显示“开始游戏”按钮
     else:
         start_game_button = Button(
@@ -85,6 +89,8 @@ def help_page(in_game=False, game_state=None):
         # 绘制按钮
         if in_game:
             return_button.draw(screen)
+            screen.blit(paused_text, paused_rect)
+    
         else:
             start_game_button.draw(screen)
 
