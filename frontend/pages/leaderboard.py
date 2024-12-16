@@ -3,7 +3,7 @@ import sys
 import time
 pygame.init()
 
-from frontend.commons import screen, SCREEN_WIDTH, font, small_font, BgManager, WHITE, Button
+from frontend.commons import screen, SCREEN_WIDTH, font, small_font, WHITE, Button
 from backend.leaderboard import load_leaderboard, save_to_leaderboard, get_sorted_leaderboard
 from backend.config import DIFFICULTY_MAPPING
 
@@ -21,8 +21,10 @@ def leaderboard_page():
     leaderboard_data = load_leaderboard()
 
     # 背景
-    bg = BgManager("assets/bg2.png", 100)
+    from frontend.commons import BgManager
+    bg = BgManager("assets/bgLeaderboard.png", 100)
     bg.draw(screen)
+    del bg, BgManager
 
     # 显示更新时间
     last_updated_time = leaderboard_data.get("last_updated", 0)
@@ -79,17 +81,16 @@ def leaderboard_page():
         200, 50,
         callback=main_menu
     )
-    back_button.draw(screen)
-    pygame.display.flip()
 
-    # 事件处理，保持窗口响应
-    running = True
-    clock = pygame.time.Clock()
-    while running:
-        clock.tick(60)  # 限制帧率
+    while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # 左键点击
                 back_button.check_click()  # 点击返回按钮
+
+        # 绘制返回按钮
+        back_button.draw(screen)
+
+        pygame.display.flip()

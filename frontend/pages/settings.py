@@ -29,7 +29,7 @@ def settings_page():
     confirm_button = Button("确认", 750, 395, 100, 50, callback=confirm_button_callback)
 
     # 背景
-    bg = BgManager("assets/bg1.png", 100)
+    bg = BgManager("assets/bgSettings.png", 100)
 
     while True:
         for event in pygame.event.get():
@@ -69,10 +69,9 @@ def settings_page():
         name_text = small_font.render("玩家名称（修改后点击确认才能保存）:", True, WHITE)
         screen.blit(name_text, (SCREEN_WIDTH // 2 - 300, 340))
 
-        # 绘制返回按钮
+        # 绘制按钮
         back_button.draw(screen)
-        # 绘制确认按钮
-        confirm_button.draw(screen)  # 假设你有一个 confirm_button 对象
+        confirm_button.draw(screen)
 
         # 更新显示
         pygame.display.flip()

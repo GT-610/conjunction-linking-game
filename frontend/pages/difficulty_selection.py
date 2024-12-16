@@ -12,9 +12,10 @@ def difficulty_selection_page():
     
     ## 绘制静态元素
     ## 背景
-    from frontend.commons import bg0
-    bg0.draw(screen)
-    del bg0
+    from frontend.commons import BgManager
+    bg = BgManager("assets/bgDifficulty.png", 100)
+    bg.draw(screen)
+    del bg, BgManager
 
     ## 标题
     title_surface = font.render("选择难度", True, WHITE)

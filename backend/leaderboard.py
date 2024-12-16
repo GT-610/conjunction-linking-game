@@ -3,7 +3,7 @@ import os
 from time import time
 
 # 文件路径
-LEADERBOARD_FILE = f"saves/leaderboard.json"
+LEADERBOARD_FILE = "saves/leaderboard.json"
 
 # 默认的排行榜结构
 DEFAULT_LEADERBOARD = {
@@ -36,7 +36,7 @@ def save_to_leaderboard(username, difficulty, play_time, overall_score, is_clear
     new_record = {
         "username": username,
         "difficulty": difficulty,
-        "date": int(time()),  # 使用 UNIX 时间戳保存时间
+        "date": int(time()),  # 使用 UNIX 时间戳
         "is_cleared": is_cleared,
         "oscore": overall_score
     }

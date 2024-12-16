@@ -1,5 +1,5 @@
 import pygame
-from frontend.commons import screen, WHITE, YELLOW, font, small_font, bg, SCREEN_WIDTH, SCREEN_HEIGHT, Button
+from frontend.commons import screen, WHITE, YELLOW, font, small_font, bg0, SCREEN_WIDTH, SCREEN_HEIGHT, Button
 
 from backend.config import config, DIFFICULTY_MAPPING
 from backend.conjunctions import DIFFICULTY_CONJUNCTIONS, calculate_truth_table

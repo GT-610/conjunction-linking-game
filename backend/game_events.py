@@ -1,4 +1,3 @@
-from backend.link import getLinkType
 from backend.config import config
 
 # 更新块逻辑
@@ -52,18 +51,16 @@ def handle_block_click(block, map, blocks, cur_conj):
 
 # 检查两个块是否可以消除
 def check_and_clear(map, p1, p2):
+    from backend.link import getLinkType
     # 获取两个块是否连通
     link_type = getLinkType(map, p1, p2)
+    del getLinkType
     
     print(f"连通类型：{link_type}")
 
     # 如果返回值是 0，说明不连通，直接返回
     if link_type == 0:
         return False
-
-    # 联结词运算的判断
-    block1_value = map[p1[0]][p1[1]]
-    block2_value = map[p2[0]][p2[1]]
 
     # 如果连通并且满足运算条件，执行清除操作
     ClearLinkedBlocks(map, p1, p2)
