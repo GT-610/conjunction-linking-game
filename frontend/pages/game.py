@@ -27,7 +27,7 @@ def game_page(game_state=None):
         config.reset()
 
         # 显示加载提示
-        from frontend.pages.loading import display_loading_message
+        from frontend.loading import display_loading_message
         display_loading_message(screen, "加载基本框架...", small_font)
 
         conjunctions = DIFFICULTY_CONJUNCTIONS[config.difficulty]

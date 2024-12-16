@@ -16,11 +16,10 @@ def settings_page():
     name_input = TextInputBox(SCREEN_WIDTH // 2 - 100, 400, 200, 40, text=config.username)
 
     # 返回按钮
-    from frontend.pages.main_menu import main_menu
-    def back_button_callback():
-        save_settings(config)
-        main_menu()
-    back_button = Button("返回主菜单", SCREEN_WIDTH // 2 - 100, 500, 200, 50, callback=back_button_callback)
+    back_button = Button(
+        "返回主菜单",
+        SCREEN_WIDTH // 2 - 100, 500, 200, 50,
+        callback=lambda: setattr(config, "position", "main_menu"))
 
     # 确认按钮
     def confirm_button_callback():
@@ -32,6 +31,11 @@ def settings_page():
     bg = BgManager("assets/bgSettings.png", 100)
 
     while True:
+        if config.position != "settings":
+            save_settings(config)
+            print("已保存设置")
+            return
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()

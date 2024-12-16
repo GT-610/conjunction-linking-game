@@ -5,7 +5,7 @@ pygame.init()
 
 from frontend.commons import screen, SCREEN_WIDTH, font, small_font, WHITE, Button
 from backend.leaderboard import load_leaderboard, save_to_leaderboard, get_sorted_leaderboard
-from backend.config import DIFFICULTY_MAPPING
+from backend.config import config, DIFFICULTY_MAPPING
 
 # 排行榜界面
 def leaderboard_page():
@@ -73,16 +73,18 @@ def leaderboard_page():
             y_offset += 35  # 每条记录之间的垂直间距
 
     # 绘制返回按钮
-    from frontend.pages.main_menu import main_menu
     back_button = Button(
         "返回主菜单",
         SCREEN_WIDTH // 2 - 125,
         500,
         200, 50,
-        callback=main_menu
+        callback=lambda: setattr(config, "position", "main_menu")
     )
 
     while True:
+        if config.position != "leaderboard":
+            return
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()

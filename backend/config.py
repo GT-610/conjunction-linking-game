@@ -2,6 +2,7 @@ class GameConfig:
     def __init__(self):
         # 游戏主要状态
         self.username = "PLAYER" # 默认用户名
+        self.position = "main_menu"
         self.difficulty = None # 游戏难度
         self.clear_rate = 0.0 # 完成度
         self.is_paused = False # 是否暂停

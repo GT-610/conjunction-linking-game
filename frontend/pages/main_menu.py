@@ -6,15 +6,9 @@ from frontend.commons import Button, button_width, button_height
 from frontend.commons import vertical_spacing
 from frontend.commons import WHITE
 
-from frontend.pages.difficulty_selection import difficulty_selection_page
-from frontend.pages.settings import settings_page
-from frontend.pages.leaderboard import leaderboard_page
-
 from backend.config import config, load_settings
 
-# 初始化 pygame
 pygame.init()
-pygame.display.set_caption("联结词连连看 v0.91-alpha")
 
 # 主菜单
 def main_menu():
@@ -49,20 +43,21 @@ def main_menu():
             (SCREEN_WIDTH - button_width) // 2,
             SCREEN_HEIGHT // 2 - 1.5 * vertical_spacing,
             button_width, button_height,
-            difficulty_selection_page
+            lambda: setattr(config, "position", "difficulty_selection")
         ),
-        Button("排行榜",
-        (SCREEN_WIDTH - button_width) // 2,
-        SCREEN_HEIGHT // 2 - 0.5 * vertical_spacing,
-        button_width, button_height,
-        leaderboard_page
+        Button(
+            "排行榜",
+            (SCREEN_WIDTH - button_width) // 2,
+            SCREEN_HEIGHT // 2 - 0.5 * vertical_spacing,
+            button_width, button_height,
+            lambda: setattr(config, "position", "leaderboard")
         ),
         Button(
             "设置",
             (SCREEN_WIDTH - button_width) // 2,
             SCREEN_HEIGHT // 2 + 0.5 * vertical_spacing,
             button_width, button_height,
-            settings_page
+            lambda: setattr(config, "position", "settings")
         ),
         Button(
             "退出游戏",
@@ -75,6 +70,10 @@ def main_menu():
 
     # 绘制动态元素
     while True:
+        # 检查状态变化
+        if config.position != "main_menu":  # 状态改变，退出循环
+            return
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()

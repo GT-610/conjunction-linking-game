@@ -38,10 +38,13 @@ def help_page(in_game=False, game_state=None):
             y=SCREEN_HEIGHT - 100,
             width=200,
             height=50,
-            callback=first_enter_game
+            callback=lambda: setattr(config, "position", "game")
         )
 
     while True:
+        if config.position != "help":
+            return
+
         # 处理事件
         for event in pygame.event.get():
             if event.type == pygame.QUIT:  # 处理退出事件

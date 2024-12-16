@@ -65,20 +65,23 @@ def difficulty_selection_page():
             callback=choose_master,
             hover_color=(128, 0, 128)  # 紫色
             )]
-    
-    from frontend.pages.main_menu import main_menu
+
     buttons.append(
         Button(
             "返回主菜单",
             (SCREEN_WIDTH - button_width) // 2 - 25,
             540, 200,
             button_height,
-            callback=main_menu
+            callback=lambda: setattr(config, "position", "main_menu")
         )
     )
 
     # 绘制动态元素
     while True:
+        # 检查状态变化
+        if config.position != "difficulty_selection":
+            return
+
         # 事件处理
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

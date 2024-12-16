@@ -49,11 +49,14 @@ def checkout_page(elapsed_time):
         SCREEN_WIDTH // 2 - 100,
         SCREEN_HEIGHT - 100,
         200, 50,
-        return_to_main_menu
+        lambda: setattr(config, "position", "main_menu")
     )
 
     # 绘制动态元素
     while True:
+        if config.position != "checkout":
+            return
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -86,8 +89,3 @@ def calc_overall_score(clear_rate, difficulty, elapsed_time):
 
     # 保证最低得分为0
     return max(0, int(overall_score))
-
-
-def return_to_main_menu():
-    from frontend.pages.main_menu import main_menu
-    main_menu()
