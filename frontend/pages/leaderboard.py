@@ -3,7 +3,7 @@ import sys
 import time
 pygame.init()
 
-from frontend.commons import screen, font, small_font, BLACK, WHITE, GRAY, Button
+from frontend.commons import screen, SCREEN_WIDTH, font, small_font, BLACK, WHITE, GRAY, Button
 from backend.leaderboard import load_leaderboard, save_to_leaderboard, get_sorted_leaderboard
 from backend.config import DIFFICULTY_MAPPING
 
@@ -47,7 +47,7 @@ def leaderboard_page():
         
         # 绘制表头
         headers = ["用户名", "通关", "难度", "日期", "分数"]
-        header_x_positions = [50, 250, 450, 600, 1000]  # 每列起始 x 坐标
+        header_x_positions = [100, 300, 500, 650, 1050]  # 每列起始 x 坐标
         for i, header in enumerate(headers):
             header_text = header_font.render(header, True, GRAY)
             screen.blit(header_text, (header_x_positions[i], y_offset))
@@ -57,7 +57,7 @@ def leaderboard_page():
         for record in sorted_records[:11]:
             local_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(record['date']))
             cleared_text = "通关" if record["is_cleared"] else "未通关"
-            difficulty_text = DIFFICULTY_MAPPING.get(record["difficulty"], "未知难度")  # 根据整数获取难度文字
+            difficulty_text = DIFFICULTY_MAPPING[record["difficulty"]]  # 根据整数获取难度文字
             row_data = [
                 record['username'],
                 cleared_text,
@@ -74,7 +74,7 @@ def leaderboard_page():
     from frontend.pages.main_menu import main_menu
     back_button = Button(
         "返回主菜单",
-        300,
+        SCREEN_WIDTH // 2 - 125,
         500,
         200, 50,
         callback=main_menu

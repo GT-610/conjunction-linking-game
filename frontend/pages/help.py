@@ -4,7 +4,7 @@ from frontend.commons import screen, BLACK, WHITE, YELLOW, font, small_font, SCR
 from backend.config import config, DIFFICULTY_MAPPING
 from backend.conjunctions import DIFFICULTY_CONJUNCTIONS, calculate_truth_table
 
-def help_page(in_game=False):
+def help_page(in_game=False, game_state=None):
     # 获取当前难度的联结词
     conjunctions = DIFFICULTY_CONJUNCTIONS[config.difficulty]
     # 根据当前难度计算真值表
@@ -13,6 +13,11 @@ def help_page(in_game=False):
 
     # 如果是通过游戏内进入，显示“返回”按钮
     if in_game:
+        # 退出帮助页面的回调函数
+        def exit_help_page():
+            from frontend.pages.game import game_page
+            game_page(game_state)
+            
         return_button = Button(
             text="返回",
             x=SCREEN_WIDTH // 2 - 100,
@@ -85,10 +90,6 @@ def help_page(in_game=False):
 
         # 更新屏幕
         pygame.display.flip()
-
-# 退出帮助页面的回调函数
-def exit_help_page():
-    print("退出帮助待实现")
 
 def first_enter_game():
     config.first_play[config.difficulty] = False
