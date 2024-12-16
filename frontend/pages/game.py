@@ -13,17 +13,12 @@ from backend.config import config
 from backend.conj_block import ConjunctionBlock
 from backend.conjunctions import DIFFICULTY_CONJUNCTIONS
 from backend.link import getLinkType
-from backend.timer import Timer
-from backend.game_events import update_blocks, handle_block_click
+from backend.timer import timer
+from backend.game_events import update_blocks, handle_block_click, save_game_state, load_game_state
 
-# 初始化计时器
-timer = Timer()
 
 # 游戏主界面
 def game_page(game_state=None):
-
-    # 初始化计时器并重置计时器和基本参数
-    global timer
 
     # 新游戏模式：初始化游戏
     if game_state is None:
@@ -54,7 +49,7 @@ def game_page(game_state=None):
         # 生成所有块的索引 (i, j) 的坐标
         indices = np.array(np.meshgrid(range(map_size + 2), range(map_size + 2))).T.reshape(-1, 2)
 
-        # 使用列表推导创建 Block 对象，减少显式的两层循环
+        # 创建 Block 对象
         blocks = np.array([
             Block(map, (i, j), 50, offset_x, offset_y)
             for i, j in indices
@@ -260,7 +255,6 @@ def draw_link_line(block1, block2, link_type, blocks, color=YELLOW):
 
     elif link_type[0] == 2:
         blockCorner = blocks[link_type[1][0]][link_type[1][1]].outerCenterPoint
-
         pygame.draw.line(screen, color, start_pos, blockCorner, 5)
         pygame.draw.line(screen, color, blockCorner, end_pos, 5)
         print("绘制单拐点线")
@@ -291,21 +285,6 @@ def pause_game():
 # 重新开始
 def restart_game():
     game_page()
-
-# 保存当前游戏状态
-def save_game_state(map, blocks, conj_blocks):
-    return {
-        "map": map,
-        "blocks": blocks,
-        "conj_blocks": conj_blocks
-    }
-
-# 恢复游戏状态
-def load_game_state(game_state):
-    map = game_state["map"]
-    blocks = game_state["blocks"]
-    conj_blocks = game_state["conj_blocks"]
-    return map, blocks, conj_blocks
 
 # 返回主菜单
 def return_main_menu():

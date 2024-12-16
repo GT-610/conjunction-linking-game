@@ -6,7 +6,6 @@ from frontend.commons import Button, button_width, button_height
 from frontend.commons import vertical_spacing
 from frontend.commons import BLACK, GRAY, WHITE
 
-# 导入其他页面
 from frontend.pages.difficulty_selection import difficulty_selection_page
 from frontend.pages.settings import settings_page
 from frontend.pages.leaderboard import leaderboard_page
@@ -15,14 +14,13 @@ from backend.config import config, load_settings
 
 # 初始化 pygame
 pygame.init()
-pygame.display.set_caption("连连看")
+pygame.display.set_caption("联结词连连看 Ver 0.90")
 
 # 主菜单
 def main_menu():
-
     settings = load_settings()
     if "username" in settings:
-        config.username = settings["username"]  # 如果配置文件中有用户名，加载它
+        config.username = settings["username"]
     if "first_play" in settings:
         config.first_play = settings["first_play"]
     del settings
@@ -57,10 +55,8 @@ def main_menu():
             quit_game
         )
     ]
-    
-    
+
     while True:
-        # 事件处理
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -78,7 +74,6 @@ def main_menu():
         text_surface = small_font.render(f"欢迎回来，{config.username}！", True, WHITE)
         text_rect = text_surface.get_rect(topright=(SCREEN_WIDTH - 20, 20))  # 右上角，留些边距
         screen.blit(text_surface, text_rect)
-
 
         # 绘制按钮
         for button in buttons:

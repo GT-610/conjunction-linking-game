@@ -41,3 +41,6 @@ class Timer:
         self.paused_duration = 0
         self.pause_start_time = 0
         self.is_paused = False
+
+# 初始化计时器
+timer = Timer()
