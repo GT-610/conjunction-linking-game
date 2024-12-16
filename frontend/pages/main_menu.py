@@ -14,7 +14,7 @@ from backend.config import config, load_settings
 
 # 初始化 pygame
 pygame.init()
-pygame.display.set_caption("联结词连连看 Ver 0.90")
+pygame.display.set_caption("联结词连连看 v0.90-alpha")
 
 # 主菜单
 def main_menu():
@@ -81,7 +81,6 @@ def main_menu():
 
         # 更新屏幕
         pygame.display.flip()
-
 
 # 退出游戏
 def quit_game():
