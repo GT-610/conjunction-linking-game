@@ -4,7 +4,7 @@ pygame.init()
 
 from frontend.commons import screen, SCREEN_WIDTH, font
 from frontend.commons import Button, small_font, Slider, TextInputBox
-from frontend.commons import WHITE, bg
+from frontend.commons import WHITE, BgManager
 
 from backend.config import config, save_settings
 
@@ -28,6 +28,9 @@ def settings_page():
         print(f"用户名已更改为：{config.username}")
     confirm_button = Button("确认", 750, 395, 100, 50, callback=confirm_button_callback)
 
+    # 背景
+    bg = BgManager("assets/bg1.png", 100)
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -44,7 +47,7 @@ def settings_page():
                 back_button.check_click()
                 confirm_button.check_click()
 
-        # 背景
+        # 绘制背景
         bg.draw(screen)
 
         # 绘制标题

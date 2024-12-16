@@ -1,6 +1,6 @@
 import pygame
 import sys
-from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font, small_font, bg, Button, WHITE
+from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font, small_font, bg0, Button, WHITE
 from backend.leaderboard import save_to_leaderboard
 from backend.config import config
 
@@ -34,7 +34,7 @@ def checkout_page(elapsed_time):
                 return_main_menu_button.check_click()
 
         # 背景
-        bg.draw(screen)
+        bg0.draw(screen)
 
         # 通关状态
         cleared_text = "通关" if config.is_cleared else "未通关"

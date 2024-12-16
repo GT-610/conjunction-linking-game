@@ -4,11 +4,24 @@ pygame.init()
 
 from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT
 from frontend.commons import Button, button_width, button_height, vertical_spacing
-from frontend.commons import font, bg, WHITE, GRAY
+from frontend.commons import font, WHITE
 from backend.config import config, DIFFICULTY_MAPPING
 
 # 选择难度界面
 def difficulty_selection_page():
+    
+    ## 绘制静态元素
+    ## 背景
+    from frontend.commons import bg0
+    bg0.draw(screen)
+    del bg0
+
+    ## 标题
+    title_surface = font.render("选择难度", True, WHITE)
+    title_rect = title_surface.get_rect(center=(SCREEN_WIDTH // 2, 100))
+    screen.blit(title_surface, title_rect)
+    del title_surface, title_rect
+
     # 按钮回调函数
     def choose_easy():
         config.difficulty = 0
@@ -63,6 +76,7 @@ def difficulty_selection_page():
         )
     )
 
+    # 绘制动态元素
     while True:
         # 事件处理
         for event in pygame.event.get():
@@ -72,13 +86,6 @@ def difficulty_selection_page():
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # 左键点击
                 for button in buttons:
                     button.check_click()
-
-        bg.draw(screen)
-
-        # 绘制标题
-        title_surface = font.render("选择难度", True, WHITE)
-        title_rect = title_surface.get_rect(center=(SCREEN_WIDTH // 2, 100))
-        screen.blit(title_surface, title_rect)
 
         # 绘制按钮
         for button in buttons:

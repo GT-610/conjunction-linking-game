@@ -3,7 +3,7 @@ import sys
 import time
 pygame.init()
 
-from frontend.commons import screen, SCREEN_WIDTH, font, small_font, bg, WHITE, GRAY, Button
+from frontend.commons import screen, SCREEN_WIDTH, font, small_font, BgManager, WHITE, Button
 from backend.leaderboard import load_leaderboard, save_to_leaderboard, get_sorted_leaderboard
 from backend.config import DIFFICULTY_MAPPING
 
@@ -21,6 +21,7 @@ def leaderboard_page():
     leaderboard_data = load_leaderboard()
 
     # 背景
+    bg = BgManager("assets/bg2.png", 100)
     bg.draw(screen)
 
     # 显示更新时间
@@ -48,7 +49,7 @@ def leaderboard_page():
         headers = ["用户名", "通关", "难度", "日期", "分数"]
         header_x_positions = [100, 300, 500, 650, 1050]  # 每列起始 x 坐标
         for i, header in enumerate(headers):
-            header_text = header_font.render(header, True, GRAY)
+            header_text = header_font.render(header, True, WHITE)
             screen.blit(header_text, (header_x_positions[i], y_offset))
         y_offset += 40  # 表头与内容的间距
 

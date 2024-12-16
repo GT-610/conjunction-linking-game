@@ -54,7 +54,7 @@ def help_page(in_game=False, game_state=None):
                     start_game_button.check_click()
 
         # 背景
-        bg.draw(screen)
+        bg0.draw(screen)
 
         # 绘制标题
         title = font.render(f"{DIFFICULTY_MAPPING[config.difficulty]}难度游玩说明", True, WHITE)

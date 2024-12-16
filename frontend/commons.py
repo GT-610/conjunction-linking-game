@@ -32,7 +32,7 @@ class BgManager:
     def draw(self, screen):
         screen.blit(self.bgi, (0, 0))
         screen.blit(self.dark_overlay, (0, 0))
-bg = BgManager("assets/bg.jpg", 100)
+bg0 = BgManager("assets/bg0.jpg", 100)
 
 # 按钮参数
 button_width = 150
