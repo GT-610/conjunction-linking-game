@@ -101,10 +101,6 @@ def difficulty_selection_page():
 def enter_game():
     print("是否首次游玩：", config.first_play[config.difficulty])
     if config.first_play[config.difficulty]:
-        # 显示帮助页面
-        from frontend.pages.help import help_page
-        help_page()
+        config.position = "help"
     else:
-        # 直接进入游戏
-        from frontend.pages.game import game_page
-        game_page()
+        config.position = "game"

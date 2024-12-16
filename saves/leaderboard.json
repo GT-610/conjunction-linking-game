@@ -1,5 +1,5 @@
 {
-    "last_updated": 1734258742,
+    "last_updated": 1734359668,
     "records": [
         {
             "username": "test",
@@ -7,6 +7,55 @@
             "date": 114514,
             "is_cleared": true,
             "oscore": 204
+        },
+        {
+            "username": "PLAYER",
+            "difficulty": 0,
+            "date": 1734359292,
+            "is_cleared": false,
+            "oscore": 0
+        },
+        {
+            "username": "PLAYER",
+            "difficulty": 0,
+            "date": 1734359293,
+            "is_cleared": false,
+            "oscore": 0
+        },
+        {
+            "username": "PLAYER",
+            "difficulty": 0,
+            "date": 1734359293,
+            "is_cleared": false,
+            "oscore": 0
+        },
+        {
+            "username": "PLAYER",
+            "difficulty": 0,
+            "date": 1734359338,
+            "is_cleared": false,
+            "oscore": 0
+        },
+        {
+            "username": "PLAYER",
+            "difficulty": 0,
+            "date": 1734359388,
+            "is_cleared": false,
+            "oscore": 0
+        },
+        {
+            "username": "PLAYER",
+            "difficulty": 0,
+            "date": 1734359424,
+            "is_cleared": false,
+            "oscore": 0
+        },
+        {
+            "username": "PLAYER",
+            "difficulty": 0,
+            "date": 1734359668,
+            "is_cleared": false,
+            "oscore": 0
         }
     ]
 }

@@ -38,7 +38,7 @@ def help_page(in_game=False, game_state=None):
             y=SCREEN_HEIGHT - 100,
             width=200,
             height=50,
-            callback=lambda: setattr(config, "position", "game")
+            callback=first_enter_game
         )
 
     while True:
@@ -106,5 +106,4 @@ def first_enter_game():
     save_settings(config)
     del save_settings
     
-    from frontend.pages.game import game_page
-    game_page()
+    config.position = "game"

@@ -159,6 +159,9 @@ def game_page(game_state=None):
 
     # 绘制游戏界面
     while True:
+        if config.position != "game":
+            return
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
