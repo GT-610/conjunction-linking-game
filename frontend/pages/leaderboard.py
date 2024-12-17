@@ -28,11 +28,12 @@ def leaderboard_page():
 
     # 显示更新时间
     last_updated_time = leaderboard_data.get("last_updated", 0)
-    last_updated_text = small_font.render(
-        f"更新时间: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(last_updated_time))}",
-        True, WHITE
-    )
-    screen.blit(last_updated_text, (screen.get_width() - last_updated_text.get_width() - 20, 10))
+    if last_updated_time:
+        last_updated_text = f"更新时间: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(last_updated_time))}"
+    else:
+        last_updated_text = "尚未更新过排行榜"
+    last_updated_rendered = small_font.render(last_updated_text, True, WHITE)
+    screen.blit(last_updated_rendered, (screen.get_width() - last_updated_rendered.get_width() - 20, 10))
 
     # 获取排行榜记录
     records = leaderboard_data.get("records", [])
@@ -75,7 +76,7 @@ def leaderboard_page():
     # 绘制返回按钮
     back_button = Button(
         "返回主菜单",
-        SCREEN_WIDTH // 2 - 125,
+        SCREEN_WIDTH // 2 - 100,
         500,
         200, 50,
         callback=lambda: setattr(config, "position", "main_menu")
