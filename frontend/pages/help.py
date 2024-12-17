@@ -1,10 +1,10 @@
 import pygame
-from frontend.commons import screen, BLACK, WHITE, YELLOW, font, small_font, SCREEN_WIDTH, SCREEN_HEIGHT, Button
+from frontend.commons import screen, WHITE, YELLOW, font, small_font, bg0, SCREEN_WIDTH, SCREEN_HEIGHT, Button
 
 from backend.config import config, DIFFICULTY_MAPPING
 from backend.conjunctions import DIFFICULTY_CONJUNCTIONS, calculate_truth_table
 
-def help_page(in_game=False, game_state=None):
+def help_page(in_game=False):
     # 获取当前难度的联结词
     conjunctions = DIFFICULTY_CONJUNCTIONS[config.difficulty]
     # 根据当前难度计算真值表
@@ -12,12 +12,7 @@ def help_page(in_game=False, game_state=None):
     del conjunctions
 
     # 如果是通过游戏内进入，显示“返回”按钮
-    if in_game:
-        # 退出帮助页面的回调函数
-        def exit_help_page():
-            from frontend.pages.game import game_page
-            game_page(game_state)
-            
+    if in_game:            
         return_button = Button(
             text="返回",
             x=SCREEN_WIDTH // 2 - 100,
@@ -42,6 +37,9 @@ def help_page(in_game=False, game_state=None):
         )
 
     while True:
+        if config.position != "help":
+            return
+
         # 处理事件
         for event in pygame.event.get():
             if event.type == pygame.QUIT:  # 处理退出事件
@@ -53,16 +51,15 @@ def help_page(in_game=False, game_state=None):
                 else:
                     start_game_button.check_click()
 
-        # 绘制帮助页面内容
-        screen.fill((0, 0, 0))  # 清屏为黑色背景
+        # 背景
+        bg0.draw(screen)
 
         # 绘制标题
         title = font.render(f"{DIFFICULTY_MAPPING[config.difficulty]}难度游玩说明", True, WHITE)
         screen.blit(title, (SCREEN_WIDTH // 2 - title.get_width() // 2, 50))
 
         # 绘制真值表
-        column_spacing = 150  # 列间距
-        table_x_start = SCREEN_WIDTH // 2 - (len(truth_table[0]) - 1) * column_spacing // 2  # 居中起始点
+        table_x_start = SCREEN_WIDTH // 2 - (len(truth_table[0]) - 1) * 150 // 2  # 居中起始点
 
         # 绘制游玩提示
         tip = {
@@ -81,21 +78,24 @@ def help_page(in_game=False, game_state=None):
         for i, row in enumerate(truth_table):
             for j, cell in enumerate(row):
                 cell_text = small_font.render(cell, True, WHITE)
-                cell_x = table_x_start + j * column_spacing  # 每列增加列间距
+                cell_x = table_x_start + j * 150
                 cell_y = 150 + i * 40  # 每行固定高度
                 screen.blit(cell_text, (cell_x, cell_y))
-
 
         # 绘制按钮
         if in_game:
             return_button.draw(screen)
             screen.blit(paused_text, paused_rect)
-    
         else:
             start_game_button.draw(screen)
 
         # 更新屏幕
         pygame.display.flip()
+
+def exit_help_page():
+    config.position = "game"
+    from frontend.pages.game import pause_game
+    pause_game()
 
 def first_enter_game():
     config.first_play[config.difficulty] = False
@@ -105,5 +105,4 @@ def first_enter_game():
     save_settings(config)
     del save_settings
     
-    from frontend.pages.game import game_page
-    game_page()
+    config.position = "game"

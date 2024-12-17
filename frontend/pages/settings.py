@@ -4,23 +4,22 @@ pygame.init()
 
 from frontend.commons import screen, SCREEN_WIDTH, font
 from frontend.commons import Button, small_font, Slider, TextInputBox
-from frontend.commons import WHITE, BLACK
+from frontend.commons import WHITE, BgManager
 
 from backend.config import config, save_settings
 
 # 设置界面
 def settings_page():
     # 滑块实例
-    bgm_slider = Slider(SCREEN_WIDTH // 2 - 100, 200, 200, initial_value=50)
-    sfx_slider = Slider(SCREEN_WIDTH // 2 - 100, 300, 200, initial_value=50)
+    bgm_slider = Slider(SCREEN_WIDTH // 2 - 100, 200, 200, initial_value=0)
+    sfx_slider = Slider(SCREEN_WIDTH // 2 - 100, 300, 200, initial_value=0)
     name_input = TextInputBox(SCREEN_WIDTH // 2 - 100, 400, 200, 40, text=config.username)
 
     # 返回按钮
-    from frontend.pages.main_menu import main_menu
-    def back_button_callback():
-        save_settings(config)
-        main_menu()
-    back_button = Button("返回主菜单", SCREEN_WIDTH // 2 - 100, 500, 200, 50, callback=back_button_callback)
+    back_button = Button(
+        "返回主菜单",
+        SCREEN_WIDTH // 2 - 100, 500, 200, 50,
+        callback=lambda: setattr(config, "position", "main_menu"))
 
     # 确认按钮
     def confirm_button_callback():
@@ -28,7 +27,15 @@ def settings_page():
         print(f"用户名已更改为：{config.username}")
     confirm_button = Button("确认", 750, 395, 100, 50, callback=confirm_button_callback)
 
+    # 背景
+    bg = BgManager("assets/bgSettings.png", 100)
+
     while True:
+        if config.position != "settings":
+            save_settings(config)
+            print("已保存设置")
+            return
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -44,8 +51,8 @@ def settings_page():
                 back_button.check_click()
                 confirm_button.check_click()
 
-        # 绘制设置界面
-        screen.fill(BLACK)
+        # 绘制背景
+        bg.draw(screen)
 
         # 绘制标题
         title_surface = font.render("设置", True, WHITE)
@@ -66,10 +73,9 @@ def settings_page():
         name_text = small_font.render("玩家名称（修改后点击确认才能保存）:", True, WHITE)
         screen.blit(name_text, (SCREEN_WIDTH // 2 - 300, 340))
 
-        # 绘制返回按钮
+        # 绘制按钮
         back_button.draw(screen)
-        # 绘制确认按钮
-        confirm_button.draw(screen)  # 假设你有一个 confirm_button 对象
+        confirm_button.draw(screen)
 
         # 更新显示
         pygame.display.flip()

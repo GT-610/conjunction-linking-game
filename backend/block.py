@@ -32,13 +32,10 @@ class Block:
         pygame.draw.rect(screen, BLACK, (self.outerX, self.outerY, self.outerWidth, self.outerWidth), 2)
 
         # 渲染块的值（0 或 1）
-        value_text = small_font.render(str(self.value), True, BLACK)
+        text_color = BLACK if self.value == 0 else WHITE
+        value_text = small_font.render(str(self.value), True, text_color)
         value_rect = value_text.get_rect(center=(self.outerX + self.outerWidth // 2, self.outerY + self.outerWidth // 2))  # 计算中心坐标
         screen.blit(value_text, value_rect)
-
-    # 检测鼠标点击的位置是否在块的范围内
-    def is_clicked(self, pos):
-        return self.rect.collidepoint(pos)
 
     # 切换选中状态
     def toggle_selection(self):

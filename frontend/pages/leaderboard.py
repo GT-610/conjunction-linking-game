@@ -3,9 +3,9 @@ import sys
 import time
 pygame.init()
 
-from frontend.commons import screen, SCREEN_WIDTH, font, small_font, BLACK, WHITE, GRAY, Button
-from backend.leaderboard import load_leaderboard, save_to_leaderboard, get_sorted_leaderboard
-from backend.config import DIFFICULTY_MAPPING
+from frontend.commons import screen, SCREEN_WIDTH, font, small_font, WHITE, Button
+from backend.leaderboard import load_leaderboard, get_sorted_leaderboard
+from backend.config import config, DIFFICULTY_MAPPING
 
 # 排行榜界面
 def leaderboard_page():
@@ -20,17 +20,20 @@ def leaderboard_page():
     # 加载排行榜数据
     leaderboard_data = load_leaderboard()
 
-    # 清空加载中的文字
-    screen.fill(BLACK)
-    pygame.display.update()
+    # 背景
+    from frontend.commons import BgManager
+    bg = BgManager("assets/bgLeaderboard.png", 100)
+    bg.draw(screen)
+    del bg, BgManager
 
     # 显示更新时间
     last_updated_time = leaderboard_data.get("last_updated", 0)
-    last_updated_text = small_font.render(
-        f"更新时间: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(last_updated_time))}",
-        True, WHITE
-    )
-    screen.blit(last_updated_text, (screen.get_width() - last_updated_text.get_width() - 20, 10))
+    if last_updated_time:
+        last_updated_text = f"更新时间: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(last_updated_time))}"
+    else:
+        last_updated_text = "尚未更新过排行榜"
+    last_updated_rendered = small_font.render(last_updated_text, True, WHITE)
+    screen.blit(last_updated_rendered, (screen.get_width() - last_updated_rendered.get_width() - 20, 10))
 
     # 获取排行榜记录
     records = leaderboard_data.get("records", [])
@@ -42,14 +45,14 @@ def leaderboard_page():
         # 表格化数据
         sorted_records = get_sorted_leaderboard()
         y_offset = 80  # 起始 y 位置
-        header_font = pygame.font.Font("fonts/SourceHanSansCN-Regular.otf", 36)
-        table_font = pygame.font.Font("fonts/SourceHanSansCN-Regular.otf", 28)
+        header_font = pygame.font.Font("assets/SourceHanSansCN-Regular.otf", 36)
+        table_font = pygame.font.Font("assets/SourceHanSansCN-Regular.otf", 28)
         
         # 绘制表头
         headers = ["用户名", "通关", "难度", "日期", "分数"]
         header_x_positions = [100, 300, 500, 650, 1050]  # 每列起始 x 坐标
         for i, header in enumerate(headers):
-            header_text = header_font.render(header, True, GRAY)
+            header_text = header_font.render(header, True, WHITE)
             screen.blit(header_text, (header_x_positions[i], y_offset))
         y_offset += 40  # 表头与内容的间距
 
@@ -71,25 +74,26 @@ def leaderboard_page():
             y_offset += 35  # 每条记录之间的垂直间距
 
     # 绘制返回按钮
-    from frontend.pages.main_menu import main_menu
     back_button = Button(
         "返回主菜单",
-        SCREEN_WIDTH // 2 - 125,
+        SCREEN_WIDTH // 2 - 100,
         500,
         200, 50,
-        callback=main_menu
+        callback=lambda: setattr(config, "position", "main_menu")
     )
-    back_button.draw(screen)
-    pygame.display.flip()
 
-    # 事件处理，保持窗口响应
-    running = True
-    clock = pygame.time.Clock()
-    while running:
-        clock.tick(60)  # 限制帧率
+    while True:
+        if config.position != "leaderboard":
+            return
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # 左键点击
                 back_button.check_click()  # 点击返回按钮
+
+        # 绘制返回按钮
+        back_button.draw(screen)
+
+        pygame.display.flip()

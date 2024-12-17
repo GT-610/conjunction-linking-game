@@ -9,16 +9,30 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 # 颜色
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-GRAY = (200, 200, 200)
+GRAY = (100, 100, 100)
 GREEN = (0, 255, 0)
-BLUE = (0, 102, 255)
+BLUE = (0, 100, 255)
 YELLOW = (255, 255, 0)
 RED = (255, 0, 0)
 
 # 字体
-font_path = "fonts/SourceHanSansCN-Regular.otf"
+font_path = "assets/SourceHanSansCN-Regular.otf"
 font = pygame.font.Font(font_path, 48)  # 标题字体
 small_font = pygame.font.Font(font_path, 36)  # 按钮字体
+
+# 背景
+class BgManager:
+    def __init__(self, image_path, brightness):
+        self.bgi = pygame.image.load(image_path).convert()
+        if brightness < 255:
+            self.dark_overlay = pygame.Surface(self.bgi.get_size(), flags=pygame.SRCALPHA)
+            alpha = 255 - brightness
+            self.dark_overlay.fill((0, 0, 0, alpha))
+
+    def draw(self, screen):
+        screen.blit(self.bgi, (0, 0))
+        screen.blit(self.dark_overlay, (0, 0))
+bg0 = BgManager("assets/bg0.jpg", 100)
 
 # 按钮参数
 button_width = 150

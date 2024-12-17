@@ -4,11 +4,25 @@ pygame.init()
 
 from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT
 from frontend.commons import Button, button_width, button_height, vertical_spacing
-from frontend.commons import font, BLACK, WHITE, GRAY
+from frontend.commons import font, WHITE
 from backend.config import config, DIFFICULTY_MAPPING
 
 # 选择难度界面
 def difficulty_selection_page():
+    
+    ## 绘制静态元素
+    ## 背景
+    from frontend.commons import BgManager
+    bg = BgManager("assets/bgDifficulty.png", 100)
+    bg.draw(screen)
+    del bg, BgManager
+
+    ## 标题
+    title_surface = font.render("选择难度", True, WHITE)
+    title_rect = title_surface.get_rect(center=(SCREEN_WIDTH // 2, 100))
+    screen.blit(title_surface, title_rect)
+    del title_surface, title_rect
+
     # 按钮回调函数
     def choose_easy():
         config.difficulty = 0
@@ -51,11 +65,23 @@ def difficulty_selection_page():
             callback=choose_master,
             hover_color=(128, 0, 128)  # 紫色
             )]
-    
-    from frontend.pages.main_menu import main_menu
-    buttons.append(Button("返回主菜单", 300, 440, 200, 50, callback=main_menu))
 
+    buttons.append(
+        Button(
+            "返回主菜单",
+            (SCREEN_WIDTH - button_width) // 2 - 25,
+            540, 200,
+            button_height,
+            callback=lambda: setattr(config, "position", "main_menu")
+        )
+    )
+
+    # 绘制动态元素
     while True:
+        # 检查状态变化
+        if config.position != "difficulty_selection":
+            return
+
         # 事件处理
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -64,14 +90,6 @@ def difficulty_selection_page():
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # 左键点击
                 for button in buttons:
                     button.check_click()
-
-        # 绘制界面
-        screen.fill(BLACK)
-
-        # 绘制标题
-        title_surface = font.render("选择难度", True, WHITE)
-        title_rect = title_surface.get_rect(center=(SCREEN_WIDTH // 2, 100))
-        screen.blit(title_surface, title_rect)
 
         # 绘制按钮
         for button in buttons:
@@ -83,10 +101,6 @@ def difficulty_selection_page():
 def enter_game():
     print("是否首次游玩：", config.first_play[config.difficulty])
     if config.first_play[config.difficulty]:
-        # 显示帮助页面
-        from frontend.pages.help import help_page
-        help_page()
+        config.position = "help"
     else:
-        # 直接进入游戏
-        from frontend.pages.game import game_page
-        game_page()
+        config.position = "game"

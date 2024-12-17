@@ -9,7 +9,7 @@ def generate_map(mapSize):
     return np.pad(map.reshape((mapSize, mapSize)), pad_width=1, mode='constant', constant_values=-1)
  
 
-# 当前地图中，如果没有可连通路线、进入死局时，将现有的图标进行打散重新洗牌。
+# 洗牌
 def shuffle_map(map, mapSize):
     inner_map = map[1:-1, 1:-1].flatten() # 去除边界
     map = np.array([i for i in icons_arr if i >= 0])

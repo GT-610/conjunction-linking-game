@@ -4,7 +4,7 @@ pygame.init()
 
 # 显示加载进度的函数
 def display_loading_message(screen, message, font):
-    screen.fill(BLACK)  # 清空屏幕
+    screen.fill(BLACK)
 
     # 显示加载文本
     map_generating_text = font.render("游戏加载中", True, WHITE)
