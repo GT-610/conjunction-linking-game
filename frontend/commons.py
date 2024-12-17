@@ -41,7 +41,6 @@ vertical_spacing = 80
 
 from backend.config import config
 button_click_sound = pygame.mixer.Sound("assets/sounds/button_click.mp3")
-button_click_sound.set_volume(config.sfx_vol / 100)
 
 # 按钮类
 class Button:
@@ -51,6 +50,7 @@ class Button:
         self.callback = callback
         self.color = GRAY
         self.hover_color = hover_color
+        button_click_sound.set_volume(config.sfx_vol / 100)
 
     def draw(self, surface):
         # 检测鼠标是否悬停
