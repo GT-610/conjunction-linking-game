@@ -1,4 +1,10 @@
 from backend.config import config
+import pygame
+pygame.init()
+
+# 加载音效
+link_sound = pygame.mixer.Sound("assets/sounds/link.mp3")
+notlink_sound = pygame.mixer.Sound("assets/sounds/notlink.mp3")
 
 # 更新块逻辑
 def update_blocks(map, blocks):
@@ -38,10 +44,12 @@ def handle_block_click(block, map, blocks, cur_conj):
 
         # 检查这两个块是否连通
         if link_type:
+            link_sound.play() # 播放连通音效
             from frontend.pages.game import draw_link_line
             draw_link_line(selected_block, block, link_type, blocks)  # 绘制连线
-            # 更新完成度
-            config.clear_rate += 0.02
+            config.clear_rate += 0.02 # 更新完成度
+        else:
+            notlink_sound.play()
 
         # 重置选择状态
         selected_block.toggle_selection()

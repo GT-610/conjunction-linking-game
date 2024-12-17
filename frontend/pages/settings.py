@@ -28,7 +28,7 @@ def settings_page():
     confirm_button = Button("确认", 750, 395, 100, 50, callback=confirm_button_callback)
 
     # 背景
-    bg = BgManager("assets/bgSettings.png", 100)
+    bg = BgManager("assets/backgrounds/bgSettings.png", 100)
 
     while True:
         if config.position != "settings":

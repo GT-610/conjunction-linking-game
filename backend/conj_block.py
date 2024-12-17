@@ -2,6 +2,8 @@ import pygame
 from frontend.commons import font_path, RED, GRAY, WHITE
 from backend.config import config
 
+conj_click_sound = pygame.mixer.Sound("assets/sounds/conj_click.mp3")
+
 class ConjunctionBlock:
     def __init__(self, conj_name, position, size, callback):
         self.conj_name = conj_name  # 联结词名称
@@ -31,7 +33,7 @@ class ConjunctionBlock:
     # 处理点击事件
     def handle_click(self, pos):
         if self.rect.collidepoint(pos):
-            # 调用回调函数切换选中状态
+            conj_click_sound.play()
             self.callback(self)
             return True
         return False
