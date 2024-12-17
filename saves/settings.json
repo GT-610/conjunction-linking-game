@@ -1,5 +1,6 @@
 {
     "username": "PLAYER",
+    "sfx_vol": 50,
     "first_play": [
         true,
         true,
