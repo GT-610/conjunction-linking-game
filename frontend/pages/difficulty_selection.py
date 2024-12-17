@@ -13,7 +13,7 @@ def difficulty_selection_page():
     ## 绘制静态元素
     ## 背景
     from frontend.commons import BgManager
-    bg = BgManager("assets/bgDifficulty.png", 100)
+    bg = BgManager("assets/backgrounds/bgDifficulty.png", 100)
     bg.draw(screen)
     del bg, BgManager
 

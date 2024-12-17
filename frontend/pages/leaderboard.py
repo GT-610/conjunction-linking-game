@@ -22,7 +22,7 @@ def leaderboard_page():
 
     # 背景
     from frontend.commons import BgManager
-    bg = BgManager("assets/bgLeaderboard.png", 100)
+    bg = BgManager("assets/backgrounds/bgLeaderboard.png", 100)
     bg.draw(screen)
     del bg, BgManager
 
@@ -45,8 +45,8 @@ def leaderboard_page():
         # 表格化数据
         sorted_records = get_sorted_leaderboard()
         y_offset = 80  # 起始 y 位置
-        header_font = pygame.font.Font("assets/SourceHanSansCN-Regular.otf", 36)
-        table_font = pygame.font.Font("assets/SourceHanSansCN-Regular.otf", 28)
+        header_font = pygame.font.Font("assets/fonts/SourceHanSansCN-Regular.otf", 36)
+        table_font = pygame.font.Font("assets/fonts/SourceHanSansCN-Regular.otf", 28)
         
         # 绘制表头
         headers = ["用户名", "通关", "难度", "日期", "分数"]

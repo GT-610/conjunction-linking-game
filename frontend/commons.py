@@ -16,7 +16,7 @@ YELLOW = (255, 255, 0)
 RED = (255, 0, 0)
 
 # 字体
-font_path = "assets/SourceHanSansCN-Regular.otf"
+font_path = "assets/fonts/SourceHanSansCN-Regular.otf"
 font = pygame.font.Font(font_path, 48)  # 标题字体
 small_font = pygame.font.Font(font_path, 36)  # 按钮字体
 
@@ -32,12 +32,15 @@ class BgManager:
     def draw(self, screen):
         screen.blit(self.bgi, (0, 0))
         screen.blit(self.dark_overlay, (0, 0))
-bg0 = BgManager("assets/bg0.jpg", 100)
+bg0 = BgManager("assets/backgrounds/bg0.jpg", 100)
 
 # 按钮参数
 button_width = 150
 button_height = 50
 vertical_spacing = 80
+
+from backend.config import config
+button_click_sound = pygame.mixer.Sound("assets/sounds/button_click.mp3")
 
 # 按钮类
 class Button:
@@ -47,6 +50,7 @@ class Button:
         self.callback = callback
         self.color = GRAY
         self.hover_color = hover_color
+        button_click_sound.set_volume(config.sfx_vol / 100)
 
     def draw(self, surface):
         # 检测鼠标是否悬停
@@ -62,6 +66,7 @@ class Button:
 
     def check_click(self):
         if self.callback and self.rect.collidepoint(pygame.mouse.get_pos()):
+            button_click_sound.play()
             self.callback()
 
 # 滑条类

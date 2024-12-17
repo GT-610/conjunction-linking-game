@@ -1,6 +1,8 @@
 import pygame
-from frontend.commons import font_path, RED, GRAY, WHITE
+from frontend.commons import small_font, RED, GRAY, WHITE
 from backend.config import config
+
+conj_click_sound = pygame.mixer.Sound("assets/sounds/conj_click.mp3")
 
 class ConjunctionBlock:
     def __init__(self, conj_name, position, size, callback):
@@ -10,8 +12,7 @@ class ConjunctionBlock:
         self.selected = False  # 是否被选中
         self.callback = callback  # 回调函数
 
-        # 字体初始化
-        self.font = pygame.font.Font(font_path, 36)
+        conj_click_sound.set_volume(config.sfx_vol / 100)
 
     # 绘制联结词块
     def draw(self, screen):
@@ -24,14 +25,14 @@ class ConjunctionBlock:
         pygame.draw.rect(screen, border_color, self.rect, 3)
 
         # 联结词文字
-        text = self.font.render(self.conj_name, True, WHITE)
+        text = small_font.render(self.conj_name, True, WHITE)
         text_rect = text.get_rect(center=self.rect.center)
         screen.blit(text, text_rect)
 
     # 处理点击事件
     def handle_click(self, pos):
         if self.rect.collidepoint(pos):
-            # 调用回调函数切换选中状态
+            conj_click_sound.play()
             self.callback(self)
             return True
         return False
