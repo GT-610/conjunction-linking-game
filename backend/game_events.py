@@ -5,6 +5,9 @@ pygame.init()
 # 加载音效
 link_sound = pygame.mixer.Sound("assets/sounds/link.mp3")
 notlink_sound = pygame.mixer.Sound("assets/sounds/notlink.mp3")
+# 设置音效音量
+link_sound.set_volume(config.sfx_vol / 100)
+notlink_sound.set_volume(config.sfx_vol / 100)
 
 # 更新块逻辑
 def update_blocks(map, blocks):

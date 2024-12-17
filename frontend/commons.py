@@ -39,7 +39,9 @@ button_width = 150
 button_height = 50
 vertical_spacing = 80
 
+from backend.config import config
 button_click_sound = pygame.mixer.Sound("assets/sounds/button_click.mp3")
+button_click_sound.set_volume(config.sfx_vol / 100)
 
 # 按钮类
 class Button:

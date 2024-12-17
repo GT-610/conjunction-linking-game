@@ -3,6 +3,7 @@ class GameConfig:
         # 游戏主要状态
         self.username = "PLAYER" # 默认用户名
         self.position = "main_menu"
+        self.sfx_vol = 50
         self.params = {}
         self.difficulty = None # 游戏难度
         self.clear_rate = 0.0 # 完成度
@@ -60,6 +61,7 @@ def create_empty_config_file():
     # 如果文件不存在或损坏，则创建一个空的配置文件
     settings_data = {
         "username": "PLAYER",  # 默认用户名
+        "sfx_vol": 50,
         "first_play": config.first_play,  # 保存是否第一次游玩
     }
     os.makedirs(os.path.dirname(settings_path), exist_ok=True)  # 确保目录存在
@@ -72,6 +74,7 @@ def save_settings(config):
     # 创建保存数据的字典
     settings_data = {
         "username": config.username,
+        "sfx_vol": config.sfx_vol,
         "first_play": config.first_play
     }
 
