@@ -1,11 +1,10 @@
 import pygame
 from frontend.commons import screen, WHITE, YELLOW, font, small_font, bg0, SCREEN_WIDTH, SCREEN_HEIGHT, Button
-from frontend.pages.game import game_page
 
-from backend.config import config, navigate_with_params, DIFFICULTY_MAPPING
+from backend.config import config, DIFFICULTY_MAPPING
 from backend.conjunctions import DIFFICULTY_CONJUNCTIONS, calculate_truth_table
 
-def help_page(in_game=False, game_state=None):
+def help_page(in_game=False):
     # 获取当前难度的联结词
     conjunctions = DIFFICULTY_CONJUNCTIONS[config.difficulty]
     # 根据当前难度计算真值表
@@ -60,8 +59,7 @@ def help_page(in_game=False, game_state=None):
         screen.blit(title, (SCREEN_WIDTH // 2 - title.get_width() // 2, 50))
 
         # 绘制真值表
-        column_spacing = 150  # 列间距
-        table_x_start = SCREEN_WIDTH // 2 - (len(truth_table[0]) - 1) * column_spacing // 2  # 居中起始点
+        table_x_start = SCREEN_WIDTH // 2 - (len(truth_table[0]) - 1) * 150 // 2  # 居中起始点
 
         # 绘制游玩提示
         tip = {
@@ -80,7 +78,7 @@ def help_page(in_game=False, game_state=None):
         for i, row in enumerate(truth_table):
             for j, cell in enumerate(row):
                 cell_text = small_font.render(cell, True, WHITE)
-                cell_x = table_x_start + j * column_spacing  # 每列增加列间距
+                cell_x = table_x_start + j * 150
                 cell_y = 150 + i * 40  # 每行固定高度
                 screen.blit(cell_text, (cell_x, cell_y))
 

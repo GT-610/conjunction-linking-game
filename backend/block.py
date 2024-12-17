@@ -37,10 +37,6 @@ class Block:
         value_rect = value_text.get_rect(center=(self.outerX + self.outerWidth // 2, self.outerY + self.outerWidth // 2))  # 计算中心坐标
         screen.blit(value_text, value_rect)
 
-    # 检测鼠标点击的位置是否在块的范围内
-    def is_clicked(self, pos):
-        return self.rect.collidepoint(pos)
-
     # 切换选中状态
     def toggle_selection(self):
         self.selected = not self.selected

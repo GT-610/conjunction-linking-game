@@ -2,7 +2,7 @@ import pygame
 pygame.init()
 
 from backend.link import getLinkType
-from frontend.commons import screen, GREEN, BLACK, RED
+from frontend.commons import RED
 
 # 提示函数
 def hint_game(map, blocks):

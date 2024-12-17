@@ -5,16 +5,15 @@ pygame.init()
 
 from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT
 from frontend.commons import Button, button_width, button_height, small_font, bg0
-from frontend.commons import WHITE, BLUE, YELLOW
+from frontend.commons import WHITE, YELLOW
 
 from backend.map import generate_map
 from backend.block import Block
 from backend.config import config, navigate_with_params
 from backend.conj_block import ConjunctionBlock
 from backend.conjunctions import DIFFICULTY_CONJUNCTIONS
-from backend.link import getLinkType
 from backend.timer import timer
-from backend.game_events import update_blocks, handle_block_click, save_game_state, load_game_state
+from backend.game_events import update_blocks, handle_block_click
 
 
 # 游戏主界面
@@ -114,11 +113,10 @@ def game_page():
     )
 
     def show_help_page():
-        game_state = save_game_state(map, blocks, conj_blocks)
         pause_game()
         config.position = "help"
         from frontend.pages.help import help_page
-        help_page(in_game=True,game_state=game_state)
+        help_page(in_game=True)
 
     help_button = Button(
         text="帮助",
@@ -221,7 +219,7 @@ def game_page():
             navigate_with_params("checkout", elapsed_time=elapsed_time)
             return
 
-        # 暂停时显示提示
+        # 暂停时显示暂停文字
         if config.is_paused:
             paused_text = small_font.render("游戏暂停中", True, WHITE)
             paused_rect = paused_text.get_rect(topleft=(30, 100))
@@ -255,7 +253,7 @@ def draw_link_line(block1, block2, link_type, blocks, color=YELLOW):
         pygame.draw.line(screen, color, blockCorner2, end_pos, 5)
         print("绘制双拐点线")
 
-    # 更新屏幕，确保连线可见
+    # 更新屏幕
     pygame.display.update()
 
     # 延迟清屏

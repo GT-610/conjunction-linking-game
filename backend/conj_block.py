@@ -1,5 +1,5 @@
 import pygame
-from frontend.commons import font_path, RED, BLACK, GRAY, WHITE
+from frontend.commons import font_path, RED, GRAY, WHITE
 from backend.config import config
 
 class ConjunctionBlock:

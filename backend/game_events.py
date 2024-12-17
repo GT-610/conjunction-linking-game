@@ -71,18 +71,3 @@ def ClearLinkedBlocks(map, p1, p2):
     map[p1[0]][p1[1]] = -1
     map[p2[0]][p2[1]] = -1
     print("已消除")
-
-# 保存当前游戏状态
-def save_game_state(map, blocks, conj_blocks):
-    return {
-        "map": map,
-        "blocks": blocks,
-        "conj_blocks": conj_blocks
-    }
-
-# 恢复游戏状态
-def load_game_state(game_state):
-    map = game_state["map"]
-    blocks = game_state["blocks"]
-    conj_blocks = game_state["conj_blocks"]
-    return map, blocks, conj_blocks

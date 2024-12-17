@@ -4,7 +4,7 @@ import time
 pygame.init()
 
 from frontend.commons import screen, SCREEN_WIDTH, font, small_font, WHITE, Button
-from backend.leaderboard import load_leaderboard, save_to_leaderboard, get_sorted_leaderboard
+from backend.leaderboard import load_leaderboard, get_sorted_leaderboard
 from backend.config import config, DIFFICULTY_MAPPING
 
 # 排行榜界面
