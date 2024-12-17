@@ -11,8 +11,8 @@ from backend.config import config, save_settings
 # 设置界面
 def settings_page():
     # 滑块实例
-    bgm_slider = Slider(SCREEN_WIDTH // 2 - 100, 200, 200, initial_value=50)
-    sfx_slider = Slider(SCREEN_WIDTH // 2 - 100, 300, 200, initial_value=50)
+    bgm_slider = Slider(SCREEN_WIDTH // 2 - 100, 200, 200, initial_value=0)
+    sfx_slider = Slider(SCREEN_WIDTH // 2 - 100, 300, 200, initial_value=0)
     name_input = TextInputBox(SCREEN_WIDTH // 2 - 100, 400, 200, 40, text=config.username)
 
     # 返回按钮
