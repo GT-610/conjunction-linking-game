@@ -11,7 +11,7 @@ from frontend.pages.settings import settings_page
 
 # 初始化 pygame
 pygame.init()
-pygame.display.set_caption("联结词连连看 v0.92-alpha")
+pygame.display.set_caption("联结词连连看 v0.93-alpha")
 
 # 页面映射
 PAGE_MAPPING = {
@@ -37,6 +37,7 @@ if __name__ == "__main__":
 
             # 尝试调用页面函数，传递参数（如果有）
             if config.params:
+                print("参数：", config.params)
                 page_function(**config.params)
                 config.params.clear()  # 调用后清理参数
             else:

@@ -18,89 +18,74 @@ from backend.game_events import update_blocks, handle_block_click, save_game_sta
 
 
 # 游戏主界面
-def game_page(game_state=None):
+def game_page():
+    # 初始化计时器并重置基本参数
+    timer.reset()
+    config.reset()
 
-    # 新游戏模式：初始化游戏
-    if game_state is None:
-        # 初始化计时器并重置基本参数
-        timer.reset()
-        config.reset()
+    # 显示加载提示
+    from frontend.loading import display_loading_message
+    display_loading_message(screen, "加载基本框架...", small_font)
 
-        # 显示加载提示
-        from frontend.loading import display_loading_message
-        display_loading_message(screen, "加载基本框架...", small_font)
+    conjunctions = DIFFICULTY_CONJUNCTIONS[config.difficulty]
+    config.cur_conj = conjunctions[0]
 
-        conjunctions = DIFFICULTY_CONJUNCTIONS[config.difficulty]
-        config.cur_conj = conjunctions[0]
+    # 生成地图
+    display_loading_message(screen, "初始化地图...", small_font)
+    map_size = 10
+    map = generate_map(map_size)
+    print(f"已生成大小为 {map_size} * {map_size} 的地图")
 
-        # 生成地图
-        display_loading_message(screen, "初始化地图...", small_font)
-        map_size = 10
-        map = generate_map(map_size)
-        print(f"已生成大小为 {map_size} * {map_size} 的地图")
+    # 生成一维 blocks 数组并 reshape 为二维
+    display_loading_message(screen, "初始化地图块...", small_font)
+    ## 块的偏移坐标
+    offset_x = (SCREEN_WIDTH - map_size * 50) // 2
+    offset_y = (SCREEN_HEIGHT - map_size * 50) // 2
 
-        # 生成一维 blocks 数组并 reshape 为二维
-        display_loading_message(screen, "初始化地图块...", small_font)
-        ## 块的偏移坐标
-        offset_x = (SCREEN_WIDTH - map_size * 50) // 2
-        offset_y = (SCREEN_HEIGHT - map_size * 50) // 2
+    blocks_count = (map_size + 2) * (map_size + 2)
+    # 生成所有块的索引 (i, j) 的坐标
+    indices = np.array(np.meshgrid(range(map_size + 2), range(map_size + 2))).T.reshape(-1, 2)
 
-        blocks_count = (map_size + 2) * (map_size + 2)
-        # 生成所有块的索引 (i, j) 的坐标
-        indices = np.array(np.meshgrid(range(map_size + 2), range(map_size + 2))).T.reshape(-1, 2)
-
-        # 创建 Block 对象
-        blocks = np.array([
-            Block(map, (i, j), 50, offset_x, offset_y)
-            for i, j in indices
-        ], dtype=object)
+    # 创建 Block 对象
+    blocks = np.array([
+        Block(map, (i, j), 50, offset_x, offset_y)
+        for i, j in indices
+    ], dtype=object)
         
-        blocks = blocks.reshape((map_size + 2, map_size + 2))
-        del offset_x, offset_y, map_size, blocks_count
+    blocks = blocks.reshape((map_size + 2, map_size + 2))
+    del offset_x, offset_y, map_size, blocks_count
 
-        # 创建联结词块
-        display_loading_message(screen, "初始化联结词块...", small_font)
-        conj_blocks = []
-        block_size = 100  # 联结词块大小
-        start_x, start_y = 50, 150  # 起始位置
-        spacing = 20  # 块之间的间隔
+    # 创建联结词块
+    display_loading_message(screen, "初始化联结词块...", small_font)
+    conj_blocks = []
+    block_size = 100  # 联结词块大小
+    start_x, start_y = 50, 150  # 起始位置
+    spacing = 20  # 块之间的间隔
 
-        # 初始化联结词块
-        ## 联结词块被选中后的回调
-        def select_conjunction_block(selected_block):
-            config.cur_conj = selected_block.conj_name  # 更新当前联结词
+    # 初始化联结词块
+    ## 联结词块被选中后的回调
+    def select_conjunction_block(selected_block):
+        config.cur_conj = selected_block.conj_name  # 更新当前联结词
 
-        for i, conj_name in enumerate(conjunctions):
-            pos = (start_x, start_y + i * (block_size + spacing))
-            conj_block = ConjunctionBlock(conj_name, pos, block_size, select_conjunction_block)
-            conj_blocks.append(conj_block)
+    for i, conj_name in enumerate(conjunctions):
+        pos = (start_x, start_y + i * (block_size + spacing))
+        conj_block = ConjunctionBlock(conj_name, pos, block_size, select_conjunction_block)
+        conj_blocks.append(conj_block)
 
-        display_loading_message(screen, "加载其他组件...", small_font)
+    display_loading_message(screen, "加载其他组件...", small_font)
 
-        # 完成度
-        cr_text = small_font.render(f"完成度: 0%", True, WHITE)
-        print("初始化完成度完成")
-
-        # 剩余时间
-        time_text = small_font.render("已用时间: 0", True, WHITE)
-
-        # 游戏开始时启动计时
-        timer.start()
-        print("初始化计时器完成")
-
-        del display_loading_message
-
-    # 恢复模式：加载已有状态
-    else:
-        # 恢复计时器和配置
-        map, blocks, conj_blocks = load_game_state(game_state)
-        elapsed_time = timer.get_elapsed_time()
-        time_text = small_font.render(f"已用时间: {elapsed_time}", True, WHITE)
-        cr_text = small_font.render(f"完成度: {int(config.clear_rate * 100)}%", True, WHITE)
-        pause_game()
-
+    # 完成度
+    cr_text = small_font.render(f"完成度: 0%", True, WHITE)
     cr_rect = cr_text.get_rect(topleft=(30, 60))
+    print("初始化完成度完成")
+
+    # 剩余时间
+    time_text = small_font.render("已用时间: 0", True, WHITE)
     time_rect = time_text.get_rect(topleft=(30, 20))
+    timer.start() # 游戏开始时启动计时
+    print("初始化计时器完成")
+
+    del display_loading_message
 
     # 按钮创建
     pause_button = Button(
@@ -131,7 +116,9 @@ def game_page(game_state=None):
     def show_help_page():
         game_state = save_game_state(map, blocks, conj_blocks)
         pause_game()
-        navigate_with_params("help", in_game=True, game_state=game_state)
+        config.position = "help"
+        from frontend.pages.help import help_page
+        help_page(in_game=True,game_state=game_state)
 
     help_button = Button(
         text="帮助",

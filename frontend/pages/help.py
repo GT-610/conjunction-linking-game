@@ -1,5 +1,6 @@
 import pygame
 from frontend.commons import screen, WHITE, YELLOW, font, small_font, bg0, SCREEN_WIDTH, SCREEN_HEIGHT, Button
+from frontend.pages.game import game_page
 
 from backend.config import config, navigate_with_params, DIFFICULTY_MAPPING
 from backend.conjunctions import DIFFICULTY_CONJUNCTIONS, calculate_truth_table
@@ -12,11 +13,7 @@ def help_page(in_game=False, game_state=None):
     del conjunctions
 
     # 如果是通过游戏内进入，显示“返回”按钮
-    if in_game:
-        # 退出帮助页面的回调函数
-        def exit_help_page():
-            navigate_with_params("game", game_state=game_state)
-            
+    if in_game:            
         return_button = Button(
             text="返回",
             x=SCREEN_WIDTH // 2 - 100,
@@ -96,6 +93,11 @@ def help_page(in_game=False, game_state=None):
 
         # 更新屏幕
         pygame.display.flip()
+
+def exit_help_page():
+    config.position = "game"
+    from frontend.pages.game import pause_game
+    pause_game()
 
 def first_enter_game():
     config.first_play[config.difficulty] = False
