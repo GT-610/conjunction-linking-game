@@ -25,7 +25,7 @@ def main_menu():
     del bg0
 
     ## 文字
-    title_surface = font.render("游戏主菜单", True, WHITE)
+    title_surface = font.render("联结词连连看", True, WHITE)
     title_rect = title_surface.get_rect(center=(SCREEN_WIDTH // 2, 100))
     screen.blit(title_surface, title_rect)
     del title_surface, title_rect
@@ -34,6 +34,11 @@ def main_menu():
     text_rect = text_surface.get_rect(topright=(SCREEN_WIDTH - 20, 20))  # 右上角，留些边距
     screen.blit(text_surface, text_rect)
     del text_surface, text_rect
+
+    ver_surface = small_font.render("Ver. 0.95-alpha", True, WHITE)
+    ver_rect = ver_surface.get_rect(bottomright=(SCREEN_WIDTH - 20, SCREEN_HEIGHT - 20))
+    screen.blit(ver_surface, ver_rect)
+    del ver_surface, ver_rect
 
     # 创建按钮
     buttons = [
