@@ -1,8 +1,7 @@
 import pygame
 from frontend.commons import small_font, RED, GRAY, WHITE
 from backend.config import config
-
-conj_click_sound = pygame.mixer.Sound("assets/sounds/conj_click.mp3")
+from backend.sound import conj_click_sound
 
 class ConjunctionBlock:
     def __init__(self, conj_name, position, size, callback):

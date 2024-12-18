@@ -1,6 +1,4 @@
 import pygame
-pygame.init()
-
 from frontend.commons import small_font, BLUE, WHITE, YELLOW, BLACK
 
 class Block:

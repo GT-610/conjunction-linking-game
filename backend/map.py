@@ -4,7 +4,7 @@ import numpy as np
 def generate_map(mapSize):
     # 块类型只有0和1，所以只需要生成2种块
     total = mapSize ** 2
-    map = np.linspace(0, 2, total, endpoint = False, dtype=int)
+    map = np.linspace(0, 2, total, endpoint = False, dtype=np.int8)
     np.random.shuffle(map) # 洗牌
     return np.pad(map.reshape((mapSize, mapSize)), pad_width=1, mode='constant', constant_values=-1)
  

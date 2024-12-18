@@ -1,15 +1,12 @@
-import pygame
-pygame.init()
-
 from backend.link import getLinkType
 from frontend.commons import RED
-
-hint_sound = pygame.mixer.Sound("assets/sounds/hint.mp3")
+from backend.sound import hint_sound
 
 # 提示函数
-def hint_game(map, blocks):
+def hint_game(map, blocks, sfx_vol):
     print("激活提示")
 
+    hint_sound.set_volume(sfx_vol / 100)
     # 收集所有非空块的坐标
     non_empty_blocks = [(x, y) for x in range(len(map)) for y in range(len(map[x])) if map[x][y] != -1]
 
@@ -25,11 +22,8 @@ def hint_game(map, blocks):
 
                 hint_sound.play()
                 from frontend.pages.game import draw_link_line
-                draw_link_line(block1, block2, link_type, blocks, RED)
-                pygame.display.update()
+                draw_link_line(block1, block2, link_type, blocks, RED, 1000)
 
-                # 延迟一段时间后清除提示
-                pygame.time.delay(1000)  # 提示线显示 1 秒
                 return
 
     print("没有可提示的连通块")

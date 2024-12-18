@@ -1,10 +1,5 @@
 from backend.config import config
-import pygame
-pygame.init()
-
-# 加载音效
-link_sound = pygame.mixer.Sound("assets/sounds/link.mp3")
-notlink_sound = pygame.mixer.Sound("assets/sounds/notlink.mp3")
+from backend.sound import link_sound, notlink_sound
 
 # 更新块逻辑
 def update_blocks(map, blocks):
