@@ -13,10 +13,9 @@ pygame.init()
 # 主菜单
 def main_menu():
     settings = load_settings()
-    if "username" in settings:
-        config.username = settings["username"]
-    if "first_play" in settings:
-        config.first_play = settings["first_play"]
+    config.username = settings["username"]
+    config.sfx_vol = settings["sfx_vol"]
+    config.first_play = settings["first_play"]
     del settings
 
     # 绘制静态元素
