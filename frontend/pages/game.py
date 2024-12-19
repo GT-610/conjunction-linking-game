@@ -101,7 +101,7 @@ def game_page():
         (SCREEN_WIDTH - button_width) // 2 + button_width + 150,
         20,
         button_width,button_height,
-        restart_game
+        lambda: setattr(config, "restart", True)
     )
 
     return_main_menu_button = Button(
@@ -109,7 +109,7 @@ def game_page():
         SCREEN_WIDTH - 200 - 10,
         SCREEN_HEIGHT - button_height - 10,
         200, button_height,
-        return_main_menu
+        lambda: setattr(config, "is_game_end", True)
     )
 
     def show_help_page():
@@ -143,7 +143,7 @@ def game_page():
 
     # 绘制游戏界面
     while True:
-        if config.position != "game":
+        if config.position != "game" or config.restart:
             return
 
         for event in pygame.event.get():
@@ -267,11 +267,3 @@ def pause_game():
     else:
         timer.pause()  # 暂停计时
     config.is_paused = not config.is_paused
-
-# 重新开始
-def restart_game():
-    game_page()
-
-# 返回主菜单
-def return_main_menu():
-    config.is_game_end = True
