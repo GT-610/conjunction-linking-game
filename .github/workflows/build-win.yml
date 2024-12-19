@@ -35,11 +35,11 @@ jobs:
       run: |
         mkdir dist\assets
         mkdir dist\saves
-        copy /y assets\* dist\assets\
+        cp assets\* dist\main\assets\
         copy /y saves\* dist\saves\
 
     - name: Upload onefile build artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: onefile-build-win
         path: dist
@@ -69,11 +69,11 @@ jobs:
       run: |
         mkdir dist\assets
         mkdir dist\saves
-        copy /y assets\* dist\assets\
+        cp assets\* dist\main\assets\
         copy /y saves\* dist\saves\
 
     - name: Upload onefile build artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: onefile-build-win-debug
         path: dist
@@ -103,11 +103,11 @@ jobs:
       run: |
         mkdir dist\assets
         mkdir dist\saves
-        copy /y assets\* dist\assets\
+        cp assets\* dist\main\assets\
         copy /y saves\* dist\saves\
 
     - name: Upload build artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: folder-build-win
         path: dist
@@ -137,11 +137,11 @@ jobs:
       run: |
         mkdir dist\assets
         mkdir dist\saves
-        copy /y assets\* dist\assets\
-        copy /y saves\* dist\saves\
+        cp assets\* dist\main\assets\
+        cp saves\* dist\main\saves\
 
     - name: Upload build artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: folder-build-win-debug
         path: dist

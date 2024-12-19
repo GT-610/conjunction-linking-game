@@ -35,11 +35,11 @@ jobs:
         run: |
           mkdir -p dist/assets
           mkdir -p dist/saves
-          cp assets/* dist/assets/
-          cp saves/* dist/saves/
+          cp assets/* dist/main/assets/
+          cp saves/* dist/main/saves/
 
       - name: Upload onefile build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: onefile-build-linux
           path: dist
@@ -69,11 +69,11 @@ jobs:
         run: |
           mkdir -p dist/assets
           mkdir -p dist/saves
-          cp assets/* dist/assets/
-          cp saves/* dist/saves/
+          cp assets/* dist/main/assets/
+          cp saves/* dist/main/saves/
 
       - name: Upload onefile build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: onefile-build-linux-debug
           path: dist
@@ -103,11 +103,11 @@ jobs:
         run: |
           mkdir -p dist/assets
           mkdir -p dist/saves
-          cp assets/* dist/assets/
-          cp saves/* dist/saves/
+          cp assets/* dist/main/assets/
+          cp saves/* dist/main/saves/
 
       - name: Upload onefile build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: folder-build-linux
           path: dist
@@ -137,11 +137,11 @@ jobs:
         run: |
           mkdir -p dist/assets
           mkdir -p dist/saves
-          cp assets/* dist/assets/
-          cp saves/* dist/saves/
+          cp assets/* dist/main/assets/
+          cp saves/* dist/main/saves/
 
       - name: Upload onefile build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: folder-build-linux-debug
           path: dist
