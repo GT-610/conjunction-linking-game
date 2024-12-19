@@ -43,7 +43,7 @@ def game_page():
 
     blocks_count = (map_size + 2) * (map_size + 2)
     # 生成所有块的索引 (i, j) 的坐标
-    indices = np.array(np.meshgrid(range(map_size + 2), range(map_size + 2)), dtype=np.uint16).T.reshape(-1, 2)
+    indices = np.array(np.meshgrid(range(map_size + 2), range(map_size + 2)), dtype=np.int16).T.reshape(-1, 2)
 
     # 创建 Block 对象
     blocks = np.array([
