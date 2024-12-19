@@ -9,9 +9,7 @@ from frontend.pages.main_menu import main_menu
 from frontend.pages.leaderboard import leaderboard_page
 from frontend.pages.settings import settings_page
 
-# 初始化 pygame
-pygame.init()
-pygame.display.set_caption("联结词连连看 v0.95-alpha")
+pygame.display.set_caption("联结词连连看 v0.96-alpha")
 
 # 页面映射
 PAGE_MAPPING = {
@@ -35,7 +33,12 @@ if __name__ == "__main__":
         if current_page in PAGE_MAPPING:
             page_function = PAGE_MAPPING[current_page]
 
-            # 尝试调用页面函数，传递参数（如果有）
+            # 检查是否需要重启页面
+            if config.restart:
+                print(f"重新加载页面：{current_page}")
+                config.restart = False  # 重置标志
+
+            # 调用页面函数，传递参数（如果有）
             if config.params:
                 print("参数：", config.params)
                 page_function(**config.params)

@@ -1,6 +1,5 @@
 import pygame
 import sys
-pygame.init()
 
 from frontend.commons import screen, SCREEN_WIDTH, font
 from frontend.commons import Button, small_font, Slider, TextInputBox

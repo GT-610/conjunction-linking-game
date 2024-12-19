@@ -9,8 +9,6 @@ def checkout_page(elapsed_time):
     overall_score = calc_overall_score(config.clear_rate, config.difficulty, elapsed_time)
     save_to_leaderboard(config.username, config.difficulty, elapsed_time, overall_score, config.is_cleared)
 
-    pygame.init()
-
     # 绘制静态元素
     ## 背景
     from frontend.commons import bg0

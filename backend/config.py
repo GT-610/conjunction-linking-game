@@ -11,6 +11,7 @@ class GameConfig:
         self.cur_conj = None # 当前选择的联结词
         self.is_game_end = False # 游戏是否结束
         self.is_cleared = False # 是否通关
+        self.restart = False # 是否重启页面
         self.first_play = first_play = [True, True, True]          # 是否第一次游玩，默认为True
 
     # 重置游戏状态
@@ -20,6 +21,7 @@ class GameConfig:
         self.cur_conj = None
         self.is_game_end = False
         self.is_cleared = False
+        self.restart = False
 
 # 全局配置实例
 config = GameConfig()

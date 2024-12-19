@@ -1,7 +1,7 @@
 import pygame
 import sys
 import time
-pygame.init()
+pygame.font.init()
 
 from frontend.commons import screen, SCREEN_WIDTH, font, small_font, WHITE, Button
 from backend.leaderboard import load_leaderboard, get_sorted_leaderboard
@@ -9,22 +9,21 @@ from backend.config import config, DIFFICULTY_MAPPING
 
 # 排行榜界面
 def leaderboard_page():
-    # 清空屏幕
-    screen.fill((0, 0, 0))
+    # 背景
+    from frontend.commons import BgManager
+    bg = BgManager("assets/backgrounds/bgLeaderboard.png", 100)
+    bg.draw(screen)
     
     # 显示加载中
     loading_text = font.render("加载中...", True, (255, 255, 255))
     screen.blit(loading_text, (screen.get_width() // 2 - loading_text.get_width() // 2, screen.get_height() // 2))
     pygame.display.update()
 
-    # 加载排行榜数据
-    leaderboard_data = load_leaderboard()
-
-    # 背景
-    from frontend.commons import BgManager
-    bg = BgManager("assets/backgrounds/bgLeaderboard.png", 100)
     bg.draw(screen)
     del bg, BgManager
+
+    # 加载排行榜数据
+    leaderboard_data = load_leaderboard()
 
     # 显示更新时间
     last_updated_time = leaderboard_data.get("last_updated", 0)

@@ -1,6 +1,5 @@
 import pygame
 import sys
-pygame.init()
 
 from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT
 from frontend.commons import Button, button_width, button_height, vertical_spacing

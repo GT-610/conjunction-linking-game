@@ -1,10 +1,9 @@
-from frontend.commons import BLACK, WHITE, SCREEN_WIDTH, SCREEN_HEIGHT
+from frontend.commons import BLACK, WHITE, SCREEN_WIDTH, SCREEN_HEIGHT, bg0
 import pygame
-pygame.init()
 
 # 显示加载进度的函数
 def display_loading_message(screen, message, font):
-    screen.fill(BLACK)
+    bg0.draw(screen)
 
     # 显示加载文本
     map_generating_text = font.render("游戏加载中", True, WHITE)
