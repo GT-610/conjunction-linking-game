@@ -8,8 +8,6 @@ from frontend.commons import WHITE
 
 from backend.config import config, load_settings
 
-pygame.init()
-
 # 主菜单
 def main_menu():
     settings = load_settings()

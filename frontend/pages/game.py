@@ -1,7 +1,6 @@
 import pygame
 import sys
 import numpy as np
-pygame.init()
 
 from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT
 from frontend.commons import Button, button_width, button_height, small_font, bg0

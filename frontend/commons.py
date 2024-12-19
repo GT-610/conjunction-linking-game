@@ -1,5 +1,6 @@
 import pygame
-pygame.init()
+pygame.font.init()
+pygame.mixer.init()
 
 
 # 分辨率和标题

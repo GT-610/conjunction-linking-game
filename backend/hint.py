@@ -1,5 +1,4 @@
 import pygame
-pygame.init()
 
 from backend.link import getLinkType
 from frontend.commons import RED

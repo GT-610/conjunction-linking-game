@@ -1,6 +1,5 @@
 from backend.config import config
 import pygame
-pygame.init()
 
 # 加载音效
 link_sound = pygame.mixer.Sound("assets/sounds/link.mp3")
