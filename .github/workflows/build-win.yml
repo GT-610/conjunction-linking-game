@@ -33,10 +33,10 @@ jobs:
 
     - name: Copy external files
       run: |
-        mkdir dist\main\assets
-        mkdir dist\main\saves
-        cp -r assets\ dist\main\assets\
-        cp -r saves\ dist\main\saves\
+        mkdir dist\assets
+        mkdir dist\saves
+        cp -r assets\ dist\assets\
+        cp -r saves\ dist\saves\
 
     - name: Upload onefile build artifact
       uses: actions/upload-artifact@v4
@@ -67,10 +67,10 @@ jobs:
 
     - name: Copy external files
       run: |
-        mkdir dist\main\assets
-        mkdir dist\main\saves
-        cp -r assets\ dist\main\assets\
-        cp -r saves\ dist\main\saves\
+        mkdir dist\assets
+        mkdir dist\saves
+        cp -r assets\ dist\assets\
+        cp -r saves\ dist\saves\
 
     - name: Upload onefile build artifact
       uses: actions/upload-artifact@v4
