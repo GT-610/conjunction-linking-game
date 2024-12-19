@@ -33,8 +33,8 @@ jobs:
 
       - name: Copy assets and saves to dist
         run: |
-          mkdir -p dist/assets
-          mkdir -p dist/saves
+          mkdir -p dist/main/assets
+          mkdir -p dist/main/saves
           cp -r assets/ dist/main/assets/
           cp -r saves/ dist/main/saves/
 
@@ -67,8 +67,8 @@ jobs:
 
       - name: Copy assets and saves to dist
         run: |
-          mkdir -p dist/assets
-          mkdir -p dist/saves
+          mkdir -p dist/main/assets
+          mkdir -p dist/main/saves
           cp assets/* dist/assets/
           cp saves/* dist/saves/
 
@@ -101,8 +101,8 @@ jobs:
 
       - name: Copy assets and saves to dist
         run: |
-          mkdir -p dist/assets
-          mkdir -p dist/saves
+          mkdir -p dist/main/assets
+          mkdir -p dist/main/saves
           cp assets/* dist/assets/
           cp saves/* dist/saves/
 
@@ -135,8 +135,8 @@ jobs:
 
       - name: Copy assets and saves to dist
         run: |
-          mkdir -p dist/assets
-          mkdir -p dist/saves
+          mkdir -p dist/main/assets
+          mkdir -p dist/main/saves
           cp assets/* dist/assets/
           cp saves/* dist/saves/
 
