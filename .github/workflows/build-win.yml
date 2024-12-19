@@ -1,0 +1,76 @@
+name: Build for Windows
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  setup:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.12"
+
+  install-dependencies:
+    runs-on: windows-latest
+    needs: setup  # 确保安装依赖在 setup 完成之后执行
+
+    steps:
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+  build-onefile:
+    runs-on: windows-latest
+    needs: install-dependencies  # 确保在安装依赖之后执行
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build with pyinstaller (onefile)
+        run: |
+          pyinstaller --onefile --noconsole main.py
+
+      - name: Copy assets and saves to dist
+        run: |
+          mkdir dist\assets
+          mkdir dist\saves
+          copy /y assets\* dist\assets\
+          copy /y saves\* dist\saves\
+
+      - name: Upload onefile build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: onefile-build
+          path: dist
+
+  build-folder:
+    runs-on: windows-latest
+    needs: install-dependencies  # 确保在安装依赖之后执行
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build with pyinstaller (folder)
+        run: |
+          pyinstaller --noconsole main.py
+
+      - name: Copy assets and saves to dist
+        run: |
+          mkdir dist\assets
+          mkdir dist\saves
+          copy /y assets\* dist\assets\
+          copy /y saves\* dist\saves\
+
+      - name: Upload folder build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: folder-build
+          path: dist  # 上传整个 dist 文件夹
