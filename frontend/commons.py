@@ -1,7 +1,6 @@
 import pygame
+from backend.config import config
 pygame.font.init()
-pygame.mixer.init()
-
 
 # 分辨率和标题
 SCREEN_WIDTH, SCREEN_HEIGHT = 1280, 720
@@ -18,8 +17,8 @@ RED = (255, 0, 0)
 
 # 字体
 font_path = "assets/fonts/SourceHanSansCN-Regular.otf"
-font = pygame.font.Font(font_path, 48)  # 标题字体
-small_font = pygame.font.Font(font_path, 36)  # 按钮字体
+font = pygame.font.Font(font_path, 48)  # 大字体
+small_font = pygame.font.Font(font_path, 36)  # 小字体
 
 # 背景
 class BgManager:
@@ -39,9 +38,7 @@ bg0 = BgManager("assets/backgrounds/bg0.jpg", 100)
 button_width = 150
 button_height = 50
 vertical_spacing = 80
-
-from backend.config import config
-button_click_sound = pygame.mixer.Sound("assets/sounds/button_click.mp3")
+from backend.sound import button_click_sound
 
 # 按钮类
 class Button:

@@ -42,7 +42,7 @@ def game_page():
 
     blocks_count = (map_size + 2) * (map_size + 2)
     # 生成所有块的索引 (i, j) 的坐标
-    indices = np.array(np.meshgrid(range(map_size + 2), range(map_size + 2))).T.reshape(-1, 2)
+    indices = np.array(np.meshgrid(range(map_size + 2), range(map_size + 2)), dtype=np.int16).T.reshape(-1, 2)
 
     # 创建 Block 对象
     blocks = np.array([
@@ -130,7 +130,7 @@ def game_page():
 
     from backend.hint import hint_game
     def hint():
-        hint_game(map, blocks)
+        hint_game(map, blocks, config.sfx_vol)
 
     hint_button = Button(
         "提示",
@@ -228,7 +228,7 @@ def game_page():
         pygame.display.flip()
 
 # 绘制路径连线
-def draw_link_line(block1, block2, link_type, blocks, color=YELLOW):
+def draw_link_line(block1, block2, link_type, blocks, color=YELLOW, delay_time=250):
     # 计算两个块的中心坐标
     start_pos = block1.outerCenterPoint
     end_pos = block2.outerCenterPoint
@@ -256,7 +256,7 @@ def draw_link_line(block1, block2, link_type, blocks, color=YELLOW):
     pygame.display.update()
 
     # 延迟清屏
-    pygame.time.delay(250)
+    pygame.time.delay(delay_time)
     print("已绘制连线")
 
 # 暂停操作

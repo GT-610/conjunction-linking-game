@@ -52,14 +52,12 @@ def load_settings():
                 return data
         except json.JSONDecodeError:
             print("配置文件损坏，已覆盖默认配置。")
-            create_empty_config_file()  # 文件损坏时创建空配置文件
-            return {}  # 返回空字典
+            return default_config_file()
     else:
-        create_empty_config_file()  # 文件不存在时创建空配置文件
-        return {}  # 返回空字典
+        return default_config_file()
 
 # 创建空的配置文件
-def create_empty_config_file():
+def default_config_file():
     # 如果文件不存在或损坏，则创建一个空的配置文件
     settings_data = {
         "username": "PLAYER",  # 默认用户名
@@ -70,6 +68,7 @@ def create_empty_config_file():
     with open(settings_path, 'w', encoding='utf-8') as file:
         json.dump(settings_data, file, ensure_ascii=False, indent=4)
         print(f"配置文件 {settings_path} 已创建")
+    return settings_data
 
 # 保存设置
 def save_settings(config):
