@@ -35,8 +35,8 @@ jobs:
       run: |
         mkdir dist\assets
         mkdir dist\saves
-        cp assets\* dist\main\assets\
-        copy /y saves\* dist\saves\
+        cp -r assets\ dist\main\assets\
+        cp -r saves\ dist\main\saves\
 
     - name: Upload onefile build artifact
       uses: actions/upload-artifact@v4
@@ -69,8 +69,8 @@ jobs:
       run: |
         mkdir dist\assets
         mkdir dist\saves
-        cp assets\* dist\main\assets\
-        copy /y saves\* dist\saves\
+        cp -r assets\ dist\main\assets\
+        cp -r saves\ dist\main\saves\
 
     - name: Upload onefile build artifact
       uses: actions/upload-artifact@v4
@@ -103,8 +103,8 @@ jobs:
       run: |
         mkdir dist\assets
         mkdir dist\saves
-        cp assets\* dist\main\assets\
-        copy /y saves\* dist\saves\
+        cp -r assets\ dist\main\assets\
+        cp -r saves\ dist\main\saves\
 
     - name: Upload build artifact
       uses: actions/upload-artifact@v4
@@ -137,8 +137,8 @@ jobs:
       run: |
         mkdir dist\assets
         mkdir dist\saves
-        cp assets\* dist\main\assets\
-        cp saves\* dist\main\saves\
+        cp -r assets\ dist\main\assets\
+        cp -r saves\ dist\main\saves\
 
     - name: Upload build artifact
       uses: actions/upload-artifact@v4
