@@ -35,8 +35,8 @@ jobs:
         run: |
           mkdir -p dist/assets
           mkdir -p dist/saves
-          cp -r assets/* dist/main/assets/
-          cp -r saves/* dist/main/saves/
+          cp -r assets/ dist/main/assets/
+          cp -r saves/ dist/main/saves/
 
       - name: Upload onefile build artifact
         uses: actions/upload-artifact@v4
