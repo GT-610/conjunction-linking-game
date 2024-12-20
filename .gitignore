@@ -6,3 +6,5 @@ tempCodeRunnerFile.py
 build/
 dist/
 main.spec
+main.build/
+main.dist/
