@@ -4,7 +4,7 @@ from backend.config import config
 pygame.font.init()
 pygame.mixer.init()
 
-# 分辨率和标题
+# 分辨率和屏幕
 SCREEN_WIDTH, SCREEN_HEIGHT = 1280, 720
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
@@ -17,6 +17,7 @@ BLUE = (0, 100, 255)
 YELLOW = (255, 255, 0)
 RED = (255, 0, 0)
 
+# 资源文件夹
 assets_dir = Path("assets")
 
 # 字体
@@ -24,6 +25,7 @@ font_path = assets_dir/"fonts"/"SourceHanSansCN-Regular.otf"
 font = pygame.font.Font(font_path, 48)  # 大字体
 small_font = pygame.font.Font(font_path, 36)  # 小字体
 
+# 声音
 button_click_sound = pygame.mixer.Sound(assets_dir/"sounds"/"button_click.mp3")
 conj_click_sound = pygame.mixer.Sound(assets_dir/"sounds"/"conj_click.mp3")
 hint_sound = pygame.mixer.Sound(assets_dir/"sounds"/"hint.mp3")
@@ -51,7 +53,6 @@ bg0 = BgManager(assets_dir/"backgrounds"/"bg0.jpg", 100)
 button_width = 150
 button_height = 50
 vertical_spacing = 80
-from frontend.commons import button_click_sound
 
 # 按钮类
 class Button:
@@ -75,6 +76,7 @@ class Button:
         text_rect = text_surface.get_rect(center=self.rect.center)
         surface.blit(text_surface, text_rect)
 
+    # 检查是否被点击
     def check_click(self):
         if self.callback and self.rect.collidepoint(pygame.mouse.get_pos()):
             button_click_sound.play()

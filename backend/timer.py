@@ -16,14 +16,14 @@ class Timer:
     def pause(self):
         if not self.is_paused:
             self.pause_start_time = pygame.time.get_ticks()  # 记录暂停开始时间
-            self.is_paused = True
+            self.is_paused = True # 设置暂停状态
 
     # 恢复计时
     def resume(self):
         if self.is_paused:
             paused_time = pygame.time.get_ticks() - self.pause_start_time  # 计算暂停时长
             self.paused_duration += paused_time  # 更新总暂停时长
-            self.is_paused = False
+            self.is_paused = False # 取消暂停状态
 
     # 获取已经过去的时间（秒）
     def get_elapsed_time(self):
@@ -41,5 +41,5 @@ class Timer:
         self.pause_start_time = 0
         self.is_paused = False
 
-# 初始化计时器
+# 计时器实例
 timer = Timer()

@@ -12,8 +12,8 @@ def generate_map(mapSize):
 # 洗牌
 def shuffle_map(map, mapSize):
     inner_map = map[1:-1, 1:-1].flatten() # 去除边界
-    map = np.array([i for i in icons_arr if i >= 0])
-    np.random.shuffle(map) # 只洗有效块
+    map = np.array([i for i in icons_arr if i >= 0]) # 去除空块
+    np.random.shuffle(map)
     map = np.pad(map, (0, mapSize ** 2 - len(map)), 'constant', constant_values= -1 ) # 补齐剩下地图的值-1
     map[1:-1, 1:-1] = map.reshape((map.shape[0] - 2, map.shape[1] - 2))
 

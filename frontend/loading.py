@@ -1,7 +1,7 @@
 from frontend.commons import BLACK, WHITE, SCREEN_WIDTH, SCREEN_HEIGHT, bg0
 import pygame
 
-# 显示加载进度的函数
+# 显示加载进度
 def display_loading_message(screen, message, font):
     bg0.draw(screen)
 

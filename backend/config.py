@@ -2,9 +2,9 @@ class GameConfig:
     def __init__(self):
         # 游戏主要状态
         self.username = "PLAYER" # 默认用户名
-        self.position = "main_menu"
-        self.sfx_vol = 50
-        self.params = {}
+        self.position = "main_menu" # 当前页面位置
+        self.sfx_vol = 50 # 音效音量
+        self.params = {} # 切换页面时的传参
         self.difficulty = None # 游戏难度
         self.clear_rate = 0.0 # 完成度
         self.is_paused = False # 是否暂停
@@ -12,7 +12,7 @@ class GameConfig:
         self.is_game_end = False # 游戏是否结束
         self.is_cleared = False # 是否通关
         self.restart = False # 是否重启页面
-        self.first_play = first_play = [True, True, True]          # 是否第一次游玩，默认为True
+        self.first_play = first_play = [True, True, True]  # 是否第一次游玩
 
     # 重置游戏状态
     def reset(self):
@@ -25,13 +25,14 @@ class GameConfig:
 
 # 全局配置实例
 config = GameConfig()
+
 # 难度映射
 DIFFICULTY_MAPPING = ["简单", "高级", "大师"]
 
 # 传参
 def navigate_with_params(position, **kwargs):
     config.position = position
-    config.params = kwargs  # 直接用 kwargs 动态存储传递的参数
+    config.params = kwargs
     if kwargs:
         print(f"切换到页面 {position}，传递参数：{kwargs}")
 
@@ -52,17 +53,12 @@ def load_settings():
                 return data
         except json.JSONDecodeError:
             print("配置文件损坏，已覆盖默认配置。")
-            return default_config_file()
-    else:
-        return default_config_file()
-
-# 创建空的配置文件
-def default_config_file():
-    # 如果文件不存在或损坏，则创建一个空的配置文件
+    
+    # 如果文件不存在或损坏，创建并返回默认配置
     settings_data = {
-        "username": "PLAYER",  # 默认用户名
+        "username": "PLAYER",
         "sfx_vol": 50,
-        "first_play": config.first_play,  # 保存是否第一次游玩
+        "first_play": config.first_play,
     }
     os.makedirs(os.path.dirname(settings_path), exist_ok=True)  # 确保目录存在
     with open(settings_path, 'w', encoding='utf-8') as file:
@@ -70,9 +66,9 @@ def default_config_file():
         print(f"配置文件 {settings_path} 已创建")
     return settings_data
 
+
 # 保存设置
 def save_settings(config):
-    # 创建保存数据的字典
     settings_data = {
         "username": config.username,
         "sfx_vol": config.sfx_vol,

@@ -41,7 +41,7 @@ def checkout_page(elapsed_time):
     screen.blit(oscore_text, oscore_rect)
     del oscore_text, oscore_rect, overall_score
 
-    # 按钮：返回主菜单
+    # 按钮
     return_main_menu_button = Button(
         "返回主菜单",
         SCREEN_WIDTH // 2 - 100,
@@ -50,6 +50,7 @@ def checkout_page(elapsed_time):
         lambda: setattr(config, "position", "main_menu")
     )
 
+    # 通关音效
     if config.is_cleared:
         from frontend.commons import success_sound
         success_sound.set_volume(config.sfx_vol / 100)
@@ -63,6 +64,7 @@ def checkout_page(elapsed_time):
 
     # 绘制动态元素
     while True:
+        # 检查状态变化
         if config.position != "checkout":
             return
 

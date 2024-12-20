@@ -6,13 +6,13 @@ DIFFICULTY_CONJUNCTIONS = [
 ]
 
 def AND(a, b):
-    return a and b  # 与
+    return a and b
 
 def NOR(a, b):
-    return not (a or b)  # 或非
+    return not (a or b)
 
 def IMP(a, b):
-    return not a or b  # 蕴含
+    return not a or b
 
 # 映射联结词到函数
 CONJUNCTIONS = {
