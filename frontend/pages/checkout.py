@@ -50,6 +50,15 @@ def checkout_page(elapsed_time):
         lambda: setattr(config, "position", "main_menu")
     )
 
+    if config.is_cleared:
+        from backend.sound import success_sound
+        success_sound.set_volume(config.sfx_vol / 100)
+        success_sound.play()
+    else:
+        from backend.sound import failure_sound
+        failure_sound.set_volume(config.sfx_vol / 100)
+        failure_sound.play()
+
     # 绘制动态元素
     while True:
         if config.position != "checkout":
