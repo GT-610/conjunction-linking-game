@@ -9,7 +9,7 @@ from frontend.pages.main_menu import main_menu
 from frontend.pages.leaderboard import leaderboard_page
 from frontend.pages.settings import settings_page
 
-pygame.display.set_caption("联结词连连看 v0.96-alpha")
+pygame.display.set_caption("联结词连连看 v0.98-alpha")
 
 # 页面映射
 PAGE_MAPPING = {

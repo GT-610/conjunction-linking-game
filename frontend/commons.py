@@ -1,6 +1,8 @@
+from pathlib import Path
 import pygame
 from backend.config import config
 pygame.font.init()
+pygame.mixer.init()
 
 # 分辨率和标题
 SCREEN_WIDTH, SCREEN_HEIGHT = 1280, 720
@@ -15,10 +17,21 @@ BLUE = (0, 100, 255)
 YELLOW = (255, 255, 0)
 RED = (255, 0, 0)
 
+assets_dir = Path("assets")
+
 # 字体
-font_path = "assets/fonts/SourceHanSansCN-Regular.otf"
+font_path = assets_dir/"fonts"/"SourceHanSansCN-Regular.otf"
 font = pygame.font.Font(font_path, 48)  # 大字体
 small_font = pygame.font.Font(font_path, 36)  # 小字体
+
+button_click_sound = pygame.mixer.Sound(assets_dir/"sounds"/"button_click.mp3")
+conj_click_sound = pygame.mixer.Sound(assets_dir/"sounds"/"conj_click.mp3")
+hint_sound = pygame.mixer.Sound(assets_dir/"sounds"/"hint.mp3")
+link_sound = pygame.mixer.Sound(assets_dir/"sounds"/"link.mp3")
+notlink_sound = pygame.mixer.Sound(assets_dir/"sounds"/"notlink.mp3")
+success_sound = pygame.mixer.Sound(assets_dir/"sounds"/"success.mp3")
+failure_sound = pygame.mixer.Sound(assets_dir/"sounds"/"failure.mp3")
+
 
 # 背景
 class BgManager:
@@ -32,13 +45,13 @@ class BgManager:
     def draw(self, screen):
         screen.blit(self.bgi, (0, 0))
         screen.blit(self.dark_overlay, (0, 0))
-bg0 = BgManager("assets/backgrounds/bg0.jpg", 100)
+bg0 = BgManager(assets_dir/"backgrounds"/"bg0.jpg", 100)
 
 # 按钮参数
 button_width = 150
 button_height = 50
 vertical_spacing = 80
-from backend.sound import button_click_sound
+from frontend.commons import button_click_sound
 
 # 按钮类
 class Button:

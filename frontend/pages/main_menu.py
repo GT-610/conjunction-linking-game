@@ -33,7 +33,7 @@ def main_menu():
     screen.blit(text_surface, text_rect)
     del text_surface, text_rect
 
-    ver_surface = small_font.render("Ver. 0.96-alpha", True, WHITE)
+    ver_surface = small_font.render("Ver. 0.98-alpha", True, WHITE)
     ver_rect = ver_surface.get_rect(bottomright=(SCREEN_WIDTH - 20, SCREEN_HEIGHT - 20))
     screen.blit(ver_surface, ver_rect)
     del ver_surface, ver_rect

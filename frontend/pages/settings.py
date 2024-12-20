@@ -3,7 +3,7 @@ import sys
 
 from frontend.commons import screen, SCREEN_WIDTH, font
 from frontend.commons import Button, small_font, Slider, TextInputBox
-from frontend.commons import WHITE, BgManager
+from frontend.commons import WHITE, assets_dir, BgManager
 
 from backend.config import config, save_settings
 
@@ -20,7 +20,7 @@ def settings_page():
         callback=lambda: setattr(config, "position", "main_menu"))
 
     # 背景
-    bg = BgManager("assets/backgrounds/bgSettings.png", 100)
+    bg = BgManager(assets_dir/"backgrounds"/"bgSettings.png", 100)
 
     while True:
         if config.position != "settings":

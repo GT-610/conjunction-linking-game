@@ -1,7 +1,6 @@
 import pygame
-from frontend.commons import small_font, RED, GRAY, WHITE
+from frontend.commons import small_font, RED, GRAY, WHITE, conj_click_sound
 from backend.config import config
-from backend.sound import conj_click_sound
 
 class ConjunctionBlock:
     def __init__(self, conj_name, position, size, callback):

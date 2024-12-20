@@ -3,7 +3,7 @@ import sys
 
 from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT
 from frontend.commons import Button, button_width, button_height, vertical_spacing
-from frontend.commons import font, WHITE
+from frontend.commons import font, WHITE, assets_dir
 from backend.config import config, DIFFICULTY_MAPPING
 
 # 选择难度界面
@@ -12,7 +12,7 @@ def difficulty_selection_page():
     ## 绘制静态元素
     ## 背景
     from frontend.commons import BgManager
-    bg = BgManager("assets/backgrounds/bgDifficulty.png", 100)
+    bg = BgManager(assets_dir/"backgrounds"/"bgDifficulty.png", 100)
     bg.draw(screen)
     del bg, BgManager
 

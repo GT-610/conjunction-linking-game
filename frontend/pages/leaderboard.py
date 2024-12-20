@@ -3,7 +3,7 @@ import sys
 import time
 pygame.font.init()
 
-from frontend.commons import screen, SCREEN_WIDTH, font, small_font, WHITE, Button
+from frontend.commons import screen, SCREEN_WIDTH, font, small_font, WHITE, Button, assets_dir
 from backend.leaderboard import load_leaderboard, get_sorted_leaderboard
 from backend.config import config, DIFFICULTY_MAPPING
 
@@ -11,7 +11,7 @@ from backend.config import config, DIFFICULTY_MAPPING
 def leaderboard_page():
     # 背景
     from frontend.commons import BgManager
-    bg = BgManager("assets/backgrounds/bgLeaderboard.png", 100)
+    bg = BgManager(assets_dir/"backgrounds"/"bgLeaderboard.png", 100)
     bg.draw(screen)
     
     # 显示加载中

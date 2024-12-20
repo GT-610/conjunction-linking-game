@@ -1,5 +1,5 @@
 from backend.config import config
-from backend.sound import link_sound, notlink_sound
+from frontend.commons import link_sound, notlink_sound
 
 # 更新块逻辑
 def update_blocks(map, blocks):
