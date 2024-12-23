@@ -47,44 +47,39 @@ def difficulty_selection_page():
     buttons = [
         Button(
             DIFFICULTY_MAPPING[0],
-            (SCREEN_WIDTH - button_width) // 2,
+            SCREEN_WIDTH // 2,
             SCREEN_HEIGHT // 2 - 1.5 * vertical_spacing,
-            button_width, button_height,
-            callback=choose_easy,
+            choose_easy,
             hover_color=(0, 255, 0)  # 绿色
         ),  
         Button(
             DIFFICULTY_MAPPING[1],
-            (SCREEN_WIDTH - button_width) // 2,
+            SCREEN_WIDTH // 2,
             SCREEN_HEIGHT // 2 - 0.5 * vertical_spacing,
-            button_width, button_height,
-            callback=choose_advanced,
+            choose_advanced,
             hover_color= (255, 204, 0) # 黄色
         ),
         Button(
             DIFFICULTY_MAPPING[2],
-            (SCREEN_WIDTH - button_width) // 2,
+            SCREEN_WIDTH // 2,
             SCREEN_HEIGHT // 2 + 0.5 * vertical_spacing,
-            button_width, button_height,
-            callback=choose_expert,
+            choose_expert,
             hover_color=(255, 0, 0)  # 红色
             ),
         Button(
             DIFFICULTY_MAPPING[3],
-            (SCREEN_WIDTH - button_width) // 2,
+            SCREEN_WIDTH // 2,
             SCREEN_HEIGHT // 2 + 1.5 * vertical_spacing,
-            button_width, button_height,
-            callback=choose_master,
+            choose_master,
             hover_color=(128, 0, 128)  # 紫色
             )]
 
     buttons.append(
         Button(
             "返回主菜单",
-            (SCREEN_WIDTH - button_width) // 2 - 25,
-            SCREEN_HEIGHT * 0.8, 200,
-            button_height,
-            callback=lambda: setattr(config, "position", "main_menu")
+            SCREEN_WIDTH // 2,
+            SCREEN_HEIGHT * 0.8,
+            lambda: setattr(config, "position", "main_menu")
         )
     )
 
