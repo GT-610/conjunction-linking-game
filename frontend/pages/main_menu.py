@@ -22,20 +22,17 @@ def main_menu():
     del bg0
 
     ## 文字
-    title_surface = font.render("联结词连连看", True, WHITE)
-    title_rect = title_surface.get_rect(center=(SCREEN_WIDTH // 2, 125 * scale))
-    screen.blit(title_surface, title_rect)
-    del title_surface, title_rect
+    title= font.render("联结词连连看", True, WHITE)
+    screen.blit(title, ((SCREEN_WIDTH - title.get_width()) // 2, (125 - title.get_height()) * scale))
+    del title
 
-    text_surface = small_font.render(f"欢迎回来，{config.username}！", True, WHITE)
-    text_rect = text_surface.get_rect(topright=(SCREEN_WIDTH - 15 * scale, 15 * scale))  # 右上角，留些边距
-    screen.blit(text_surface, text_rect)
-    del text_surface, text_rect
+    welcome_text = small_font.render(f"欢迎回来，{config.username}！", True, WHITE)
+    screen.blit(welcome_text, (SCREEN_WIDTH - (15 + 1.5 * welcome_text.get_width()) * scale, 15 * scale))
+    del welcome_text
 
-    ver_surface = small_font.render(f"Ver. {ver}-{minver}", True, WHITE)
-    ver_rect = ver_surface.get_rect(bottomright=(SCREEN_WIDTH - 20 * scale, SCREEN_HEIGHT - 20 * scale))
-    screen.blit(ver_surface, ver_rect)
-    del ver_surface, ver_rect
+    ver_text = small_font.render(f"Ver. {ver}-{minver}", True, WHITE)
+    screen.blit(ver_text, (SCREEN_WIDTH - (20 + 1.5 * ver_text.get_width()) * scale, SCREEN_HEIGHT - (20 + 1.5 * ver_text.get_height()) * scale))
+    del ver_text
 
     # 创建按钮
     buttons = [

@@ -5,7 +5,7 @@ pygame.font.init()
 pygame.mixer.init()
 
 # 分辨率和缩放
-SCREEN_WIDTH, SCREEN_HEIGHT = 1280, 720
+SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 scale = max(SCREEN_WIDTH / 1280, SCREEN_HEIGHT / 720)
 

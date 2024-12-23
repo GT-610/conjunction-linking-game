@@ -38,8 +38,8 @@ def leaderboard_page():
     records = leaderboard_data.get("records", [])
     if not records:
         no_records_text = font.render("还没有记录哦", True, WHITE)
-        no_records_rect = no_records_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
-        screen.blit(no_records_text, no_records_rect)
+        screen.blit(no_records_text, ((SCREEN_WIDTH - no_records_text.get_width()) // 2, (SCREEN_HEIGHT - no_records_text.get_height()) // 2))
+        del no_records_text
     else:
         # 表格化数据
         sorted_records = get_sorted_leaderboard()

@@ -34,9 +34,8 @@ def checkout_page(elapsed_time):
 
     ## 综合得分
     oscore_text = small_font.render(f"综合得分: {overall_score}", True, WHITE)
-    oscore_rect = oscore_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 60))
-    screen.blit(oscore_text, oscore_rect)
-    del oscore_text, oscore_rect, overall_score
+    screen.blit(oscore_text, ((SCREEN_WIDTH - oscore_text.get_width()) // 2, (SCREEN_HEIGHT - oscore_text.get_height()) // 2 + 60))
+    del oscore_text, overall_score
 
     # 按钮
     return_main_menu_button = Button(

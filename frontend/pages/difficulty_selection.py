@@ -1,7 +1,7 @@
 import pygame
 import sys
 
-from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT
+from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, scale
 from frontend.commons import Button, button_width, button_height, vertical_spacing
 from frontend.commons import font, WHITE, assets_dir
 from backend.config import config, DIFFICULTY_MAPPING
@@ -17,10 +17,9 @@ def difficulty_selection_page():
     del bg, BgManager
 
     ## 标题
-    title_surface = font.render("选择难度", True, WHITE)
-    title_rect = title_surface.get_rect(center=(SCREEN_WIDTH // 2, 100))
-    screen.blit(title_surface, title_rect)
-    del title_surface, title_rect
+    title = font.render("选择难度", True, WHITE)
+    screen.blit(title, ((SCREEN_WIDTH - title.get_width()) // 2, 100 * scale))
+    del title
 
     # 按钮回调函数
     def choose_easy():
