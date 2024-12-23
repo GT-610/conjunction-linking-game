@@ -26,15 +26,20 @@ def difficulty_selection_page():
     def choose_easy():
         config.difficulty = 0
         enter_game()
-        print("已选择简单难度")
+        print("已选择基本难度")
 
     def choose_advanced():
         config.difficulty = 1
         enter_game()
         print("已选择高级难度")
 
-    def choose_master():
+    def choose_expert():
         config.difficulty = 2
+        enter_game()
+        print("已选择专家难度")
+
+    def choose_master():
+        config.difficulty = 3
         enter_game()
         print("已选择大师难度")
 
@@ -43,7 +48,7 @@ def difficulty_selection_page():
         Button(
             DIFFICULTY_MAPPING[0],
             (SCREEN_WIDTH - button_width) // 2,
-            SCREEN_HEIGHT // 2 - vertical_spacing,
+            SCREEN_HEIGHT // 2 - 1.5 * vertical_spacing,
             button_width, button_height,
             callback=choose_easy,
             hover_color=(0, 255, 0)  # 绿色
@@ -51,15 +56,23 @@ def difficulty_selection_page():
         Button(
             DIFFICULTY_MAPPING[1],
             (SCREEN_WIDTH - button_width) // 2,
-            SCREEN_HEIGHT // 2,
+            SCREEN_HEIGHT // 2 - 0.5 * vertical_spacing,
             button_width, button_height,
             callback=choose_advanced,
-            hover_color=(255, 0, 0)  # 红色
-            ),
+            hover_color= (255, 204, 0) # 黄色
+        ),
         Button(
             DIFFICULTY_MAPPING[2],
             (SCREEN_WIDTH - button_width) // 2,
-            SCREEN_HEIGHT // 2 + vertical_spacing,
+            SCREEN_HEIGHT // 2 + 0.5 * vertical_spacing,
+            button_width, button_height,
+            callback=choose_expert,
+            hover_color=(255, 0, 0)  # 红色
+            ),
+        Button(
+            DIFFICULTY_MAPPING[3],
+            (SCREEN_WIDTH - button_width) // 2,
+            SCREEN_HEIGHT // 2 + 1.5 * vertical_spacing,
             button_width, button_height,
             callback=choose_master,
             hover_color=(128, 0, 128)  # 紫色
@@ -69,7 +82,7 @@ def difficulty_selection_page():
         Button(
             "返回主菜单",
             (SCREEN_WIDTH - button_width) // 2 - 25,
-            540, 200,
+            SCREEN_HEIGHT * 0.8, 200,
             button_height,
             callback=lambda: setattr(config, "position", "main_menu")
         )

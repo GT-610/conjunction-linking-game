@@ -3,7 +3,7 @@ import sys
 import time
 pygame.font.init()
 
-from frontend.commons import screen, SCREEN_WIDTH, font, small_font, WHITE, Button, assets_dir
+from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font, small_font, WHITE, Button, assets_dir
 from backend.leaderboard import load_leaderboard, get_sorted_leaderboard
 from backend.config import config, DIFFICULTY_MAPPING
 
@@ -76,7 +76,7 @@ def leaderboard_page():
     back_button = Button(
         "返回主菜单",
         SCREEN_WIDTH // 2 - 100,
-        500,
+        SCREEN_HEIGHT * 0.8,
         200, 50,
         callback=lambda: setattr(config, "position", "main_menu")
     )
