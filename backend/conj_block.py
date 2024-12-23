@@ -4,7 +4,8 @@ from backend.config import config
 
 class ConjunctionBlock:
     def __init__(self, conj_name, position, size, callback):
-        self.conj_name = conj_name  # 联结词名称
+        self.conj_name = conj_name
+        self.conj_text = small_font.render(self.conj_name, True, WHITE)
         self.rect = pygame.Rect(position, (size, size))
         self.size = size
         self.selected = False  # 是否被选中
@@ -23,9 +24,7 @@ class ConjunctionBlock:
         pygame.draw.rect(screen, border_color, self.rect, 3)
 
         # 联结词文字
-        text = small_font.render(self.conj_name, True, WHITE)
-        text_rect = text.get_rect(center=self.rect.center)
-        screen.blit(text, text_rect)
+        screen.blit(self.conj_text, (self.rect.center[0] - self.conj_text.get_width() // 2, self.rect.center[1] - self.conj_text.get_height() // 2))
 
     # 处理点击事件
     def handle_click(self, pos):

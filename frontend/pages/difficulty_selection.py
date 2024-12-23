@@ -1,7 +1,7 @@
 import pygame
 import sys
 
-from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT
+from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, scale
 from frontend.commons import Button, button_width, button_height, vertical_spacing
 from frontend.commons import font, WHITE, assets_dir
 from backend.config import config, DIFFICULTY_MAPPING
@@ -17,10 +17,9 @@ def difficulty_selection_page():
     del bg, BgManager
 
     ## 标题
-    title_surface = font.render("选择难度", True, WHITE)
-    title_rect = title_surface.get_rect(center=(SCREEN_WIDTH // 2, 100))
-    screen.blit(title_surface, title_rect)
-    del title_surface, title_rect
+    title = font.render("选择难度", True, WHITE)
+    screen.blit(title, ((SCREEN_WIDTH - title.get_width()) // 2, 100 * scale))
+    del title
 
     # 按钮回调函数
     def choose_easy():
@@ -47,44 +46,39 @@ def difficulty_selection_page():
     buttons = [
         Button(
             DIFFICULTY_MAPPING[0],
-            (SCREEN_WIDTH - button_width) // 2,
+            SCREEN_WIDTH // 2,
             SCREEN_HEIGHT // 2 - 1.5 * vertical_spacing,
-            button_width, button_height,
-            callback=choose_easy,
+            choose_easy,
             hover_color=(0, 255, 0)  # 绿色
         ),  
         Button(
             DIFFICULTY_MAPPING[1],
-            (SCREEN_WIDTH - button_width) // 2,
+            SCREEN_WIDTH // 2,
             SCREEN_HEIGHT // 2 - 0.5 * vertical_spacing,
-            button_width, button_height,
-            callback=choose_advanced,
+            choose_advanced,
             hover_color= (255, 204, 0) # 黄色
         ),
         Button(
             DIFFICULTY_MAPPING[2],
-            (SCREEN_WIDTH - button_width) // 2,
+            SCREEN_WIDTH // 2,
             SCREEN_HEIGHT // 2 + 0.5 * vertical_spacing,
-            button_width, button_height,
-            callback=choose_expert,
+            choose_expert,
             hover_color=(255, 0, 0)  # 红色
             ),
         Button(
             DIFFICULTY_MAPPING[3],
-            (SCREEN_WIDTH - button_width) // 2,
+            SCREEN_WIDTH // 2,
             SCREEN_HEIGHT // 2 + 1.5 * vertical_spacing,
-            button_width, button_height,
-            callback=choose_master,
+            choose_master,
             hover_color=(128, 0, 128)  # 紫色
             )]
 
     buttons.append(
         Button(
             "返回主菜单",
-            (SCREEN_WIDTH - button_width) // 2 - 25,
-            SCREEN_HEIGHT * 0.8, 200,
-            button_height,
-            callback=lambda: setattr(config, "position", "main_menu")
+            SCREEN_WIDTH // 2,
+            SCREEN_HEIGHT * 0.8,
+            lambda: setattr(config, "position", "main_menu")
         )
     )
 
