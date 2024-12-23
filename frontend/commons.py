@@ -5,7 +5,7 @@ pygame.font.init()
 pygame.mixer.init()
 
 # 分辨率和缩放
-SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
+SCREEN_WIDTH, SCREEN_HEIGHT = 1280, 720
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 scale = max(SCREEN_WIDTH / 1280, SCREEN_HEIGHT / 720)
 
@@ -24,8 +24,8 @@ assets_dir = Path("assets")
 
 # 字体
 font_path = assets_dir/"fonts"/"SourceHanSansCN-Regular.otf"
-font = pygame.font.Font(font_path, min(48, int(48 * scale)))  # 大字体
-small_font = pygame.font.Font(font_path, min(36, int(36 * scale)))  # 小字体
+font = pygame.font.Font(font_path, int(48 * scale))  # 大字体
+small_font = pygame.font.Font(font_path, int(36 * scale))  # 小字体
 
 # 声音
 button_click_sound = pygame.mixer.Sound(assets_dir/"sounds"/"button_click.mp3")
@@ -64,9 +64,9 @@ class BgManager:
 bg0 = BgManager(assets_dir/"backgrounds"/"bg0.jpg", 100)
 
 # 按钮参数
-button_width = min(150, 150 * scale)
-button_height = min(50, 50 * scale)
-vertical_spacing = min(80, 80 * scale)
+button_width = 150 * scale
+button_height = 50 * scale
+vertical_spacing = 80 * scale
 
 # 按钮类
 class Button:
@@ -107,8 +107,8 @@ class Slider:
     def __init__(self, x, y, width, min_value=0, max_value=100, initial_value=50):
         self.width = width
         self.height = 10  # 滑轨高度固定为 10
-        self.knob_width = 10
-        self.knob_height = 20
+        self.knob_width = 10 * scale
+        self.knob_height = 20 * scale
 
         # 滑条矩形，以中心点为基准计算左上角位置
         self.rect = pygame.Rect(0, 0, self.width, self.height)

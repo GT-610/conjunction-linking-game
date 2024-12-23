@@ -27,7 +27,7 @@ def main_menu():
     del title
 
     welcome_text = small_font.render(f"欢迎回来，{config.username}！", True, WHITE)
-    screen.blit(welcome_text, (SCREEN_WIDTH - (15 + 1.5 * welcome_text.get_width()) * scale, 15 * scale))
+    screen.blit(welcome_text, (SCREEN_WIDTH * 0.65, 15 * scale))
     del welcome_text
 
     ver_text = small_font.render(f"Ver. {ver}-{minver}", True, WHITE)
