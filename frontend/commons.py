@@ -71,20 +71,18 @@ vertical_spacing = min(80, 80 * scale)
 # 按钮类
 class Button:
     def __init__(self, text, x, y, callback=None, hover_color=BLUE):
-        self.text = text
+        self.text = small_font.render(text, True, WHITE)
         self.callback = callback
         self.hover_color = hover_color
         self.color = GRAY
 
         # 测量文本宽度
-        self.text_surface = small_font.render(self.text, True, WHITE)
-        text_width = self.text_surface.get_width()
-        text_height = self.text_surface.get_height()
+        text_width = self.text.get_width()
+        text_height = self.text.get_height()
 
         # 动态调整按钮宽度和高度，宽度最小为 button_width
         self.width = max(button_width, text_width)
         self.height = max(button_height, text_height)
-
         self.rect = pygame.Rect(0, 0, self.width, self.height)
         self.rect.center = (x, y)
         button_click_sound.set_volume(config.sfx_vol / 100)
@@ -96,8 +94,7 @@ class Button:
             pygame.draw.rect(screen, self.hover_color, self.rect)
         else:
             pygame.draw.rect(screen, self.color, self.rect)
-        text_rect = self.text_surface.get_rect(center=self.rect.center)
-        screen.blit(self.text_surface, text_rect)
+        screen.blit(self.text, (self.rect.center[0] - self.text.get_width() // 2, self.rect.center[1] - self.text.get_height() // 2))
 
     # 检查是否被点击
     def check_click(self):

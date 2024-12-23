@@ -62,7 +62,7 @@ def game_page():
     # 初始化联结词块
     ## 联结词块被选中后，更新当前联结词
     def select_conjunction_block(selected_block):
-        config.cur_conj = selected_block.conj_name
+        config.cur_conj = selected_block.conj_text
 
     for i, conj_name in enumerate(conjunctions):
         pos = (start_x, start_y + i * (block_size + spacing))
@@ -205,8 +205,7 @@ def game_page():
         # 暂停时显示暂停文字
         if config.is_paused:
             paused_text = small_font.render("游戏暂停中", True, WHITE)
-            paused_rect = paused_text.get_rect(topleft=(30 * scale, 90 * scale))
-            screen.blit(paused_text, paused_rect)
+            screen.blit(paused_text, (30 * scale, 90 * scale))
 
         # 更新屏幕
         pygame.display.flip()
