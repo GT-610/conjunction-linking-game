@@ -62,7 +62,7 @@ def game_page():
     # 初始化联结词块
     ## 联结词块被选中后，更新当前联结词
     def select_conjunction_block(selected_block):
-        config.cur_conj = selected_block.conj_text
+        config.cur_conj = selected_block.conj_name
 
     for i, conj_name in enumerate(conjunctions):
         pos = (start_x, start_y + i * (block_size + spacing))
