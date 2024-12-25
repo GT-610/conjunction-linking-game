@@ -2,7 +2,7 @@
 DIFFICULTY_CONJUNCTIONS = [
     ["同或"],
     ["与", "或非"],
-    ["与", "异或"],
+    ["与", "反蕴含"],
     ["蕴含"]
 ]
 
@@ -14,6 +14,9 @@ def NOR(a, b):
 
 def IMP(a, b):
     return not a or b
+
+def NIM(a, b):
+    return not IMP(a, b)
 
 def XOR(a, b):
     return a ^ b
@@ -27,7 +30,8 @@ CONJUNCTIONS = {
     "或非": NOR,
     "蕴含": IMP,
     "异或": XOR,
-    "同或": AOR
+    "同或": AOR,
+    "反蕴含": NIM
 }
 
 # 生成真值表
