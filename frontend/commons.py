@@ -126,9 +126,9 @@ class Slider:
 
     def draw(self, screen):
         # 绘制滑轨
-        pygame.draw.rect(surface, GRAY, self.rect)
+        pygame.draw.rect(screen, (125, 125, 125), self.rect)
         # 绘制滑块
-        pygame.draw.rect(surface, BLUE if self.is_dragging else WHITE, self.knob_rect)
+        pygame.draw.rect(screen, (0, 200, 255) if self.is_dragging else WHITE, self.knob_rect)
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
