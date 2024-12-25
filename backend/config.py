@@ -6,9 +6,11 @@ class GameConfig:
         self.sfx_vol = 50 # 音效音量
         self.params = {} # 切换页面时的传参
         self.difficulty = None # 游戏难度
+        self.cur_combo = 0 # 当前连击数
+        self.max_combo = 0 # 最大连击数
         self.clear_rate = 0.0 # 完成度
-        self.is_paused = False # 是否暂停
         self.cur_conj = None # 当前选择的联结词
+        self.is_paused = False # 是否暂停
         self.is_game_end = False # 游戏是否结束
         self.is_cleared = False # 是否通关
         self.restart = False # 是否重启页面
@@ -18,6 +20,8 @@ class GameConfig:
     def reset(self):
         self.clear_rate = 0.0
         self.is_paused = False
+        self.cur_combo = 0 # 当前连击数
+        self.max_combo = 0 # 最大连击数
         self.cur_conj = None
         self.is_game_end = False
         self.is_cleared = False
