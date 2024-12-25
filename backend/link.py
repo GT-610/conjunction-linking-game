@@ -41,7 +41,7 @@ def isTwoCornerLink(map, p1, p2):
     rows, cols = len(map), len(map[0])
     
     # 定义四个方向：上、右、下、左
-    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # 上、下、左、右
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
     
     for step in range(1, 11):
         # 遍历四个方向，寻找空格（-1）
@@ -53,18 +53,18 @@ def isTwoCornerLink(map, p1, p2):
             if checkP[0] < 0 or checkP[0] >= rows or checkP[1] < 0 or checkP[1] >= cols:
                 continue
             
-            # 检查checkP是否是空格
+            # 检查checkP是否为空
             if map[checkP[0]][checkP[1]] != -1:
                 continue
             
             # 检查从p1到checkP，以及从checkP到p2是否能通过单直角连通
             corner1, corner2 = isOneCornerLink(map, p1, checkP), isOneCornerLink(map, checkP, p2)
             
-            # 如果找到了有效的拐点，返回
+            # 找到有效的拐点，返回坐标
             if corner1 and corner2:
-                return [corner1, corner2]  # 返回两个拐点坐标
+                return [corner1, corner2]
     
-    # 如果四个方向都没有找到合适的checkP
+    # 未找到拐点
     return None
 
 # 获取两个点连通类型
@@ -76,7 +76,7 @@ def getLinkType(map, p1, p2):
 
     if conj_func(map[p1[0]][p1[1]], map[p2[0]][p2[1]]) != 1:
         print(f"{p1} 和 {p2} 不符合{config.cur_conj}要求")
-        return 0 # 联结词不满足肯定为不连通
+        return 0 # 联结词不满足直接返回不连通
 
     if isStraightLink(map, p1, p2):
         return 1 # 直连
@@ -89,4 +89,4 @@ def getLinkType(map, p1, p2):
     if res:
         return (3, res) # 双拐点连通
         
-    return 0 # 无法连通
+    return 0 # 不连通

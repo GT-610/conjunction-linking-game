@@ -1,17 +1,18 @@
-from frontend.commons import BLACK, WHITE, SCREEN_WIDTH, SCREEN_HEIGHT, bg0
+from frontend.commons import BLACK, WHITE, SCREEN_WIDTH, SCREEN_HEIGHT, scale, bg0
 import pygame
+from random import randint
 
-# 显示加载进度的函数
+# 显示加载进度
 def display_loading_message(screen, message, font):
     bg0.draw(screen)
 
     # 显示加载文本
-    map_generating_text = font.render("游戏加载中", True, WHITE)
-    map_generating_rect = map_generating_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50))
-    screen.blit(map_generating_text, map_generating_rect)
+    gen_text = font.render("游戏加载中", True, WHITE)
+    screen.blit(gen_text, ((SCREEN_WIDTH - gen_text.get_width()) // 2, (SCREEN_HEIGHT - gen_text.get_height()) // 2 - 50 * scale))
+    del gen_text
 
     # 显示加载项
     loading_text = font.render(message, True, WHITE)
-    loading_rect = loading_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
-    screen.blit(loading_text, loading_rect)
+    screen.blit(loading_text, ((SCREEN_WIDTH - loading_text.get_width()) // 2, (SCREEN_HEIGHT - loading_text.get_height()) // 2))
+    # pygame.time.delay(randint(150, 300)) # 有意延迟，让用户知道游戏在加载（调试时不使用）
     pygame.display.update()

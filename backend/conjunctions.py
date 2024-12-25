@@ -1,24 +1,33 @@
 # 难度联结词表
 DIFFICULTY_CONJUNCTIONS = [
-    ["与", "或非", "蕴含"],
+    ["同或"],
     ["与", "或非"],
+    ["与", "异或"],
     ["蕴含"]
 ]
 
 def AND(a, b):
-    return a and b  # 与
+    return a and b
 
 def NOR(a, b):
-    return not (a or b)  # 或非
+    return not (a or b)
 
 def IMP(a, b):
-    return not a or b  # 蕴含
+    return not a or b
+
+def XOR(a, b):
+    return a ^ b
+
+def AOR(a, b):
+    return not (a ^ b)
 
 # 映射联结词到函数
 CONJUNCTIONS = {
     "与": AND,
     "或非": NOR,
-    "蕴含": IMP
+    "蕴含": IMP,
+    "异或": XOR,
+    "同或": AOR
 }
 
 # 生成真值表

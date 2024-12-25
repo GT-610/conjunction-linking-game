@@ -1,5 +1,5 @@
 import pygame
-from backend.config import config
+from backend.config import ver, minver, config
 
 from frontend.pages.checkout import checkout_page
 from frontend.pages.difficulty_selection import difficulty_selection_page
@@ -9,7 +9,7 @@ from frontend.pages.main_menu import main_menu
 from frontend.pages.leaderboard import leaderboard_page
 from frontend.pages.settings import settings_page
 
-pygame.display.set_caption("联结词连连看 v0.96-alpha")
+pygame.display.set_caption(f"联结词连连看 v{ver}-{minver}")
 
 # 页面映射
 PAGE_MAPPING = {

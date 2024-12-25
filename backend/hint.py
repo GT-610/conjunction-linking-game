@@ -1,6 +1,5 @@
 from backend.link import getLinkType
-from frontend.commons import RED
-from backend.sound import hint_sound
+from frontend.commons import RED, hint_sound
 
 # 提示函数
 def hint_game(map, blocks, sfx_vol):

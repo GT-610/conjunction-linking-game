@@ -2,7 +2,7 @@ import pygame
 import sys
 import numpy as np
 
-from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT
+from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, scale
 from frontend.commons import Button, button_width, button_height, small_font, bg0
 from frontend.commons import WHITE, YELLOW
 
@@ -14,56 +14,55 @@ from backend.conjunctions import DIFFICULTY_CONJUNCTIONS
 from backend.timer import timer
 from backend.game_events import update_blocks, handle_block_click
 
-
 # 游戏主界面
 def game_page():
-    # 初始化计时器并重置基本参数
+    # 加载联结词
+    from frontend.loading import display_loading_message
+    display_loading_message(screen, "初始化基本参数...", small_font)
+
+    # 重置参数
     timer.reset()
     config.reset()
-
-    # 显示加载提示
-    from frontend.loading import display_loading_message
-    display_loading_message(screen, "加载基本框架...", small_font)
-
     conjunctions = DIFFICULTY_CONJUNCTIONS[config.difficulty]
     config.cur_conj = conjunctions[0]
 
     # 生成地图
-    display_loading_message(screen, "初始化地图...", small_font)
+    display_loading_message(screen, "生成地图...", small_font)
     map_size = 10
     map = generate_map(config.difficulty, map_size)
     print(f"已生成大小为 {map_size} * {map_size} 的地图")
 
     # 生成一维 blocks 数组并 reshape 为二维
-    display_loading_message(screen, "初始化地图块...", small_font)
-    ## 块的偏移坐标
-    offset_x = (SCREEN_WIDTH - map_size * 50) // 2
-    offset_y = (SCREEN_HEIGHT - map_size * 50) // 2
+    display_loading_message(screen, "生成地图块...", small_font)
+    block_size = 50 * scale
 
-    blocks_count = (map_size + 2) * (map_size + 2)
+    # 计算居中的偏移量
+    offset_x = (SCREEN_WIDTH - block_size * (map_size + 2)) // 2
+    offset_y = (SCREEN_HEIGHT - block_size * (map_size + 2)) // 2
+
     # 生成所有块的索引 (i, j) 的坐标
     indices = np.array(np.meshgrid(range(map_size + 2), range(map_size + 2)), dtype=np.int16).T.reshape(-1, 2)
 
     # 创建 Block 对象
     blocks = np.array([
-        Block(map, (i, j), 50, offset_x, offset_y)
+        Block(map, (i, j), block_size, offset_x, offset_y)
         for i, j in indices
     ], dtype=object)
         
     blocks = blocks.reshape((map_size + 2, map_size + 2))
-    del offset_x, offset_y, map_size, blocks_count
+    del offset_x, offset_y, indices, map_size
 
     # 创建联结词块
     display_loading_message(screen, "初始化联结词块...", small_font)
     conj_blocks = []
-    block_size = 100  # 联结词块大小
-    start_x, start_y = 50, 150  # 起始位置
-    spacing = 20  # 块之间的间隔
+    block_size = 100 * scale  # 联结词块大小
+    start_x, start_y = 50 * scale, 150 * scale  # 起始位置
+    spacing = 20 * scale  # 块之间的间隔
 
     # 初始化联结词块
-    ## 联结词块被选中后的回调
+    ## 联结词块被选中后，更新当前联结词
     def select_conjunction_block(selected_block):
-        config.cur_conj = selected_block.conj_name  # 更新当前联结词
+        config.cur_conj = selected_block.conj_name
 
     for i, conj_name in enumerate(conjunctions):
         pos = (start_x, start_y + i * (block_size + spacing))
@@ -72,61 +71,49 @@ def game_page():
 
     display_loading_message(screen, "加载其他组件...", small_font)
 
-    # 完成度
-    cr_text = small_font.render(f"完成度: 0%", True, WHITE)
-    cr_rect = cr_text.get_rect(topleft=(30, 60))
-    print("初始化完成度完成")
 
     # 剩余时间
     time_text = small_font.render("已用时间: 0", True, WHITE)
-    time_rect = time_text.get_rect(topleft=(30, 20))
-    timer.start() # 游戏开始时启动计时
+    time_pos = (30 * scale, 10 * scale)
     print("初始化计时器完成")
+
+    # 完成度
+    cr_text = small_font.render(f"完成度: 0%", True, WHITE)
+    cr_pos = (30 * scale, 50 * scale)
+    print("初始化完成度完成")
 
     del display_loading_message
 
     # 按钮创建
     pause_button = Button(
         "暂停",
-        (SCREEN_WIDTH - button_width) // 2 - button_width - 150,
-        20,
-        button_width, button_height,
+        SCREEN_WIDTH // 2 - 160 * scale,
+        SCREEN_HEIGHT * 0.05,
         pause_game
     )
 
     # 重新开始按钮（仅在暂停时显示）
     restart_button = Button(
         "重新开始",
-        (SCREEN_WIDTH - button_width) // 2 + button_width + 150,
-        20,
-        button_width,button_height,
+        SCREEN_WIDTH // 2 + 160 * scale,
+        SCREEN_HEIGHT * 0.05,
         lambda: setattr(config, "restart", True)
     )
 
+    # 返回主菜单按钮
     return_main_menu_button = Button(
         "返回主菜单",
-        SCREEN_WIDTH - 200 - 10,
-        SCREEN_HEIGHT - button_height - 10,
-        200, button_height,
+        SCREEN_WIDTH  - 100 * scale,
+        SCREEN_HEIGHT * 0.925,
         lambda: setattr(config, "is_game_end", True)
     )
 
-    def show_help_page():
-        pause_game()
-        config.position = "help"
-        from frontend.pages.help import help_page
-        help_page(in_game=True)
-
     help_button = Button(
-        text="帮助",
-        x=SCREEN_WIDTH - 100,  # 地图右侧
-        y=150,                 # y 坐标
-        width=80,
-        height=40,
+        "帮助",
+        SCREEN_WIDTH - 100 * scale,  # 地图右侧
+        150 * scale,                 # y 坐标
         callback=show_help_page
     )
-
-    print("已绘制按钮")
 
     from backend.hint import hint_game
     def hint():
@@ -134,11 +121,16 @@ def game_page():
 
     hint_button = Button(
         "提示",
-        (SCREEN_WIDTH - button_width) // 2,
-        20,
-        button_width, button_height,
+        SCREEN_WIDTH // 2,
+        SCREEN_HEIGHT * 0.05,
         hint
     )
+
+    print("已绘制按钮")
+
+    # 开始计时
+    pygame.init()
+    timer.start()
 
     # 绘制游戏界面
     while True:
@@ -157,18 +149,16 @@ def game_page():
                 help_button.check_click()
                 restart_button.check_click()
                 return_main_menu_button.check_click()
-
-                # 检查联结词块交互
-                for block in conj_blocks:
-                    block.handle_click(event.pos)
                 
-                # 游戏未在暂停的时候，检查地图块交互
+                # 游戏未在暂停的时候，检查交互
                 if not config.is_paused:
                     for row in blocks:
                         for block in row:
                             if block.rect.collidepoint(event.pos):
                                 handle_block_click(block, map, blocks, config.cur_conj)
                                 update_blocks(map, blocks)
+                    for block in conj_blocks:
+                        block.handle_click(event.pos)
         # 绘制背景
         bg0.draw(screen)
 
@@ -176,28 +166,23 @@ def game_page():
         if not config.is_paused:
             elapsed_time = timer.get_elapsed_time()
         time_text = small_font.render(f"已用时间: {elapsed_time}", True, WHITE)
-        screen.blit(time_text, time_rect)
+        screen.blit(time_text, time_pos)
 
         # 绘制分数显示
         cr_text = small_font.render(f"完成度: {int(config.clear_rate * 100)}%", True, WHITE)
-        screen.blit(cr_text, cr_rect)
-
-        # 绘制顶部区域
-        screen.blit(time_text, time_rect)
+        screen.blit(cr_text, cr_pos)
 
         # 绘制按钮
         pause_button.draw(screen)
         hint_button.draw(screen)
         help_button.draw(screen)
-        ## 如果暂停，则显示“重新开始”按钮
         if config.is_paused:
             restart_button.draw(screen)
-        # 绘制返回主菜单按钮
         return_main_menu_button.draw(screen)
 
         # 绘制每个块
         for block in np.nditer(blocks, flags=['refs_ok']):
-            block = block.item()  # 取出 Block 对象
+            block = block.item()
             if block.value != -1:
                 block.draw(screen)
 
@@ -205,15 +190,14 @@ def game_page():
         for conj_block in conj_blocks:
             conj_block.draw(screen)
 
+        # 通关判定
         if np.all(map == -1):
+            config.is_cleared = True
             config.is_game_end = True
 
         # 游戏结束
         if config.is_game_end == True:
-            if np.all(map == -1):
-                config.is_cleared = True
             elapsed_time = timer.get_elapsed_time()
-
             # 调用结算页面
             navigate_with_params("checkout", elapsed_time=elapsed_time)
             return
@@ -221,8 +205,7 @@ def game_page():
         # 暂停时显示暂停文字
         if config.is_paused:
             paused_text = small_font.render("游戏暂停中", True, WHITE)
-            paused_rect = paused_text.get_rect(topleft=(30, 100))
-            screen.blit(paused_text, paused_rect)
+            screen.blit(paused_text, (30 * scale, 90 * scale))
 
         # 更新屏幕
         pygame.display.flip()
@@ -266,3 +249,9 @@ def pause_game():
     else:
         timer.pause()  # 暂停计时
     config.is_paused = not config.is_paused
+
+def show_help_page():
+    pause_game()
+    config.position = "help"
+    from frontend.pages.help import help_page
+    help_page(in_game=True)

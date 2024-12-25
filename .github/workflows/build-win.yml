@@ -1,0 +1,139 @@
+name: Build for Windows
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build-win-onefile:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.12"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pyinstaller
+
+    - name: Build onefile
+      run: |
+        pyinstaller --onefile --noconsole main.py
+
+    - name: Copy external files
+      run: |
+        cp -r assets\ dist\
+        cp -r saves\ dist\
+
+    - name: Upload onefile build artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: onefile-build-win
+        path: dist
+
+  build-win-debug-onefile:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.12"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pyinstaller
+
+    - name: Build onefile with console enabled
+      run: |
+        pyinstaller --onefile main.py
+
+    - name: Copy external files
+      run: |
+        cp -r assets\ dist\
+        cp -r saves\ dist\
+
+    - name: Upload onefile build artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: onefile-build-win-debug
+        path: dist
+
+  build-win-folder:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.12"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pyinstaller
+
+    - name: Build folder
+      run: |
+        pyinstaller --noconsole main.py
+
+    - name: Copy external files
+      run: |
+        cp -r assets\ dist\main\
+        cp -r saves\ dist\main\
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: folder-build-win
+        path: dist
+
+  build-win-debug-folder:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.12"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pyinstaller
+
+    - name: Build folder with console enabled
+      run: |
+        pyinstaller main.py
+
+    - name: Copy external files
+      run: |
+        cp -r assets\ dist\main\
+        cp -r saves\ dist\main\
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: folder-build-win-debug
+        path: dist

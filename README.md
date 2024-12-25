@@ -16,7 +16,24 @@ The game is developed in Python 3.12. Make sure you have at least Python 3.10 or
     python main.py
     ```
 
-## License
-All the code is licensed under [MIT License](LICENSE).
+## Compile
+1. Install `pyinstaller`:
 
-Fonts used in this project are licensed under their respective licenses. See [fonts/LICENSE.txt](fonts/LICENSE.txt) for details.
+    ```bash
+    pip install pyinstaller
+    ```
+
+2. Run:
+
+    ```bash
+    pyinstaller --onefile --noconsole main.py
+    ```
+
+3. Copy `assets/`, `saves/` folder to the build location.
+
+4. Run `main.exe`.
+
+## License
+All code is under [MIT License](LICENSE).
+
+Assets used in this project are licensed under their respective licenses.
