@@ -33,8 +33,7 @@ class Block:
         # 渲染块的值（0 或 1）
         text_color = BLACK if self.value == 0 else WHITE
         value_text = small_font.render(str(self.value), True, text_color)
-        value_rect = value_text.get_rect(center=(self.outerX + self.outerWidth // 2, self.outerY + self.outerWidth // 2))  # 计算中心坐标
-        screen.blit(value_text, value_rect)
+        screen.blit(value_text, (self.outerX + (self.outerWidth - value_text.get_width()) // 2, self.outerY + (self.outerWidth - value_text.get_height()) // 2))
 
     # 切换选中状态
     def toggle_selection(self):

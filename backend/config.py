@@ -12,7 +12,7 @@ class GameConfig:
         self.is_game_end = False # 游戏是否结束
         self.is_cleared = False # 是否通关
         self.restart = False # 是否重启页面
-        self.first_play = first_play = [True, True, True]  # 是否第一次游玩
+        self.first_play = first_play = [True, True, True, True]  # 是否第一次游玩
 
     # 重置游戏状态
     def reset(self):
@@ -27,7 +27,11 @@ class GameConfig:
 config = GameConfig()
 
 # 难度映射
-DIFFICULTY_MAPPING = ["简单", "高级", "大师"]
+DIFFICULTY_MAPPING = ["基本", "高级", "专家", "大师"]
+
+# 版本
+ver = 0.99
+minver = "alpha"
 
 # 传参
 def navigate_with_params(position, **kwargs):

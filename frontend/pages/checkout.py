@@ -1,6 +1,6 @@
 import pygame
 import sys
-from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, font, small_font, Button, WHITE
+from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, scale, font, small_font, Button, WHITE
 from backend.leaderboard import save_to_leaderboard
 from backend.config import config
 
@@ -19,34 +19,29 @@ def checkout_page(elapsed_time):
     cleared_text = "通关" if config.is_cleared else "未通关"
     cleared_color = (0, 255, 0) if config.is_cleared else (255, 0, 0)  # 成功为绿色，失败为红色
     cleared_text_rendered = font.render(cleared_text, True, cleared_color)
-    cleared_rect = cleared_text_rendered.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 4))
-    screen.blit(cleared_text_rendered, cleared_rect)
-    del cleared_text, cleared_color, cleared_text_rendered, cleared_rect
+    screen.blit(cleared_text_rendered, ((SCREEN_WIDTH - cleared_text_rendered.get_width()) // 2, (SCREEN_HEIGHT - cleared_text_rendered.get_height()) // 4))
+    del cleared_text, cleared_color, cleared_text_rendered
 
     ## 完成度
     cr_text = small_font.render(f"完成度: {int(config.clear_rate * 100)}%", True, WHITE)
-    cr_rect = cr_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 60))
-    screen.blit(cr_text, cr_rect)
-    del cr_text, cr_rect
+    screen.blit(cr_text, ((SCREEN_WIDTH - cr_text.get_width()) // 2, (SCREEN_HEIGHT - cr_text.get_height()) // 2 - 60 * scale))
+    del cr_text
 
     ## 时间
     time_text = small_font.render(f"用时: {elapsed_time}秒", True, WHITE)
-    time_rect = time_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
-    screen.blit(time_text, time_rect)
-    del time_text, time_rect
+    screen.blit(time_text, ((SCREEN_WIDTH - time_text.get_width()) // 2, (SCREEN_HEIGHT - time_text.get_height()) // 2))
+    del time_text
 
     ## 综合得分
     oscore_text = small_font.render(f"综合得分: {overall_score}", True, WHITE)
-    oscore_rect = oscore_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 60))
-    screen.blit(oscore_text, oscore_rect)
-    del oscore_text, oscore_rect, overall_score
+    screen.blit(oscore_text, ((SCREEN_WIDTH - oscore_text.get_width()) // 2, (SCREEN_HEIGHT - oscore_text.get_height()) // 2 + 60))
+    del oscore_text, overall_score
 
     # 按钮
     return_main_menu_button = Button(
         "返回主菜单",
-        SCREEN_WIDTH // 2 - 100,
-        SCREEN_HEIGHT - 100,
-        200, 50,
+        SCREEN_WIDTH // 2,
+        SCREEN_HEIGHT - 100 * scale,
         lambda: setattr(config, "position", "main_menu")
     )
 
