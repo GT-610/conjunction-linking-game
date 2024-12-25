@@ -29,7 +29,7 @@ def game_page():
     # 生成地图
     display_loading_message(screen, "生成地图...", small_font)
     map_size = 10
-    map = generate_map(map_size)
+    map = generate_map(config.difficulty, map_size)
     print(f"已生成大小为 {map_size} * {map_size} 的地图")
 
     # 生成一维 blocks 数组并 reshape 为二维
