@@ -64,17 +64,17 @@ class Button:
         self.hover_color = hover_color
         button_click_sound.set_volume(config.sfx_vol / 100)
 
-    def draw(self, surface):
+    def draw(self, screen):
         # 检测鼠标是否悬停
         mouse_pos = pygame.mouse.get_pos()
         if self.rect.collidepoint(mouse_pos):
-            pygame.draw.rect(surface, self.hover_color, self.rect)
+            pygame.draw.rect(screen, self.hover_color, self.rect)
         else:
-            pygame.draw.rect(surface, self.color, self.rect)
+            pygame.draw.rect(screen, self.color, self.rect)
         # 绘制按钮文本
         text_surface = small_font.render(self.text, True, WHITE)
         text_rect = text_surface.get_rect(center=self.rect.center)
-        surface.blit(text_surface, text_rect)
+        screen.blit(text_surface, text_rect)
 
     # 检查是否被点击
     def check_click(self):
@@ -92,11 +92,11 @@ class Slider:
         self.value = initial_value
         self.is_dragging = False
 
-    def draw(self, surface):
+    def draw(self, screen):
         # 绘制滑轨
-        pygame.draw.rect(surface, GRAY, self.rect)
+        pygame.draw.rect(screen, GRAY, self.rect)
         # 绘制滑块
-        pygame.draw.rect(surface, BLUE if self.is_dragging else WHITE, self.knob_rect)
+        pygame.draw.rect(screen, BLUE if self.is_dragging else WHITE, self.knob_rect)
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -120,8 +120,8 @@ class TextInputBox:
         self.color = GRAY
         self.font = small_font
 
-    def draw(self, surface):
-        pygame.draw.rect(surface, self.color, self.rect, 2)
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.color, self.rect, 2)
         text_surface = self.font.render(self.text, True, WHITE)
         surface.blit(text_surface, (self.rect.x + 5, self.rect.y - 8))
 
