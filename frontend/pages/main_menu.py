@@ -30,7 +30,10 @@ def main_menu():
     screen.blit(welcome_text, (SCREEN_WIDTH * 0.65, 15 * scale))
     del welcome_text
 
-    ver_text = small_font.render(f"Ver. {ver}-{minver}", True, WHITE)
+    if minver:
+        ver_text = small_font.render(f"Ver. {ver}-{minver}", True, WHITE)
+    else:
+        ver_text = small_font.render(f"Ver. {ver}", True, WHITE)
     screen.blit(ver_text, (SCREEN_WIDTH - (20 + 1.5 * ver_text.get_width()) * scale, SCREEN_HEIGHT - (20 + 1.5 * ver_text.get_height()) * scale))
     del ver_text
 

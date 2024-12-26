@@ -30,8 +30,8 @@ config = GameConfig()
 DIFFICULTY_MAPPING = ["基本", "高级", "专家", "大师"]
 
 # 版本
-ver = 0.99
-minver = "beta"
+ver = "1.00"
+minver = ""
 
 # 传参
 def navigate_with_params(position, **kwargs):
