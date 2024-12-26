@@ -31,7 +31,7 @@ DIFFICULTY_MAPPING = ["基本", "高级", "专家", "大师"]
 
 # 版本
 ver = 0.99
-minver = "alpha"
+minver = "beta"
 
 # 传参
 def navigate_with_params(position, **kwargs):
