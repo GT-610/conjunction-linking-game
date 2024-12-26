@@ -9,7 +9,6 @@ SCREEN_WIDTH, SCREEN_HEIGHT = 1280, 720
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 scale = max(SCREEN_WIDTH / 1280, SCREEN_HEIGHT / 720)
 
-
 # 颜色
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -21,6 +20,9 @@ RED = (255, 0, 0)
 
 # 资源文件夹
 assets_dir = Path("assets")
+
+# 图标
+favicon = pygame.image.load(assets_dir/"favicon.ico")
 
 # 字体
 font_path = assets_dir/"fonts"/"SourceHanSansCN-Regular.otf"

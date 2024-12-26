@@ -1,11 +1,13 @@
 import pygame
 import sys
 
-from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, scale, font, small_font
+from frontend.commons import screen, SCREEN_WIDTH, SCREEN_HEIGHT, scale, favicon, font, small_font
 from frontend.commons import Button, button_width, vertical_spacing
 from frontend.commons import WHITE
 
 from backend.config import ver, minver, config, load_settings
+
+pygame.display.set_icon(favicon)
 
 # 主菜单
 def main_menu():

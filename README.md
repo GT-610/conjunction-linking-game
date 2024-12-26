@@ -56,13 +56,13 @@ Engligh README is below Chinese one. ([Here](#conjuctions-linking-game))
 2. 执行以下命令：
 
     ```bash
-    python -m nuitka --standalone --disable-console --include-data-dir=./assets=./assets --include-data-dir=./saves=./saves main.py
+    python -m nuitka --standalone --disable-console --include-data-dir=./assets=./assets --include-data-dir=./saves=./saves --windows-icon-from-ico=assets/favicon.ico main.py
     ```
 
     如果您想打包成一个文件，也可以运行以下命令：
 
     ```bash
-    python -m nuitka --standalone --onefile --disable-console --include-data-dir=./assets=./assets --include-data-dir=./saves=./saves main.py
+    python -m nuitka --standalone --onefile --disable-console --include-data-dir=./assets=./assets --include-data-dir=./saves=./saves --windows-icon-from-ico=assets/favicon.ico main.py
     ```
 
     输出文件夹位于 `main.dist`。
