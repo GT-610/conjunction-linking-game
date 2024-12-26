@@ -55,14 +55,14 @@ def settings_page():
         sfx_slider.draw(screen)
         name_input.draw(screen)
 
-        # 显示音量和玩家名称
+        # 绘制音量和玩家名称
         sfx_text = small_font.render(f"音效音量: {int(sfx_slider.value)}", True, WHITE)
         screen.blit(sfx_text, ((SCREEN_WIDTH - sfx_text.get_width()) // 2, 190 * scale))
 
         name_text = small_font.render("玩家名称", True, WHITE)
         screen.blit(name_text, ((SCREEN_WIDTH - name_text.get_width()) // 2, 300 * scale))
 
-        # 绘制按钮
+        # 绘制返回按钮
         back_button.draw(screen)
 
         # 更新显示

@@ -29,6 +29,7 @@ class ConjunctionBlock:
     # 处理点击事件
     def handle_click(self, pos):
         if self.rect.collidepoint(pos):
+            conj_click_sound.stop()
             conj_click_sound.play()
             self.callback(self)
             return True

@@ -99,6 +99,7 @@ class Button:
     # 检查是否被点击
     def check_click(self):
         if self.callback and self.rect.collidepoint(pygame.mouse.get_pos()):
+            button_click_sound.stop()
             button_click_sound.play()
             self.callback()
 
