@@ -61,7 +61,7 @@ class BgManager:
         screen.blit(self.bgi, (start_x, start_y))
         screen.blit(self.dark_overlay, (start_x, start_y))
 
-bg0 = BgManager(assets_dir/"backgrounds"/"bg0.jpg", 100)
+bg0 = BgManager(assets_dir/"backgrounds"/"bg0.png", 100)
 
 # 按钮参数
 button_width = 150 * scale
